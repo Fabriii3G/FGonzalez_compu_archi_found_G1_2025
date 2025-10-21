@@ -1,0 +1,304 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/snipe/Desktop/ALU/simulation/modelsim
+valu
+Z1 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
+Z2 !s110 1760993693
+!i10b 1
+!s100 `:[hUEokUm8MX=GYOkS@]3
+Z3 !s11b Dg1SIo80bB@j0V0VzS_@n1
+I7U_4zMn9@[Sj0fc4S?eCg0
+Z4 VDg1SIo80bB@j0V0VzS_@n1
+S1
+R0
+w1760993108
+8C:/Users/snipe/Desktop/ALU/alu.sv
+FC:/Users/snipe/Desktop/ALU/alu.sv
+!i122 6
+L0 1 105
+Z5 OV;L;2020.1;71
+r1
+!s85 0
+31
+Z6 !s108 1760993693.000000
+!s107 C:/Users/snipe/Desktop/ALU/alu.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/snipe/Desktop/ALU|C:/Users/snipe/Desktop/ALU/alu.sv|
+!i113 1
+Z7 o-sv -work work
+Z8 !s92 -sv -work work +incdir+C:/Users/snipe/Desktop/ALU
+Z9 tCvgOpt 0
+valu_tb
+R1
+R2
+!i10b 1
+!s100 [GXzPH1f710_lL[N2[=S[1
+R3
+IWA>z=o^WEb_@^hcj=mFc`1
+R4
+S1
+R0
+w1760993109
+8C:/Users/snipe/Desktop/ALU/alu_tb.sv
+FC:/Users/snipe/Desktop/ALU/alu_tb.sv
+!i122 8
+L0 3 97
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/snipe/Desktop/ALU/alu_tb.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/snipe/Desktop/ALU|C:/Users/snipe/Desktop/ALU/alu_tb.sv|
+!i113 1
+R7
+R8
+R9
+vdivisorCompletoN
+R1
+R2
+!i10b 1
+!s100 M8f1?e[8je]3V63[<]CNb2
+R3
+Id<R0?<5=`SiX4V2_VPi@S3
+R4
+S1
+R0
+Z10 w1760993678
+Z11 8C:/Users/snipe/Desktop/ALU/divisorCompletoN.sv
+Z12 FC:/Users/snipe/Desktop/ALU/divisorCompletoN.sv
+!i122 7
+L0 27 77
+R5
+r1
+!s85 0
+31
+R6
+Z13 !s107 C:/Users/snipe/Desktop/ALU/divisorCompletoN.sv|
+Z14 !s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/snipe/Desktop/ALU|C:/Users/snipe/Desktop/ALU/divisorCompletoN.sv|
+!i113 1
+R7
+R8
+R9
+ndivisor@completo@n
+vmultiplicadorCompletoN
+R1
+R2
+!i10b 1
+!s100 19=EcK^T@n?oN50hV7RJ]1
+R3
+IJ8Fe2]bN7ze39E0kM5WlD2
+R4
+S1
+R0
+Z15 w1760990593
+8C:/Users/snipe/Desktop/ALU/multiplicadorCompletoN.sv
+FC:/Users/snipe/Desktop/ALU/multiplicadorCompletoN.sv
+!i122 5
+L0 1 34
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/snipe/Desktop/ALU/multiplicadorCompletoN.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/snipe/Desktop/ALU|C:/Users/snipe/Desktop/ALU/multiplicadorCompletoN.sv|
+!i113 1
+R7
+R8
+R9
+nmultiplicador@completo@n
+vmux2
+R1
+R2
+!i10b 1
+!s100 oHk`WXZ`Vz`Q[;]gBh7;D3
+R3
+Io9miEGb;TQ@g447VPjKMh3
+R4
+S1
+R0
+R15
+8C:/Users/snipe/Desktop/ALU/mux2.sv
+FC:/Users/snipe/Desktop/ALU/mux2.sv
+!i122 4
+L0 3 14
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/snipe/Desktop/ALU/mux2.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/snipe/Desktop/ALU|C:/Users/snipe/Desktop/ALU/mux2.sv|
+!i113 1
+R7
+R8
+R9
+vmux2_N
+R1
+R2
+!i10b 1
+!s100 =kPL:TI3LD<0aG075Q6ia0
+R3
+Indf9hjoDiU=@caU>zmU;m3
+R4
+S1
+R0
+R10
+R11
+R12
+!i122 7
+L0 17 8
+R5
+r1
+!s85 0
+31
+R6
+R13
+R14
+!i113 1
+R7
+R8
+R9
+nmux2_@n
+vrestadorCompleto1bit
+R1
+R2
+!i10b 1
+!s100 C<D8KZ<hHC7Mzm0TIi1[U3
+R3
+I`N43H9d^o7Y;hG[E926^I0
+R4
+S1
+R0
+R15
+8C:/Users/snipe/Desktop/ALU/restadorCompleto1bit.sv
+FC:/Users/snipe/Desktop/ALU/restadorCompleto1bit.sv
+!i122 3
+L0 5 15
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/snipe/Desktop/ALU/restadorCompleto1bit.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/snipe/Desktop/ALU|C:/Users/snipe/Desktop/ALU/restadorCompleto1bit.sv|
+!i113 1
+R7
+R8
+R9
+nrestador@completo1bit
+vrestadorCompletoN
+R1
+Z16 !s110 1760993692
+!i10b 1
+!s100 RcG14JjoOKUYc2oW8C5XR0
+R3
+I`0U9zOVMzJC9;UF7i5V541
+R4
+S1
+R0
+R15
+8C:/Users/snipe/Desktop/ALU/restadorCompletoN.sv
+FC:/Users/snipe/Desktop/ALU/restadorCompletoN.sv
+!i122 2
+Z17 L0 4 29
+R5
+r1
+!s85 0
+31
+Z18 !s108 1760993692.000000
+!s107 C:/Users/snipe/Desktop/ALU/restadorCompletoN.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/snipe/Desktop/ALU|C:/Users/snipe/Desktop/ALU/restadorCompletoN.sv|
+!i113 1
+R7
+R8
+R9
+nrestador@completo@n
+vshl_in
+R1
+R2
+!i10b 1
+!s100 ]SL=j5^3SnCoMG3XUmG3d1
+R3
+I:fek2?@:PP]6[^GPVE`GF3
+R4
+S1
+R0
+R10
+R11
+R12
+!i122 7
+L0 7 8
+R5
+r1
+!s85 0
+31
+R6
+R13
+R14
+!i113 1
+R7
+R8
+R9
+vsumadorCompleto1bit
+R1
+R16
+!i10b 1
+!s100 gL4JKzf]:_9LI=A8136U21
+R3
+IW1[X10lH^[cCWG<o^FVQ<0
+R4
+S1
+R0
+R15
+8C:/Users/snipe/Desktop/ALU/sumadorCompleto1bit.sv
+FC:/Users/snipe/Desktop/ALU/sumadorCompleto1bit.sv
+!i122 1
+L0 5 17
+R5
+r1
+!s85 0
+31
+R18
+!s107 C:/Users/snipe/Desktop/ALU/sumadorCompleto1bit.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/snipe/Desktop/ALU|C:/Users/snipe/Desktop/ALU/sumadorCompleto1bit.sv|
+!i113 1
+R7
+R8
+R9
+nsumador@completo1bit
+vsumadorCompletoN
+R1
+R16
+!i10b 1
+!s100 <E_C]oOWzTCMf4SD>NV]J3
+R3
+I>P@nEE_PHl0JOIPe]3ceh1
+R4
+S1
+R0
+R15
+8C:/Users/snipe/Desktop/ALU/sumadorCompletoN.sv
+FC:/Users/snipe/Desktop/ALU/sumadorCompletoN.sv
+!i122 0
+R17
+R5
+r1
+!s85 0
+31
+R18
+!s107 C:/Users/snipe/Desktop/ALU/sumadorCompletoN.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/snipe/Desktop/ALU|C:/Users/snipe/Desktop/ALU/sumadorCompletoN.sv|
+!i113 1
+R7
+R8
+R9
+nsumador@completo@n

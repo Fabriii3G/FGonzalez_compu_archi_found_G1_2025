@@ -1,0 +1,630 @@
+Analysis & Elaboration report for ALU
+Mon Oct 20 14:54:43 2025
+Quartus Prime Version 20.1.0 Build 711 06/05/2020 SJ Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Elaboration Summary
+  3. Parallel Compilation
+  4. Parameter Settings for User Entity Instance: Top-level Entity: |alu
+  5. Parameter Settings for User Entity Instance: sumadorCompletoN:u_sumador
+  6. Parameter Settings for User Entity Instance: restadorCompletoN:u_restador
+  7. Parameter Settings for User Entity Instance: multiplicadorCompletoN:u_multiplicador
+  8. Parameter Settings for User Entity Instance: multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[0].sumador
+  9. Parameter Settings for User Entity Instance: multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[1].sumador
+ 10. Parameter Settings for User Entity Instance: multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[2].sumador
+ 11. Parameter Settings for User Entity Instance: multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[3].sumador
+ 12. Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor
+ 13. Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|shl_in:STAGE[0].u_sh
+ 14. Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|restadorCompletoN:STAGE[0].u_sub
+ 15. Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|mux2_N:STAGE[0].u_mux_pr
+ 16. Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|mux2_N:STAGE[0].u_mux_pr|mux2:u
+ 17. Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|shl_in:STAGE[1].u_sh
+ 18. Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|restadorCompletoN:STAGE[1].u_sub
+ 19. Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|mux2_N:STAGE[1].u_mux_pr
+ 20. Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|mux2_N:STAGE[1].u_mux_pr|mux2:u
+ 21. Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|shl_in:STAGE[2].u_sh
+ 22. Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|restadorCompletoN:STAGE[2].u_sub
+ 23. Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|mux2_N:STAGE[2].u_mux_pr
+ 24. Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|mux2_N:STAGE[2].u_mux_pr|mux2:u
+ 25. Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|shl_in:STAGE[3].u_sh
+ 26. Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|restadorCompletoN:STAGE[3].u_sub
+ 27. Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|mux2_N:STAGE[3].u_mux_pr
+ 28. Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|mux2_N:STAGE[3].u_mux_pr|mux2:u
+ 29. Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|mux2_N:u_mux_R
+ 30. Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|mux2_N:u_mux_R|mux2:u
+ 31. Analysis & Elaboration Settings
+ 32. Port Connectivity Checks: "divisorCompletoN:u_divisor|mux2_N:u_mux_R"
+ 33. Port Connectivity Checks: "divisorCompletoN:u_divisor|restadorCompletoN:STAGE[3].u_sub"
+ 34. Port Connectivity Checks: "divisorCompletoN:u_divisor|restadorCompletoN:STAGE[2].u_sub"
+ 35. Port Connectivity Checks: "divisorCompletoN:u_divisor|restadorCompletoN:STAGE[1].u_sub"
+ 36. Port Connectivity Checks: "divisorCompletoN:u_divisor|restadorCompletoN:STAGE[0].u_sub"
+ 37. Port Connectivity Checks: "divisorCompletoN:u_divisor|shl_in:STAGE[0].u_sh"
+ 38. Port Connectivity Checks: "divisorCompletoN:u_divisor"
+ 39. Port Connectivity Checks: "multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[3].sumador"
+ 40. Port Connectivity Checks: "multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[2].sumador"
+ 41. Port Connectivity Checks: "multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[1].sumador"
+ 42. Port Connectivity Checks: "multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[0].sumador"
+ 43. Analysis & Elaboration Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2020  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
+
+
+
++-----------------------------------------------------------------------------+
+; Analysis & Elaboration Summary                                              ;
++-------------------------------+---------------------------------------------+
+; Analysis & Elaboration Status ; Successful - Mon Oct 20 14:54:43 2025       ;
+; Quartus Prime Version         ; 20.1.0 Build 711 06/05/2020 SJ Lite Edition ;
+; Revision Name                 ; ALU                                         ;
+; Top-level Entity Name         ; alu                                         ;
+; Family                        ; Cyclone V                                   ;
+; Logic utilization (in ALMs)   ; N/A until Partition Merge                   ;
+; Total registers               ; N/A until Partition Merge                   ;
+; Total pins                    ; N/A until Partition Merge                   ;
+; Total virtual pins            ; N/A until Partition Merge                   ;
+; Total block memory bits       ; N/A until Partition Merge                   ;
+; Total PLLs                    ; N/A until Partition Merge                   ;
+; Total DLLs                    ; N/A until Partition Merge                   ;
++-------------------------------+---------------------------------------------+
+
+
++------------------------------------------+
+; Parallel Compilation                     ;
++----------------------------+-------------+
+; Processors                 ; Number      ;
++----------------------------+-------------+
+; Number detected on machine ; 16          ;
+; Maximum allowed            ; 16          ;
+;                            ;             ;
+; Average used               ; 1.00        ;
+; Maximum used               ; 1           ;
+;                            ;             ;
+; Usage by Processor         ; % Time Used ;
+;     Processor 1            ; 100.0%      ;
++----------------------------+-------------+
+
+
++---------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: Top-level Entity: |alu ;
++----------------+-------+--------------------------------------------+
+; Parameter Name ; Value ; Type                                       ;
++----------------+-------+--------------------------------------------+
+; WIDTH          ; 4     ; Signed Integer                             ;
++----------------+-------+--------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: sumadorCompletoN:u_sumador ;
++----------------+-------+------------------------------------------------+
+; Parameter Name ; Value ; Type                                           ;
++----------------+-------+------------------------------------------------+
+; WIDTH          ; 4     ; Signed Integer                                 ;
++----------------+-------+------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: restadorCompletoN:u_restador ;
++----------------+-------+--------------------------------------------------+
+; Parameter Name ; Value ; Type                                             ;
++----------------+-------+--------------------------------------------------+
+; WIDTH          ; 4     ; Signed Integer                                   ;
++----------------+-------+--------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: multiplicadorCompletoN:u_multiplicador ;
++----------------+-------+------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                       ;
++----------------+-------+------------------------------------------------------------+
+; WIDTH          ; 4     ; Signed Integer                                             ;
++----------------+-------+------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[0].sumador ;
++----------------+-------+---------------------------------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                                        ;
++----------------+-------+---------------------------------------------------------------------------------------------+
+; WIDTH          ; 8     ; Signed Integer                                                                              ;
++----------------+-------+---------------------------------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[1].sumador ;
++----------------+-------+---------------------------------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                                        ;
++----------------+-------+---------------------------------------------------------------------------------------------+
+; WIDTH          ; 8     ; Signed Integer                                                                              ;
++----------------+-------+---------------------------------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[2].sumador ;
++----------------+-------+---------------------------------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                                        ;
++----------------+-------+---------------------------------------------------------------------------------------------+
+; WIDTH          ; 8     ; Signed Integer                                                                              ;
++----------------+-------+---------------------------------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[3].sumador ;
++----------------+-------+---------------------------------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                                        ;
++----------------+-------+---------------------------------------------------------------------------------------------+
+; WIDTH          ; 8     ; Signed Integer                                                                              ;
++----------------+-------+---------------------------------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor ;
++----------------+-------+------------------------------------------------+
+; Parameter Name ; Value ; Type                                           ;
++----------------+-------+------------------------------------------------+
+; WIDTH          ; 4     ; Signed Integer                                 ;
++----------------+-------+------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|shl_in:STAGE[0].u_sh ;
++----------------+-------+---------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                ;
++----------------+-------+---------------------------------------------------------------------+
+; WIDTH          ; 4     ; Signed Integer                                                      ;
++----------------+-------+---------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|restadorCompletoN:STAGE[0].u_sub ;
++----------------+-------+---------------------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                            ;
++----------------+-------+---------------------------------------------------------------------------------+
+; WIDTH          ; 4     ; Signed Integer                                                                  ;
++----------------+-------+---------------------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|mux2_N:STAGE[0].u_mux_pr ;
++----------------+-------+-------------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                    ;
++----------------+-------+-------------------------------------------------------------------------+
+; WIDTH          ; 4     ; Signed Integer                                                          ;
++----------------+-------+-------------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|mux2_N:STAGE[0].u_mux_pr|mux2:u ;
++----------------+-------+--------------------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                           ;
++----------------+-------+--------------------------------------------------------------------------------+
+; WIDTH          ; 4     ; Signed Integer                                                                 ;
++----------------+-------+--------------------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|shl_in:STAGE[1].u_sh ;
++----------------+-------+---------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                ;
++----------------+-------+---------------------------------------------------------------------+
+; WIDTH          ; 4     ; Signed Integer                                                      ;
++----------------+-------+---------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|restadorCompletoN:STAGE[1].u_sub ;
++----------------+-------+---------------------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                            ;
++----------------+-------+---------------------------------------------------------------------------------+
+; WIDTH          ; 4     ; Signed Integer                                                                  ;
++----------------+-------+---------------------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|mux2_N:STAGE[1].u_mux_pr ;
++----------------+-------+-------------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                    ;
++----------------+-------+-------------------------------------------------------------------------+
+; WIDTH          ; 4     ; Signed Integer                                                          ;
++----------------+-------+-------------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|mux2_N:STAGE[1].u_mux_pr|mux2:u ;
++----------------+-------+--------------------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                           ;
++----------------+-------+--------------------------------------------------------------------------------+
+; WIDTH          ; 4     ; Signed Integer                                                                 ;
++----------------+-------+--------------------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|shl_in:STAGE[2].u_sh ;
++----------------+-------+---------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                ;
++----------------+-------+---------------------------------------------------------------------+
+; WIDTH          ; 4     ; Signed Integer                                                      ;
++----------------+-------+---------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|restadorCompletoN:STAGE[2].u_sub ;
++----------------+-------+---------------------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                            ;
++----------------+-------+---------------------------------------------------------------------------------+
+; WIDTH          ; 4     ; Signed Integer                                                                  ;
++----------------+-------+---------------------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|mux2_N:STAGE[2].u_mux_pr ;
++----------------+-------+-------------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                    ;
++----------------+-------+-------------------------------------------------------------------------+
+; WIDTH          ; 4     ; Signed Integer                                                          ;
++----------------+-------+-------------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|mux2_N:STAGE[2].u_mux_pr|mux2:u ;
++----------------+-------+--------------------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                           ;
++----------------+-------+--------------------------------------------------------------------------------+
+; WIDTH          ; 4     ; Signed Integer                                                                 ;
++----------------+-------+--------------------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|shl_in:STAGE[3].u_sh ;
++----------------+-------+---------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                ;
++----------------+-------+---------------------------------------------------------------------+
+; WIDTH          ; 4     ; Signed Integer                                                      ;
++----------------+-------+---------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|restadorCompletoN:STAGE[3].u_sub ;
++----------------+-------+---------------------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                            ;
++----------------+-------+---------------------------------------------------------------------------------+
+; WIDTH          ; 4     ; Signed Integer                                                                  ;
++----------------+-------+---------------------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|mux2_N:STAGE[3].u_mux_pr ;
++----------------+-------+-------------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                    ;
++----------------+-------+-------------------------------------------------------------------------+
+; WIDTH          ; 4     ; Signed Integer                                                          ;
++----------------+-------+-------------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|mux2_N:STAGE[3].u_mux_pr|mux2:u ;
++----------------+-------+--------------------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                           ;
++----------------+-------+--------------------------------------------------------------------------------+
+; WIDTH          ; 4     ; Signed Integer                                                                 ;
++----------------+-------+--------------------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|mux2_N:u_mux_R ;
++----------------+-------+---------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                          ;
++----------------+-------+---------------------------------------------------------------+
+; WIDTH          ; 4     ; Signed Integer                                                ;
++----------------+-------+---------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-----------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: divisorCompletoN:u_divisor|mux2_N:u_mux_R|mux2:u ;
++----------------+-------+----------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                 ;
++----------------+-------+----------------------------------------------------------------------+
+; WIDTH          ; 4     ; Signed Integer                                                       ;
++----------------+-------+----------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Elaboration Settings                                                                                           ;
++---------------------------------------------------------------------------------+--------------------+--------------------+
+; Option                                                                          ; Setting            ; Default Value      ;
++---------------------------------------------------------------------------------+--------------------+--------------------+
+; Device                                                                          ; 5CSXFC6D6F31C6     ;                    ;
+; Top-level entity name                                                           ; alu                ; ALU                ;
+; Family name                                                                     ; Cyclone V          ; Cyclone V          ;
+; Use smart compilation                                                           ; Off                ; Off                ;
+; Enable parallel Assembler and Timing Analyzer during compilation                ; On                 ; On                 ;
+; Enable compact report table                                                     ; Off                ; Off                ;
+; Restructure Multiplexers                                                        ; Auto               ; Auto               ;
+; MLAB Add Timing Constraints For Mixed-Port Feed-Through Mode Setting Don't Care ; Off                ; Off                ;
+; Create Debugging Nodes for IP Cores                                             ; Off                ; Off                ;
+; Preserve fewer node names                                                       ; On                 ; On                 ;
+; Intel FPGA IP Evaluation Mode                                                   ; Enable             ; Enable             ;
+; Verilog Version                                                                 ; Verilog_2001       ; Verilog_2001       ;
+; VHDL Version                                                                    ; VHDL_1993          ; VHDL_1993          ;
+; State Machine Processing                                                        ; Auto               ; Auto               ;
+; Safe State Machine                                                              ; Off                ; Off                ;
+; Extract Verilog State Machines                                                  ; On                 ; On                 ;
+; Extract VHDL State Machines                                                     ; On                 ; On                 ;
+; Ignore Verilog initial constructs                                               ; Off                ; Off                ;
+; Iteration limit for constant Verilog loops                                      ; 5000               ; 5000               ;
+; Iteration limit for non-constant Verilog loops                                  ; 250                ; 250                ;
+; Add Pass-Through Logic to Inferred RAMs                                         ; On                 ; On                 ;
+; Infer RAMs from Raw Logic                                                       ; On                 ; On                 ;
+; Parallel Synthesis                                                              ; On                 ; On                 ;
+; DSP Block Balancing                                                             ; Auto               ; Auto               ;
+; NOT Gate Push-Back                                                              ; On                 ; On                 ;
+; Power-Up Don't Care                                                             ; On                 ; On                 ;
+; Remove Redundant Logic Cells                                                    ; Off                ; Off                ;
+; Remove Duplicate Registers                                                      ; On                 ; On                 ;
+; Ignore CARRY Buffers                                                            ; Off                ; Off                ;
+; Ignore CASCADE Buffers                                                          ; Off                ; Off                ;
+; Ignore GLOBAL Buffers                                                           ; Off                ; Off                ;
+; Ignore ROW GLOBAL Buffers                                                       ; Off                ; Off                ;
+; Ignore LCELL Buffers                                                            ; Off                ; Off                ;
+; Ignore SOFT Buffers                                                             ; On                 ; On                 ;
+; Limit AHDL Integers to 32 Bits                                                  ; Off                ; Off                ;
+; Optimization Technique                                                          ; Balanced           ; Balanced           ;
+; Carry Chain Length                                                              ; 70                 ; 70                 ;
+; Auto Carry Chains                                                               ; On                 ; On                 ;
+; Auto Open-Drain Pins                                                            ; On                 ; On                 ;
+; Perform WYSIWYG Primitive Resynthesis                                           ; Off                ; Off                ;
+; Auto ROM Replacement                                                            ; On                 ; On                 ;
+; Auto RAM Replacement                                                            ; On                 ; On                 ;
+; Auto DSP Block Replacement                                                      ; On                 ; On                 ;
+; Auto Shift Register Replacement                                                 ; Auto               ; Auto               ;
+; Allow Shift Register Merging across Hierarchies                                 ; Auto               ; Auto               ;
+; Auto Clock Enable Replacement                                                   ; On                 ; On                 ;
+; Strict RAM Replacement                                                          ; Off                ; Off                ;
+; Allow Synchronous Control Signals                                               ; On                 ; On                 ;
+; Force Use of Synchronous Clear Signals                                          ; Off                ; Off                ;
+; Auto Resource Sharing                                                           ; Off                ; Off                ;
+; Allow Any RAM Size For Recognition                                              ; Off                ; Off                ;
+; Allow Any ROM Size For Recognition                                              ; Off                ; Off                ;
+; Allow Any Shift Register Size For Recognition                                   ; Off                ; Off                ;
+; Use LogicLock Constraints during Resource Balancing                             ; On                 ; On                 ;
+; Ignore translate_off and synthesis_off directives                               ; Off                ; Off                ;
+; Timing-Driven Synthesis                                                         ; On                 ; On                 ;
+; Report Parameter Settings                                                       ; On                 ; On                 ;
+; Report Source Assignments                                                       ; On                 ; On                 ;
+; Report Connectivity Checks                                                      ; On                 ; On                 ;
+; Ignore Maximum Fan-Out Assignments                                              ; Off                ; Off                ;
+; Synchronization Register Chain Length                                           ; 3                  ; 3                  ;
+; Power Optimization During Synthesis                                             ; Normal compilation ; Normal compilation ;
+; HDL message level                                                               ; Level2             ; Level2             ;
+; Suppress Register Optimization Related Messages                                 ; Off                ; Off                ;
+; Number of Removed Registers Reported in Synthesis Report                        ; 5000               ; 5000               ;
+; Number of Swept Nodes Reported in Synthesis Report                              ; 5000               ; 5000               ;
+; Number of Inverted Registers Reported in Synthesis Report                       ; 100                ; 100                ;
+; Clock MUX Protection                                                            ; On                 ; On                 ;
+; Auto Gated Clock Conversion                                                     ; Off                ; Off                ;
+; Block Design Naming                                                             ; Auto               ; Auto               ;
+; SDC constraint protection                                                       ; Off                ; Off                ;
+; Synthesis Effort                                                                ; Auto               ; Auto               ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal                    ; On                 ; On                 ;
+; Pre-Mapping Resynthesis Optimization                                            ; Off                ; Off                ;
+; Analysis & Synthesis Message Level                                              ; Medium             ; Medium             ;
+; Disable Register Merging Across Hierarchies                                     ; Auto               ; Auto               ;
+; Resource Aware Inference For Block RAM                                          ; On                 ; On                 ;
+; Automatic Parallel Synthesis                                                    ; On                 ; On                 ;
+; Partial Reconfiguration Bitstream ID                                            ; Off                ; Off                ;
++---------------------------------------------------------------------------------+--------------------+--------------------+
+
+
++-----------------------------------------------------------------------+
+; Port Connectivity Checks: "divisorCompletoN:u_divisor|mux2_N:u_mux_R" ;
++------+-------+----------+---------------------------------------------+
+; Port ; Type  ; Severity ; Details                                     ;
++------+-------+----------+---------------------------------------------+
+; d0   ; Input ; Info     ; Stuck at GND                                ;
++------+-------+----------+---------------------------------------------+
+
+
++-----------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "divisorCompletoN:u_divisor|restadorCompletoN:STAGE[3].u_sub" ;
++------+-------+----------+---------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                       ;
++------+-------+----------+---------------------------------------------------------------+
+; Cin  ; Input ; Info     ; Stuck at GND                                                  ;
++------+-------+----------+---------------------------------------------------------------+
+
+
++-----------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "divisorCompletoN:u_divisor|restadorCompletoN:STAGE[2].u_sub" ;
++------+-------+----------+---------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                       ;
++------+-------+----------+---------------------------------------------------------------+
+; Cin  ; Input ; Info     ; Stuck at GND                                                  ;
++------+-------+----------+---------------------------------------------------------------+
+
+
++-----------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "divisorCompletoN:u_divisor|restadorCompletoN:STAGE[1].u_sub" ;
++------+-------+----------+---------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                       ;
++------+-------+----------+---------------------------------------------------------------+
+; Cin  ; Input ; Info     ; Stuck at GND                                                  ;
++------+-------+----------+---------------------------------------------------------------+
+
+
++-----------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "divisorCompletoN:u_divisor|restadorCompletoN:STAGE[0].u_sub" ;
++------+-------+----------+---------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                       ;
++------+-------+----------+---------------------------------------------------------------+
+; Cin  ; Input ; Info     ; Stuck at GND                                                  ;
++------+-------+----------+---------------------------------------------------------------+
+
+
++-----------------------------------------------------------------------------+
+; Port Connectivity Checks: "divisorCompletoN:u_divisor|shl_in:STAGE[0].u_sh" ;
++------+-------+----------+---------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                           ;
++------+-------+----------+---------------------------------------------------+
+; x    ; Input ; Info     ; Stuck at GND                                      ;
++------+-------+----------+---------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "divisorCompletoN:u_divisor"                                                              ;
++-----------+--------+----------+-------------------------------------------------------------------------------------+
+; Port      ; Type   ; Severity ; Details                                                                             ;
++-----------+--------+----------+-------------------------------------------------------------------------------------+
+; R         ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; divByZero ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++-----------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++-------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[3].sumador"               ;
++---------+--------+----------+-------------------------------------------------------------------------------------+
+; Port    ; Type   ; Severity ; Details                                                                             ;
++---------+--------+----------+-------------------------------------------------------------------------------------+
+; B[2..0] ; Input  ; Info     ; Stuck at GND                                                                        ;
+; B[7]    ; Input  ; Info     ; Stuck at GND                                                                        ;
+; Cin     ; Input  ; Info     ; Stuck at GND                                                                        ;
+; Cout    ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++---------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++-------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[2].sumador"               ;
++---------+--------+----------+-------------------------------------------------------------------------------------+
+; Port    ; Type   ; Severity ; Details                                                                             ;
++---------+--------+----------+-------------------------------------------------------------------------------------+
+; B[7..6] ; Input  ; Info     ; Stuck at GND                                                                        ;
+; B[1..0] ; Input  ; Info     ; Stuck at GND                                                                        ;
+; Cin     ; Input  ; Info     ; Stuck at GND                                                                        ;
+; Cout    ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++---------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++-------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[1].sumador"               ;
++---------+--------+----------+-------------------------------------------------------------------------------------+
+; Port    ; Type   ; Severity ; Details                                                                             ;
++---------+--------+----------+-------------------------------------------------------------------------------------+
+; B[7..5] ; Input  ; Info     ; Stuck at GND                                                                        ;
+; B[0]    ; Input  ; Info     ; Stuck at GND                                                                        ;
+; Cin     ; Input  ; Info     ; Stuck at GND                                                                        ;
+; Cout    ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++---------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++-------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[0].sumador"               ;
++---------+--------+----------+-------------------------------------------------------------------------------------+
+; Port    ; Type   ; Severity ; Details                                                                             ;
++---------+--------+----------+-------------------------------------------------------------------------------------+
+; A       ; Input  ; Info     ; Stuck at GND                                                                        ;
+; B[7..4] ; Input  ; Info     ; Stuck at GND                                                                        ;
+; Cin     ; Input  ; Info     ; Stuck at GND                                                                        ;
+; Cout    ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++---------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++---------------------------------+
+; Analysis & Elaboration Messages ;
++---------------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime Analysis & Elaboration
+    Info: Version 20.1.0 Build 711 06/05/2020 SJ Lite Edition
+    Info: Processing started: Mon Oct 20 14:54:38 2025
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off ALU -c ALU --analysis_and_elaboration
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (20030): Parallel compilation is enabled and will use 16 of the 16 processors detected
+Info (12021): Found 1 design units, including 1 entities, in source file sumadorcompleton.sv
+    Info (12023): Found entity 1: sumadorCompletoN File: C:/Users/snipe/Desktop/ALU/sumadorCompletoN.sv Line: 4
+Info (12021): Found 1 design units, including 1 entities, in source file sumadorcompleto1bit.sv
+    Info (12023): Found entity 1: sumadorCompleto1bit File: C:/Users/snipe/Desktop/ALU/sumadorCompleto1bit.sv Line: 5
+Info (12021): Found 1 design units, including 1 entities, in source file restadorcompleton.sv
+    Info (12023): Found entity 1: restadorCompletoN File: C:/Users/snipe/Desktop/ALU/restadorCompletoN.sv Line: 4
+Info (12021): Found 1 design units, including 1 entities, in source file restadorcompleto1bit.sv
+    Info (12023): Found entity 1: restadorCompleto1bit File: C:/Users/snipe/Desktop/ALU/restadorCompleto1bit.sv Line: 5
+Info (12021): Found 1 design units, including 1 entities, in source file mux4.sv
+    Info (12023): Found entity 1: mux4 File: C:/Users/snipe/Desktop/ALU/mux4.sv Line: 3
+Info (12021): Found 1 design units, including 1 entities, in source file mux2.sv
+    Info (12023): Found entity 1: mux2 File: C:/Users/snipe/Desktop/ALU/mux2.sv Line: 3
+Info (12021): Found 1 design units, including 1 entities, in source file multiplicadorcompleton.sv
+    Info (12023): Found entity 1: multiplicadorCompletoN File: C:/Users/snipe/Desktop/ALU/multiplicadorCompletoN.sv Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file alu_tb.sv
+    Info (12023): Found entity 1: alu_tb File: C:/Users/snipe/Desktop/ALU/alu_tb.sv Line: 3
+Info (12021): Found 1 design units, including 1 entities, in source file alu.sv
+    Info (12023): Found entity 1: alu File: C:/Users/snipe/Desktop/ALU/alu.sv Line: 1
+Info (12021): Found 3 design units, including 3 entities, in source file divisorcompleton.sv
+    Info (12023): Found entity 1: shl_in File: C:/Users/snipe/Desktop/ALU/divisorCompletoN.sv Line: 7
+    Info (12023): Found entity 2: mux2_N File: C:/Users/snipe/Desktop/ALU/divisorCompletoN.sv Line: 17
+    Info (12023): Found entity 3: divisorCompletoN File: C:/Users/snipe/Desktop/ALU/divisorCompletoN.sv Line: 27
+Info (12127): Elaborating entity "alu" for the top level hierarchy
+Warning (10034): Output port "segments_units" at alu.sv(13) has no driver File: C:/Users/snipe/Desktop/ALU/alu.sv Line: 13
+Warning (10034): Output port "segments_tens" at alu.sv(15) has no driver File: C:/Users/snipe/Desktop/ALU/alu.sv Line: 15
+Info (12128): Elaborating entity "sumadorCompletoN" for hierarchy "sumadorCompletoN:u_sumador" File: C:/Users/snipe/Desktop/ALU/alu.sv Line: 36
+Info (12128): Elaborating entity "sumadorCompleto1bit" for hierarchy "sumadorCompletoN:u_sumador|sumadorCompleto1bit:loop[0].u_rest" File: C:/Users/snipe/Desktop/ALU/sumadorCompletoN.sv Line: 26
+Info (12128): Elaborating entity "restadorCompletoN" for hierarchy "restadorCompletoN:u_restador" File: C:/Users/snipe/Desktop/ALU/alu.sv Line: 42
+Info (12128): Elaborating entity "restadorCompleto1bit" for hierarchy "restadorCompletoN:u_restador|restadorCompleto1bit:loop[0].u_rest" File: C:/Users/snipe/Desktop/ALU/restadorCompletoN.sv Line: 26
+Info (12128): Elaborating entity "multiplicadorCompletoN" for hierarchy "multiplicadorCompletoN:u_multiplicador" File: C:/Users/snipe/Desktop/ALU/alu.sv Line: 50
+Warning (10230): Verilog HDL assignment warning at multiplicadorCompletoN.sv(32): truncated value with size 8 to match size of target (4) File: C:/Users/snipe/Desktop/ALU/multiplicadorCompletoN.sv Line: 32
+Info (12128): Elaborating entity "sumadorCompletoN" for hierarchy "multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[0].sumador" File: C:/Users/snipe/Desktop/ALU/multiplicadorCompletoN.sv Line: 27
+Info (12128): Elaborating entity "divisorCompletoN" for hierarchy "divisorCompletoN:u_divisor" File: C:/Users/snipe/Desktop/ALU/alu.sv Line: 57
+Info (12128): Elaborating entity "shl_in" for hierarchy "divisorCompletoN:u_divisor|shl_in:STAGE[0].u_sh" File: C:/Users/snipe/Desktop/ALU/divisorCompletoN.sv Line: 70
+Info (12128): Elaborating entity "mux2_N" for hierarchy "divisorCompletoN:u_divisor|mux2_N:STAGE[0].u_mux_pr" File: C:/Users/snipe/Desktop/ALU/divisorCompletoN.sv Line: 85
+Info (12128): Elaborating entity "mux2" for hierarchy "divisorCompletoN:u_divisor|mux2_N:STAGE[0].u_mux_pr|mux2:u" File: C:/Users/snipe/Desktop/ALU/divisorCompletoN.sv Line: 23
+Info: Quartus Prime Analysis & Elaboration was successful. 0 errors, 4 warnings
+    Info: Peak virtual memory: 4773 megabytes
+    Info: Processing ended: Mon Oct 20 14:54:43 2025
+    Info: Elapsed time: 00:00:05
+    Info: Total CPU time (on all processors): 00:00:15
+
+
