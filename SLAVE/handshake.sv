@@ -1,4 +1,4 @@
-module handshake_checker (
+module handshake (
     input  logic clk,
     input  logic rst_n,
     input  logic check_enable,
