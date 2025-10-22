@@ -4,10 +4,10 @@
 module bit_counter (
     input  logic clk,
     input  logic rst_n,
-    input  logic enable,        // Habilitar conteo
-    input  logic clear,         // Reiniciar contador
-    output logic [2:0] count,   // Cuenta actual (0-7)
-    output logic terminal       // Indica que llegó a 7
+    input  logic enable,
+    input  logic clear,
+    output logic [2:0] count,
+    output logic terminal
 );
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin

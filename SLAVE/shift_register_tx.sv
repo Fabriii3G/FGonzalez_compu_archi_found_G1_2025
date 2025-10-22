@@ -4,10 +4,10 @@
 module shift_register_tx (
     input  logic clk,
     input  logic rst_n,
-    input  logic load,          // Cargar nuevo dato
-    input  logic shift,         // Habilitar desplazamiento
-    input  logic [7:0] data_in, // Dato a enviar
-    output logic serial_out     // Bit de salida (MISO)
+    input  logic load,
+    input  logic shift,
+    input  logic [7:0] data_in,
+    output logic serial_out
 );
     logic [7:0] shift_reg;
     
@@ -18,10 +18,10 @@ module shift_register_tx (
         end else begin
             if (load) begin
                 shift_reg  <= data_in;
-                serial_out <= data_in[7];  // Primer bit (MSB)
+                serial_out <= data_in[7];  // MSB primero
             end else if (shift) begin
                 shift_reg  <= {shift_reg[6:0], 1'b0};
-                serial_out <= shift_reg[6]; // Siguiente bit
+                serial_out <= shift_reg[7];  // CORREGIDO: usar bit 7, no 6
             end
         end
     end

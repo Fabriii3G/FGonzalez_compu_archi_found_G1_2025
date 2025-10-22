@@ -4,10 +4,10 @@
 module shift_register_rx (
     input  logic clk,
     input  logic rst_n,
-    input  logic enable,        // Habilitar desplazamiento
-    input  logic serial_in,     // Bit de entrada (MOSI)
-    input  logic load,          // Cargar en buffer de salida
-    output logic [7:0] data_out // Dato recibido completo
+    input  logic enable,
+    input  logic serial_in,
+    input  logic load,
+    output logic [7:0] data_out
 );
     logic [7:0] shift_reg;
     
