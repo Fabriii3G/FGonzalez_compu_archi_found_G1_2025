@@ -1,28 +1,8 @@
 // ============================================================
 // divisorCompletoN.sv
-// División entera A/B (long division no-restaurativa), estructural.
+// División entera A/B (long division no-restaurativa)
 // - Parametrizable: WIDTH (default 4)
 // ============================================================
-
-module shl_in #(parameter WIDTH=4)(
-  input  logic [WIDTH-1:0] x,
-  input  logic             inbit,
-  output logic [WIDTH-1:0] y
-);
-  // PR_next = (x << 1) | inbit   (cableado)
-  assign y = {x[WIDTH-2:0], inbit};
-endmodule
-
-// MUX 2:1 N bits
-module mux2_N #(parameter WIDTH=4)(
-  input  logic [WIDTH-1:0] d0, // opción 0
-  input  logic [WIDTH-1:0] d1, // opción 1
-  input  logic             s,  // sel (1 debe elegir d1 en lógica "normal")
-  output logic [WIDTH-1:0] y
-);
-  mux2 #(.WIDTH(WIDTH)) u (.d0(d1), .d1(d0), .s(s), .y(y));
-endmodule
-
 
 module divisorCompletoN #(parameter WIDTH=4)(
   input  logic [WIDTH-1:0] A,      // dividendo
@@ -31,7 +11,7 @@ module divisorCompletoN #(parameter WIDTH=4)(
   output logic [WIDTH-1:0] R,      // residuo
   output logic              divByZero
 );
-  // -------- det. B == 0 SIN operador de reducción --------
+  // -------- detectar B == 0 SIN operador de reducción --------
   logic anyB;
   generate
     if (WIDTH == 1) begin
@@ -59,12 +39,12 @@ module divisorCompletoN #(parameter WIDTH=4)(
   genvar k;
   generate
     for (k = 0; k < WIDTH; k = k + 1) begin: STAGE
-      localparam int IDX = WIDTH-1-k; // bit del dividendo en esta etapa
+      localparam int IDX = WIDTH-1-k; // bit del dividendo en esta etapa (MSB->LSB)
 
       logic [WIDTH-1:0] PRsh;        // PR<<1 | A[IDX]
       logic [WIDTH-1:0] PRsh_minusB; // PRsh - B
       logic             borrow_cmp;  // borrow de la resta
-      logic             ge;          // PRsh >= B
+      logic             ge;          // PRsh >= B  (borrow==0)
 
       // Desplazar e inyectar bit de A
       shl_in #(WIDTH) u_sh (.x(PR[k]), .inbit(A[IDX]), .y(PRsh));
@@ -81,15 +61,18 @@ module divisorCompletoN #(parameter WIDTH=4)(
 
       assign ge = ~borrow_cmp; // borrow==0 -> PRsh >= B
 
-      // PR[k+1] = ge ? (PRsh-B) : PRsh
-      mux2_N #(WIDTH) u_mux_pr (.d0(PRsh), .d1(PRsh_minusB), .s(ge), .y(PR[k+1]));
+      
+      // Usamos tu mux2 (s=1 elige d1)
+      mux2 #(.WIDTH(WIDTH)) u_mux_pr (
+        .d0(PRsh), .d1(PRsh_minusB), .s(ge), .y(PR[k+1])
+      );
 
-      // qbit (evita cociente valido si B==0)
+      // qbit (evita cociente válido si B==0)
       assign qbit[IDX] = ge & ~divByZero;
     end
   endgenerate
 
-  // -------- Ensamblar Q sin reduccion --------
+  // -------- Ensamblar Q sin reducción --------
   genvar qi;
   generate
     for (qi = 0; qi < WIDTH; qi = qi + 1) begin : GQ
@@ -98,6 +81,9 @@ module divisorCompletoN #(parameter WIDTH=4)(
   endgenerate
 
   // -------- R = PR[WIDTH] si B!=0, si B==0 -> 0 --------
-  mux2_N #(WIDTH) u_mux_R (.d0('0), .d1(PR[WIDTH]), .s(~divByZero), .y(R));
+  // s=~divByZero => si B!=0 (s=1) elige PR[WIDTH], si B==0 (s=0) elige 0
+  mux2 #(.WIDTH(WIDTH)) u_mux_R (
+    .d0('0), .d1(PR[WIDTH]), .s(~divByZero), .y(R)
+  );
 
 endmodule

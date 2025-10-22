@@ -7,52 +7,43 @@ B[0] => B[0].IN4
 B[1] => B[1].IN4
 B[2] => B[2].IN4
 B[3] => B[3].IN4
-boton0 => Mux0.IN15
-boton0 => Mux1.IN15
-boton0 => Mux2.IN15
-boton0 => Mux3.IN15
-boton0 => Decoder0.IN3
-boton1 => Mux0.IN14
-boton1 => Mux1.IN14
-boton1 => Mux2.IN14
-boton1 => Mux3.IN14
-boton1 => Decoder0.IN2
-boton2 => Mux0.IN13
-boton2 => Mux1.IN13
-boton2 => Mux2.IN13
-boton2 => Mux3.IN13
-boton2 => Decoder0.IN1
-boton3 => Mux0.IN12
-boton3 => Mux1.IN12
-boton3 => Mux2.IN12
-boton3 => Mux3.IN12
-boton3 => Decoder0.IN0
+boton0 => sel_rest.IN1
+boton0 => sel_div.IN1
+boton0 => sel_mult.IN1
+boton0 => sel_sum.IN1
+boton1 => comb.IN1
+boton1 => comb.IN1
+boton1 => comb.IN1
+boton2 => comb.IN0
+boton2 => comb.IN0
+boton3 => comb.IN1
+boton3 => comb.IN1
 Cin => Cin.IN2
-S[0] << Mux3.DB_MAX_OUTPUT_PORT_TYPE
-S[1] << Mux2.DB_MAX_OUTPUT_PORT_TYPE
-S[2] << Mux1.DB_MAX_OUTPUT_PORT_TYPE
-S[3] << Mux0.DB_MAX_OUTPUT_PORT_TYPE
-Cout << Selector0.DB_MAX_OUTPUT_PORT_TYPE
-Z << Equal0.DB_MAX_OUTPUT_PORT_TYPE
-N << N.DB_MAX_OUTPUT_PORT_TYPE
-V << V.DB_MAX_OUTPUT_PORT_TYPE
-segments_units[0] << <GND>
-segments_units[1] << <GND>
-segments_units[2] << <GND>
-segments_units[3] << <GND>
-segments_units[4] << <GND>
-segments_units[5] << <GND>
-segments_units[6] << <GND>
-segments_tens[0] << <GND>
-segments_tens[1] << <GND>
-segments_tens[2] << <GND>
-segments_tens[3] << <GND>
-segments_tens[4] << <GND>
-segments_tens[5] << <GND>
-segments_tens[6] << <GND>
+S[0] <= S.DB_MAX_OUTPUT_PORT_TYPE
+S[1] <= S.DB_MAX_OUTPUT_PORT_TYPE
+S[2] <= S.DB_MAX_OUTPUT_PORT_TYPE
+S[3] <= S.DB_MAX_OUTPUT_PORT_TYPE
+Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
+Z <= G_ORZ.oz[2].DB_MAX_OUTPUT_PORT_TYPE
+N <= S.DB_MAX_OUTPUT_PORT_TYPE
+V <= V.DB_MAX_OUTPUT_PORT_TYPE
+segments_units[0] <= <GND>
+segments_units[1] <= <GND>
+segments_units[2] <= <GND>
+segments_units[3] <= <GND>
+segments_units[4] <= <GND>
+segments_units[5] <= <GND>
+segments_units[6] <= <GND>
+segments_tens[0] <= <GND>
+segments_tens[1] <= <GND>
+segments_tens[2] <= <GND>
+segments_tens[3] <= <GND>
+segments_tens[4] <= <GND>
+segments_tens[5] <= <GND>
+segments_tens[6] <= <GND>
 
 
-|alu|sumadorCompletoN:u_sumador
+|alu|sumadorCompletoN:u_sum
 A[0] => A[0].IN1
 A[1] => A[1].IN1
 A[2] => A[2].IN1
@@ -69,7 +60,7 @@ S[3] <= sumadorCompleto1bit:loop[3].u_rest.S
 Cout <= sumadorCompleto1bit:loop[3].u_rest.Cout
 
 
-|alu|sumadorCompletoN:u_sumador|sumadorCompleto1bit:loop[0].u_rest
+|alu|sumadorCompletoN:u_sum|sumadorCompleto1bit:loop[0].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -82,7 +73,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|sumadorCompletoN:u_sumador|sumadorCompleto1bit:loop[1].u_rest
+|alu|sumadorCompletoN:u_sum|sumadorCompleto1bit:loop[1].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -95,7 +86,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|sumadorCompletoN:u_sumador|sumadorCompleto1bit:loop[2].u_rest
+|alu|sumadorCompletoN:u_sum|sumadorCompleto1bit:loop[2].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -108,7 +99,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|sumadorCompletoN:u_sumador|sumadorCompleto1bit:loop[3].u_rest
+|alu|sumadorCompletoN:u_sum|sumadorCompleto1bit:loop[3].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -121,7 +112,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|restadorCompletoN:u_restador
+|alu|restadorCompletoN:u_res
 A[0] => A[0].IN1
 A[1] => A[1].IN1
 A[2] => A[2].IN1
@@ -138,7 +129,7 @@ S[3] <= restadorCompleto1bit:loop[3].u_rest.S
 Cout <= restadorCompleto1bit:loop[3].u_rest.Cout
 
 
-|alu|restadorCompletoN:u_restador|restadorCompleto1bit:loop[0].u_rest
+|alu|restadorCompletoN:u_res|restadorCompleto1bit:loop[0].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -152,7 +143,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|restadorCompletoN:u_restador|restadorCompleto1bit:loop[1].u_rest
+|alu|restadorCompletoN:u_res|restadorCompleto1bit:loop[1].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -166,7 +157,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|restadorCompletoN:u_restador|restadorCompleto1bit:loop[2].u_rest
+|alu|restadorCompletoN:u_res|restadorCompleto1bit:loop[2].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -180,7 +171,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|restadorCompletoN:u_restador|restadorCompleto1bit:loop[3].u_rest
+|alu|restadorCompletoN:u_res|restadorCompleto1bit:loop[3].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -194,51 +185,23 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador
-multiplicando[0] => mult_desplazado[3][3].IN4
-multiplicando[1] => mult_desplazado[3][4].IN4
-multiplicando[2] => mult_desplazado[3][5].IN4
-multiplicando[3] => mult_desplazado[3][6].IN4
-multiplicador[0] => res_parcial.OUTPUTSELECT
-multiplicador[0] => res_parcial.OUTPUTSELECT
-multiplicador[0] => res_parcial.OUTPUTSELECT
-multiplicador[0] => res_parcial.OUTPUTSELECT
-multiplicador[0] => res_parcial.OUTPUTSELECT
-multiplicador[0] => res_parcial.OUTPUTSELECT
-multiplicador[0] => res_parcial.OUTPUTSELECT
-multiplicador[0] => res_parcial.OUTPUTSELECT
-multiplicador[1] => res_parcial.OUTPUTSELECT
-multiplicador[1] => res_parcial.OUTPUTSELECT
-multiplicador[1] => res_parcial.OUTPUTSELECT
-multiplicador[1] => res_parcial.OUTPUTSELECT
-multiplicador[1] => res_parcial.OUTPUTSELECT
-multiplicador[1] => res_parcial.OUTPUTSELECT
-multiplicador[1] => res_parcial.OUTPUTSELECT
-multiplicador[1] => res_parcial.OUTPUTSELECT
-multiplicador[2] => res_parcial.OUTPUTSELECT
-multiplicador[2] => res_parcial.OUTPUTSELECT
-multiplicador[2] => res_parcial.OUTPUTSELECT
-multiplicador[2] => res_parcial.OUTPUTSELECT
-multiplicador[2] => res_parcial.OUTPUTSELECT
-multiplicador[2] => res_parcial.OUTPUTSELECT
-multiplicador[2] => res_parcial.OUTPUTSELECT
-multiplicador[2] => res_parcial.OUTPUTSELECT
-multiplicador[3] => res_parcial[4][7].OUTPUTSELECT
-multiplicador[3] => res_parcial[4][6].OUTPUTSELECT
-multiplicador[3] => res_parcial[4][5].OUTPUTSELECT
-multiplicador[3] => res_parcial[4][4].OUTPUTSELECT
-multiplicador[3] => res_parcial.OUTPUTSELECT
-multiplicador[3] => res_parcial.OUTPUTSELECT
-multiplicador[3] => res_parcial.OUTPUTSELECT
-multiplicador[3] => res_parcial.OUTPUTSELECT
-res[0] <= res_parcial.DB_MAX_OUTPUT_PORT_TYPE
-res[1] <= res_parcial.DB_MAX_OUTPUT_PORT_TYPE
-res[2] <= res_parcial.DB_MAX_OUTPUT_PORT_TYPE
-res[3] <= res_parcial.DB_MAX_OUTPUT_PORT_TYPE
-overflow <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
+|alu|multiplicadorCompletoN:u_mul
+multiplicando[0] => addend[3][3].IN4
+multiplicando[1] => addend[3][4].IN4
+multiplicando[2] => addend[3][5].IN4
+multiplicando[3] => addend[3][6].IN4
+multiplicador[0] => multiplicador[0].IN1
+multiplicador[1] => multiplicador[1].IN1
+multiplicador[2] => multiplicador[2].IN1
+multiplicador[3] => multiplicador[3].IN1
+res[0] <= mux2:G[3].u_mux.y
+res[1] <= mux2:G[3].u_mux.y
+res[2] <= mux2:G[3].u_mux.y
+res[3] <= mux2:G[3].u_mux.y
+overflow <= oh.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[0].sumador
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[0].u_add
 A[0] => A[0].IN1
 A[1] => A[1].IN1
 A[2] => A[2].IN1
@@ -267,7 +230,7 @@ S[7] <= sumadorCompleto1bit:loop[7].u_rest.S
 Cout <= sumadorCompleto1bit:loop[7].u_rest.Cout
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[0].sumador|sumadorCompleto1bit:loop[0].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[0].u_add|sumadorCompleto1bit:loop[0].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -280,7 +243,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[0].sumador|sumadorCompleto1bit:loop[1].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[0].u_add|sumadorCompleto1bit:loop[1].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -293,7 +256,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[0].sumador|sumadorCompleto1bit:loop[2].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[0].u_add|sumadorCompleto1bit:loop[2].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -306,7 +269,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[0].sumador|sumadorCompleto1bit:loop[3].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[0].u_add|sumadorCompleto1bit:loop[3].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -319,7 +282,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[0].sumador|sumadorCompleto1bit:loop[4].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[0].u_add|sumadorCompleto1bit:loop[4].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -332,7 +295,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[0].sumador|sumadorCompleto1bit:loop[5].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[0].u_add|sumadorCompleto1bit:loop[5].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -345,7 +308,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[0].sumador|sumadorCompleto1bit:loop[6].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[0].u_add|sumadorCompleto1bit:loop[6].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -358,7 +321,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[0].sumador|sumadorCompleto1bit:loop[7].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[0].u_add|sumadorCompleto1bit:loop[7].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -371,7 +334,50 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[1].sumador
+|alu|multiplicadorCompletoN:u_mul|mux2:G[0].u_mux
+d0[0] => y.IN0
+d0[1] => y.IN0
+d0[2] => y.IN0
+d0[3] => y.IN0
+d0[4] => y.IN0
+d0[5] => y.IN0
+d0[6] => y.IN0
+d0[7] => y.IN0
+d1[0] => y.IN0
+d1[1] => y.IN0
+d1[2] => y.IN0
+d1[3] => y.IN0
+d1[4] => y.IN0
+d1[5] => y.IN0
+d1[6] => y.IN0
+d1[7] => y.IN0
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+y[0] <= y.DB_MAX_OUTPUT_PORT_TYPE
+y[1] <= y.DB_MAX_OUTPUT_PORT_TYPE
+y[2] <= y.DB_MAX_OUTPUT_PORT_TYPE
+y[3] <= y.DB_MAX_OUTPUT_PORT_TYPE
+y[4] <= y.DB_MAX_OUTPUT_PORT_TYPE
+y[5] <= y.DB_MAX_OUTPUT_PORT_TYPE
+y[6] <= y.DB_MAX_OUTPUT_PORT_TYPE
+y[7] <= y.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[1].u_add
 A[0] => A[0].IN1
 A[1] => A[1].IN1
 A[2] => A[2].IN1
@@ -400,7 +406,7 @@ S[7] <= sumadorCompleto1bit:loop[7].u_rest.S
 Cout <= sumadorCompleto1bit:loop[7].u_rest.Cout
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[1].sumador|sumadorCompleto1bit:loop[0].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[1].u_add|sumadorCompleto1bit:loop[0].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -413,7 +419,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[1].sumador|sumadorCompleto1bit:loop[1].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[1].u_add|sumadorCompleto1bit:loop[1].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -426,7 +432,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[1].sumador|sumadorCompleto1bit:loop[2].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[1].u_add|sumadorCompleto1bit:loop[2].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -439,7 +445,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[1].sumador|sumadorCompleto1bit:loop[3].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[1].u_add|sumadorCompleto1bit:loop[3].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -452,7 +458,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[1].sumador|sumadorCompleto1bit:loop[4].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[1].u_add|sumadorCompleto1bit:loop[4].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -465,7 +471,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[1].sumador|sumadorCompleto1bit:loop[5].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[1].u_add|sumadorCompleto1bit:loop[5].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -478,7 +484,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[1].sumador|sumadorCompleto1bit:loop[6].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[1].u_add|sumadorCompleto1bit:loop[6].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -491,7 +497,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[1].sumador|sumadorCompleto1bit:loop[7].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[1].u_add|sumadorCompleto1bit:loop[7].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -504,7 +510,50 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[2].sumador
+|alu|multiplicadorCompletoN:u_mul|mux2:G[1].u_mux
+d0[0] => y.IN0
+d0[1] => y.IN0
+d0[2] => y.IN0
+d0[3] => y.IN0
+d0[4] => y.IN0
+d0[5] => y.IN0
+d0[6] => y.IN0
+d0[7] => y.IN0
+d1[0] => y.IN0
+d1[1] => y.IN0
+d1[2] => y.IN0
+d1[3] => y.IN0
+d1[4] => y.IN0
+d1[5] => y.IN0
+d1[6] => y.IN0
+d1[7] => y.IN0
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+y[0] <= y.DB_MAX_OUTPUT_PORT_TYPE
+y[1] <= y.DB_MAX_OUTPUT_PORT_TYPE
+y[2] <= y.DB_MAX_OUTPUT_PORT_TYPE
+y[3] <= y.DB_MAX_OUTPUT_PORT_TYPE
+y[4] <= y.DB_MAX_OUTPUT_PORT_TYPE
+y[5] <= y.DB_MAX_OUTPUT_PORT_TYPE
+y[6] <= y.DB_MAX_OUTPUT_PORT_TYPE
+y[7] <= y.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[2].u_add
 A[0] => A[0].IN1
 A[1] => A[1].IN1
 A[2] => A[2].IN1
@@ -533,7 +582,7 @@ S[7] <= sumadorCompleto1bit:loop[7].u_rest.S
 Cout <= sumadorCompleto1bit:loop[7].u_rest.Cout
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[2].sumador|sumadorCompleto1bit:loop[0].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[2].u_add|sumadorCompleto1bit:loop[0].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -546,7 +595,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[2].sumador|sumadorCompleto1bit:loop[1].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[2].u_add|sumadorCompleto1bit:loop[1].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -559,7 +608,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[2].sumador|sumadorCompleto1bit:loop[2].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[2].u_add|sumadorCompleto1bit:loop[2].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -572,7 +621,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[2].sumador|sumadorCompleto1bit:loop[3].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[2].u_add|sumadorCompleto1bit:loop[3].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -585,7 +634,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[2].sumador|sumadorCompleto1bit:loop[4].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[2].u_add|sumadorCompleto1bit:loop[4].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -598,7 +647,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[2].sumador|sumadorCompleto1bit:loop[5].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[2].u_add|sumadorCompleto1bit:loop[5].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -611,7 +660,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[2].sumador|sumadorCompleto1bit:loop[6].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[2].u_add|sumadorCompleto1bit:loop[6].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -624,7 +673,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[2].sumador|sumadorCompleto1bit:loop[7].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[2].u_add|sumadorCompleto1bit:loop[7].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -637,7 +686,50 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[3].sumador
+|alu|multiplicadorCompletoN:u_mul|mux2:G[2].u_mux
+d0[0] => y.IN0
+d0[1] => y.IN0
+d0[2] => y.IN0
+d0[3] => y.IN0
+d0[4] => y.IN0
+d0[5] => y.IN0
+d0[6] => y.IN0
+d0[7] => y.IN0
+d1[0] => y.IN0
+d1[1] => y.IN0
+d1[2] => y.IN0
+d1[3] => y.IN0
+d1[4] => y.IN0
+d1[5] => y.IN0
+d1[6] => y.IN0
+d1[7] => y.IN0
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+y[0] <= y.DB_MAX_OUTPUT_PORT_TYPE
+y[1] <= y.DB_MAX_OUTPUT_PORT_TYPE
+y[2] <= y.DB_MAX_OUTPUT_PORT_TYPE
+y[3] <= y.DB_MAX_OUTPUT_PORT_TYPE
+y[4] <= y.DB_MAX_OUTPUT_PORT_TYPE
+y[5] <= y.DB_MAX_OUTPUT_PORT_TYPE
+y[6] <= y.DB_MAX_OUTPUT_PORT_TYPE
+y[7] <= y.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[3].u_add
 A[0] => A[0].IN1
 A[1] => A[1].IN1
 A[2] => A[2].IN1
@@ -666,7 +758,7 @@ S[7] <= sumadorCompleto1bit:loop[7].u_rest.S
 Cout <= sumadorCompleto1bit:loop[7].u_rest.Cout
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[3].sumador|sumadorCompleto1bit:loop[0].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[3].u_add|sumadorCompleto1bit:loop[0].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -679,7 +771,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[3].sumador|sumadorCompleto1bit:loop[1].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[3].u_add|sumadorCompleto1bit:loop[1].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -692,7 +784,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[3].sumador|sumadorCompleto1bit:loop[2].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[3].u_add|sumadorCompleto1bit:loop[2].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -705,7 +797,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[3].sumador|sumadorCompleto1bit:loop[3].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[3].u_add|sumadorCompleto1bit:loop[3].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -718,7 +810,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[3].sumador|sumadorCompleto1bit:loop[4].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[3].u_add|sumadorCompleto1bit:loop[4].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -731,7 +823,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[3].sumador|sumadorCompleto1bit:loop[5].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[3].u_add|sumadorCompleto1bit:loop[5].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -744,7 +836,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[3].sumador|sumadorCompleto1bit:loop[6].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[3].u_add|sumadorCompleto1bit:loop[6].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -757,7 +849,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|multiplicadorCompletoN:u_multiplicador|sumadorCompletoN:loop[3].sumador|sumadorCompleto1bit:loop[7].u_rest
+|alu|multiplicadorCompletoN:u_mul|sumadorCompletoN:G[3].u_add|sumadorCompleto1bit:loop[7].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -770,7 +862,50 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|divisorCompletoN:u_divisor
+|alu|multiplicadorCompletoN:u_mul|mux2:G[3].u_mux
+d0[0] => y.IN0
+d0[1] => y.IN0
+d0[2] => y.IN0
+d0[3] => y.IN0
+d0[4] => y.IN0
+d0[5] => y.IN0
+d0[6] => y.IN0
+d0[7] => y.IN0
+d1[0] => y.IN0
+d1[1] => y.IN0
+d1[2] => y.IN0
+d1[3] => y.IN0
+d1[4] => y.IN0
+d1[5] => y.IN0
+d1[6] => y.IN0
+d1[7] => y.IN0
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+y[0] <= y.DB_MAX_OUTPUT_PORT_TYPE
+y[1] <= y.DB_MAX_OUTPUT_PORT_TYPE
+y[2] <= y.DB_MAX_OUTPUT_PORT_TYPE
+y[3] <= y.DB_MAX_OUTPUT_PORT_TYPE
+y[4] <= y.DB_MAX_OUTPUT_PORT_TYPE
+y[5] <= y.DB_MAX_OUTPUT_PORT_TYPE
+y[6] <= y.DB_MAX_OUTPUT_PORT_TYPE
+y[7] <= y.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|alu|divisorCompletoN:u_div
 A[0] => A[0].IN1
 A[1] => A[1].IN1
 A[2] => A[2].IN1
@@ -783,14 +918,14 @@ Q[0] <= qbit.DB_MAX_OUTPUT_PORT_TYPE
 Q[1] <= qbit.DB_MAX_OUTPUT_PORT_TYPE
 Q[2] <= qbit.DB_MAX_OUTPUT_PORT_TYPE
 Q[3] <= qbit.DB_MAX_OUTPUT_PORT_TYPE
-R[0] <= mux2_N:u_mux_R.y[0]
-R[1] <= mux2_N:u_mux_R.y[1]
-R[2] <= mux2_N:u_mux_R.y[2]
-R[3] <= mux2_N:u_mux_R.y[3]
+R[0] <= mux2:u_mux_R.y[0]
+R[1] <= mux2:u_mux_R.y[1]
+R[2] <= mux2:u_mux_R.y[2]
+R[3] <= mux2:u_mux_R.y[3]
 divByZero <= OR_CHAIN_B.orc[2].DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|divisorCompletoN:u_divisor|shl_in:STAGE[0].u_sh
+|alu|divisorCompletoN:u_div|shl_in:STAGE[0].u_sh
 x[0] => y[1].DATAIN
 x[1] => y[2].DATAIN
 x[2] => y[3].DATAIN
@@ -802,7 +937,7 @@ y[2] <= x[1].DB_MAX_OUTPUT_PORT_TYPE
 y[3] <= x[2].DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|divisorCompletoN:u_divisor|restadorCompletoN:STAGE[0].u_sub
+|alu|divisorCompletoN:u_div|restadorCompletoN:STAGE[0].u_sub
 A[0] => A[0].IN1
 A[1] => A[1].IN1
 A[2] => A[2].IN1
@@ -819,7 +954,7 @@ S[3] <= restadorCompleto1bit:loop[3].u_rest.S
 Cout <= restadorCompleto1bit:loop[3].u_rest.Cout
 
 
-|alu|divisorCompletoN:u_divisor|restadorCompletoN:STAGE[0].u_sub|restadorCompleto1bit:loop[0].u_rest
+|alu|divisorCompletoN:u_div|restadorCompletoN:STAGE[0].u_sub|restadorCompleto1bit:loop[0].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -833,7 +968,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|divisorCompletoN:u_divisor|restadorCompletoN:STAGE[0].u_sub|restadorCompleto1bit:loop[1].u_rest
+|alu|divisorCompletoN:u_div|restadorCompletoN:STAGE[0].u_sub|restadorCompleto1bit:loop[1].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -847,7 +982,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|divisorCompletoN:u_divisor|restadorCompletoN:STAGE[0].u_sub|restadorCompleto1bit:loop[2].u_rest
+|alu|divisorCompletoN:u_div|restadorCompletoN:STAGE[0].u_sub|restadorCompleto1bit:loop[2].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -861,7 +996,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|divisorCompletoN:u_divisor|restadorCompletoN:STAGE[0].u_sub|restadorCompleto1bit:loop[3].u_rest
+|alu|divisorCompletoN:u_div|restadorCompletoN:STAGE[0].u_sub|restadorCompleto1bit:loop[3].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -875,42 +1010,30 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|divisorCompletoN:u_divisor|mux2_N:STAGE[0].u_mux_pr
-d0[0] => d0[0].IN1
-d0[1] => d0[1].IN1
-d0[2] => d0[2].IN1
-d0[3] => d0[3].IN1
-d1[0] => d1[0].IN1
-d1[1] => d1[1].IN1
-d1[2] => d1[2].IN1
-d1[3] => d1[3].IN1
-s => s.IN1
-y[0] <= mux2:u.y
-y[1] <= mux2:u.y
-y[2] <= mux2:u.y
-y[3] <= mux2:u.y
-
-
-|alu|divisorCompletoN:u_divisor|mux2_N:STAGE[0].u_mux_pr|mux2:u
-d0[0] => y.DATAB
-d0[1] => y.DATAB
-d0[2] => y.DATAB
-d0[3] => y.DATAB
-d1[0] => y.DATAA
-d1[1] => y.DATAA
-d1[2] => y.DATAA
-d1[3] => y.DATAA
-s => y.OUTPUTSELECT
-s => y.OUTPUTSELECT
-s => y.OUTPUTSELECT
-s => y.OUTPUTSELECT
+|alu|divisorCompletoN:u_div|mux2:STAGE[0].u_mux_pr
+d0[0] => y.IN0
+d0[1] => y.IN0
+d0[2] => y.IN0
+d0[3] => y.IN0
+d1[0] => y.IN0
+d1[1] => y.IN0
+d1[2] => y.IN0
+d1[3] => y.IN0
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
 y[0] <= y.DB_MAX_OUTPUT_PORT_TYPE
 y[1] <= y.DB_MAX_OUTPUT_PORT_TYPE
 y[2] <= y.DB_MAX_OUTPUT_PORT_TYPE
 y[3] <= y.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|divisorCompletoN:u_divisor|shl_in:STAGE[1].u_sh
+|alu|divisorCompletoN:u_div|shl_in:STAGE[1].u_sh
 x[0] => y[1].DATAIN
 x[1] => y[2].DATAIN
 x[2] => y[3].DATAIN
@@ -922,7 +1045,7 @@ y[2] <= x[1].DB_MAX_OUTPUT_PORT_TYPE
 y[3] <= x[2].DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|divisorCompletoN:u_divisor|restadorCompletoN:STAGE[1].u_sub
+|alu|divisorCompletoN:u_div|restadorCompletoN:STAGE[1].u_sub
 A[0] => A[0].IN1
 A[1] => A[1].IN1
 A[2] => A[2].IN1
@@ -939,7 +1062,7 @@ S[3] <= restadorCompleto1bit:loop[3].u_rest.S
 Cout <= restadorCompleto1bit:loop[3].u_rest.Cout
 
 
-|alu|divisorCompletoN:u_divisor|restadorCompletoN:STAGE[1].u_sub|restadorCompleto1bit:loop[0].u_rest
+|alu|divisorCompletoN:u_div|restadorCompletoN:STAGE[1].u_sub|restadorCompleto1bit:loop[0].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -953,7 +1076,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|divisorCompletoN:u_divisor|restadorCompletoN:STAGE[1].u_sub|restadorCompleto1bit:loop[1].u_rest
+|alu|divisorCompletoN:u_div|restadorCompletoN:STAGE[1].u_sub|restadorCompleto1bit:loop[1].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -967,7 +1090,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|divisorCompletoN:u_divisor|restadorCompletoN:STAGE[1].u_sub|restadorCompleto1bit:loop[2].u_rest
+|alu|divisorCompletoN:u_div|restadorCompletoN:STAGE[1].u_sub|restadorCompleto1bit:loop[2].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -981,7 +1104,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|divisorCompletoN:u_divisor|restadorCompletoN:STAGE[1].u_sub|restadorCompleto1bit:loop[3].u_rest
+|alu|divisorCompletoN:u_div|restadorCompletoN:STAGE[1].u_sub|restadorCompleto1bit:loop[3].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -995,42 +1118,30 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|divisorCompletoN:u_divisor|mux2_N:STAGE[1].u_mux_pr
-d0[0] => d0[0].IN1
-d0[1] => d0[1].IN1
-d0[2] => d0[2].IN1
-d0[3] => d0[3].IN1
-d1[0] => d1[0].IN1
-d1[1] => d1[1].IN1
-d1[2] => d1[2].IN1
-d1[3] => d1[3].IN1
-s => s.IN1
-y[0] <= mux2:u.y
-y[1] <= mux2:u.y
-y[2] <= mux2:u.y
-y[3] <= mux2:u.y
-
-
-|alu|divisorCompletoN:u_divisor|mux2_N:STAGE[1].u_mux_pr|mux2:u
-d0[0] => y.DATAB
-d0[1] => y.DATAB
-d0[2] => y.DATAB
-d0[3] => y.DATAB
-d1[0] => y.DATAA
-d1[1] => y.DATAA
-d1[2] => y.DATAA
-d1[3] => y.DATAA
-s => y.OUTPUTSELECT
-s => y.OUTPUTSELECT
-s => y.OUTPUTSELECT
-s => y.OUTPUTSELECT
+|alu|divisorCompletoN:u_div|mux2:STAGE[1].u_mux_pr
+d0[0] => y.IN0
+d0[1] => y.IN0
+d0[2] => y.IN0
+d0[3] => y.IN0
+d1[0] => y.IN0
+d1[1] => y.IN0
+d1[2] => y.IN0
+d1[3] => y.IN0
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
 y[0] <= y.DB_MAX_OUTPUT_PORT_TYPE
 y[1] <= y.DB_MAX_OUTPUT_PORT_TYPE
 y[2] <= y.DB_MAX_OUTPUT_PORT_TYPE
 y[3] <= y.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|divisorCompletoN:u_divisor|shl_in:STAGE[2].u_sh
+|alu|divisorCompletoN:u_div|shl_in:STAGE[2].u_sh
 x[0] => y[1].DATAIN
 x[1] => y[2].DATAIN
 x[2] => y[3].DATAIN
@@ -1042,7 +1153,7 @@ y[2] <= x[1].DB_MAX_OUTPUT_PORT_TYPE
 y[3] <= x[2].DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|divisorCompletoN:u_divisor|restadorCompletoN:STAGE[2].u_sub
+|alu|divisorCompletoN:u_div|restadorCompletoN:STAGE[2].u_sub
 A[0] => A[0].IN1
 A[1] => A[1].IN1
 A[2] => A[2].IN1
@@ -1059,7 +1170,7 @@ S[3] <= restadorCompleto1bit:loop[3].u_rest.S
 Cout <= restadorCompleto1bit:loop[3].u_rest.Cout
 
 
-|alu|divisorCompletoN:u_divisor|restadorCompletoN:STAGE[2].u_sub|restadorCompleto1bit:loop[0].u_rest
+|alu|divisorCompletoN:u_div|restadorCompletoN:STAGE[2].u_sub|restadorCompleto1bit:loop[0].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -1073,7 +1184,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|divisorCompletoN:u_divisor|restadorCompletoN:STAGE[2].u_sub|restadorCompleto1bit:loop[1].u_rest
+|alu|divisorCompletoN:u_div|restadorCompletoN:STAGE[2].u_sub|restadorCompleto1bit:loop[1].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -1087,7 +1198,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|divisorCompletoN:u_divisor|restadorCompletoN:STAGE[2].u_sub|restadorCompleto1bit:loop[2].u_rest
+|alu|divisorCompletoN:u_div|restadorCompletoN:STAGE[2].u_sub|restadorCompleto1bit:loop[2].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -1101,7 +1212,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|divisorCompletoN:u_divisor|restadorCompletoN:STAGE[2].u_sub|restadorCompleto1bit:loop[3].u_rest
+|alu|divisorCompletoN:u_div|restadorCompletoN:STAGE[2].u_sub|restadorCompleto1bit:loop[3].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -1115,42 +1226,30 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|divisorCompletoN:u_divisor|mux2_N:STAGE[2].u_mux_pr
-d0[0] => d0[0].IN1
-d0[1] => d0[1].IN1
-d0[2] => d0[2].IN1
-d0[3] => d0[3].IN1
-d1[0] => d1[0].IN1
-d1[1] => d1[1].IN1
-d1[2] => d1[2].IN1
-d1[3] => d1[3].IN1
-s => s.IN1
-y[0] <= mux2:u.y
-y[1] <= mux2:u.y
-y[2] <= mux2:u.y
-y[3] <= mux2:u.y
-
-
-|alu|divisorCompletoN:u_divisor|mux2_N:STAGE[2].u_mux_pr|mux2:u
-d0[0] => y.DATAB
-d0[1] => y.DATAB
-d0[2] => y.DATAB
-d0[3] => y.DATAB
-d1[0] => y.DATAA
-d1[1] => y.DATAA
-d1[2] => y.DATAA
-d1[3] => y.DATAA
-s => y.OUTPUTSELECT
-s => y.OUTPUTSELECT
-s => y.OUTPUTSELECT
-s => y.OUTPUTSELECT
+|alu|divisorCompletoN:u_div|mux2:STAGE[2].u_mux_pr
+d0[0] => y.IN0
+d0[1] => y.IN0
+d0[2] => y.IN0
+d0[3] => y.IN0
+d1[0] => y.IN0
+d1[1] => y.IN0
+d1[2] => y.IN0
+d1[3] => y.IN0
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
 y[0] <= y.DB_MAX_OUTPUT_PORT_TYPE
 y[1] <= y.DB_MAX_OUTPUT_PORT_TYPE
 y[2] <= y.DB_MAX_OUTPUT_PORT_TYPE
 y[3] <= y.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|divisorCompletoN:u_divisor|shl_in:STAGE[3].u_sh
+|alu|divisorCompletoN:u_div|shl_in:STAGE[3].u_sh
 x[0] => y[1].DATAIN
 x[1] => y[2].DATAIN
 x[2] => y[3].DATAIN
@@ -1162,7 +1261,7 @@ y[2] <= x[1].DB_MAX_OUTPUT_PORT_TYPE
 y[3] <= x[2].DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|divisorCompletoN:u_divisor|restadorCompletoN:STAGE[3].u_sub
+|alu|divisorCompletoN:u_div|restadorCompletoN:STAGE[3].u_sub
 A[0] => A[0].IN1
 A[1] => A[1].IN1
 A[2] => A[2].IN1
@@ -1179,7 +1278,7 @@ S[3] <= restadorCompleto1bit:loop[3].u_rest.S
 Cout <= restadorCompleto1bit:loop[3].u_rest.Cout
 
 
-|alu|divisorCompletoN:u_divisor|restadorCompletoN:STAGE[3].u_sub|restadorCompleto1bit:loop[0].u_rest
+|alu|divisorCompletoN:u_div|restadorCompletoN:STAGE[3].u_sub|restadorCompleto1bit:loop[0].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -1193,7 +1292,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|divisorCompletoN:u_divisor|restadorCompletoN:STAGE[3].u_sub|restadorCompleto1bit:loop[1].u_rest
+|alu|divisorCompletoN:u_div|restadorCompletoN:STAGE[3].u_sub|restadorCompleto1bit:loop[1].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -1207,7 +1306,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|divisorCompletoN:u_divisor|restadorCompletoN:STAGE[3].u_sub|restadorCompleto1bit:loop[2].u_rest
+|alu|divisorCompletoN:u_div|restadorCompletoN:STAGE[3].u_sub|restadorCompleto1bit:loop[2].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -1221,7 +1320,7 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|divisorCompletoN:u_divisor|restadorCompletoN:STAGE[3].u_sub|restadorCompleto1bit:loop[3].u_rest
+|alu|divisorCompletoN:u_div|restadorCompletoN:STAGE[3].u_sub|restadorCompleto1bit:loop[3].u_rest
 A => S.IN0
 A => Cout.IN0
 A => Cout.IN0
@@ -1235,70 +1334,46 @@ S <= S.DB_MAX_OUTPUT_PORT_TYPE
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|divisorCompletoN:u_divisor|mux2_N:STAGE[3].u_mux_pr
-d0[0] => d0[0].IN1
-d0[1] => d0[1].IN1
-d0[2] => d0[2].IN1
-d0[3] => d0[3].IN1
-d1[0] => d1[0].IN1
-d1[1] => d1[1].IN1
-d1[2] => d1[2].IN1
-d1[3] => d1[3].IN1
-s => s.IN1
-y[0] <= mux2:u.y
-y[1] <= mux2:u.y
-y[2] <= mux2:u.y
-y[3] <= mux2:u.y
-
-
-|alu|divisorCompletoN:u_divisor|mux2_N:STAGE[3].u_mux_pr|mux2:u
-d0[0] => y.DATAB
-d0[1] => y.DATAB
-d0[2] => y.DATAB
-d0[3] => y.DATAB
-d1[0] => y.DATAA
-d1[1] => y.DATAA
-d1[2] => y.DATAA
-d1[3] => y.DATAA
-s => y.OUTPUTSELECT
-s => y.OUTPUTSELECT
-s => y.OUTPUTSELECT
-s => y.OUTPUTSELECT
+|alu|divisorCompletoN:u_div|mux2:STAGE[3].u_mux_pr
+d0[0] => y.IN0
+d0[1] => y.IN0
+d0[2] => y.IN0
+d0[3] => y.IN0
+d1[0] => y.IN0
+d1[1] => y.IN0
+d1[2] => y.IN0
+d1[3] => y.IN0
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
 y[0] <= y.DB_MAX_OUTPUT_PORT_TYPE
 y[1] <= y.DB_MAX_OUTPUT_PORT_TYPE
 y[2] <= y.DB_MAX_OUTPUT_PORT_TYPE
 y[3] <= y.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|alu|divisorCompletoN:u_divisor|mux2_N:u_mux_R
-d0[0] => d0[0].IN1
-d0[1] => d0[1].IN1
-d0[2] => d0[2].IN1
-d0[3] => d0[3].IN1
-d1[0] => d1[0].IN1
-d1[1] => d1[1].IN1
-d1[2] => d1[2].IN1
-d1[3] => d1[3].IN1
-s => s.IN1
-y[0] <= mux2:u.y
-y[1] <= mux2:u.y
-y[2] <= mux2:u.y
-y[3] <= mux2:u.y
-
-
-|alu|divisorCompletoN:u_divisor|mux2_N:u_mux_R|mux2:u
-d0[0] => y.DATAB
-d0[1] => y.DATAB
-d0[2] => y.DATAB
-d0[3] => y.DATAB
-d1[0] => y.DATAA
-d1[1] => y.DATAA
-d1[2] => y.DATAA
-d1[3] => y.DATAA
-s => y.OUTPUTSELECT
-s => y.OUTPUTSELECT
-s => y.OUTPUTSELECT
-s => y.OUTPUTSELECT
+|alu|divisorCompletoN:u_div|mux2:u_mux_R
+d0[0] => y.IN0
+d0[1] => y.IN0
+d0[2] => y.IN0
+d0[3] => y.IN0
+d1[0] => y.IN0
+d1[1] => y.IN0
+d1[2] => y.IN0
+d1[3] => y.IN0
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
+s => y.IN1
 y[0] <= y.DB_MAX_OUTPUT_PORT_TYPE
 y[1] <= y.DB_MAX_OUTPUT_PORT_TYPE
 y[2] <= y.DB_MAX_OUTPUT_PORT_TYPE
