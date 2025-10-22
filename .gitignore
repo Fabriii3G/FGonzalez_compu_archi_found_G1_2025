@@ -52,6 +52,11 @@
 !**/class.ptf
 !*.tbd
 !*.sof
+
+# Permitir la carpeta SLAVE y archivos .sv
+!SLAVE/
+!*.sv
+
 ## tbd
 
 !*.tcl
