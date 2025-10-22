@@ -1,7 +1,6 @@
 // ============================================================================
 // Módulo TOP: Máquina de estados SPI Slave 
 // ============================================================================
-
 module spi_slave_fsm (
     input  logic clk,              // Reloj del sistema FPGA
     input  logic rst_n,            // Reset activo bajo
@@ -201,6 +200,12 @@ module spi_slave_fsm (
     
     
     // ========================================================================
+    // Señal interna para led_load
+    // ========================================================================
+    logic led_load_internal;
+    
+    
+    // ========================================================================
     // Lógica de control - Generación de señales de control CORREGIDA
     // ========================================================================
     always_comb begin
@@ -212,7 +217,6 @@ module spi_slave_fsm (
         counter_enable  = 1'b0;
         counter_clear   = 1'b0;
         check_handshake = 1'b0;
-        led_load        = 1'b0;
         data_valid      = 1'b0;
         
         case (current_state)
@@ -242,7 +246,6 @@ module spi_slave_fsm (
             PROCESS: begin
                 check_handshake = 1'b1;
                 data_valid      = 1'b1;
-                // led_load se maneja en bloque secuencial
             end
             
             default: begin
@@ -257,15 +260,18 @@ module spi_slave_fsm (
     // ========================================================================
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            led_load <= 1'b0;
+            led_load_internal <= 1'b0;
         end else begin
             if (current_state == PROCESS && !is_handshake) begin
-                led_load <= 1'b1;
+                led_load_internal <= 1'b1;
             end else begin
-                led_load <= 1'b0;
+                led_load_internal <= 1'b0;
             end
         end
     end
+    
+    // Asignar señal interna al módulo LED
+    assign led_load = led_load_internal;
     
     
     // ========================================================================
