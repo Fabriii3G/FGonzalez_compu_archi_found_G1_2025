@@ -1,10 +1,13 @@
 from machine import Pin, SPI
 import time
 
+
+# Pin Chip Select (CS)
+cs = Pin(17, Pin.OUT)
+
 # Configuración SPI
 # SPI(0) usa los pines por defecto:
 # SCK = GP18, MOSI = GP19, MISO = GP16
-# (puedes cambiarlo según tu conexión)
 spi = SPI(0,
           baudrate=1000000,  # 1 MHz
           polarity=0,
@@ -15,8 +18,7 @@ spi = SPI(0,
           mosi=Pin(19),
           miso=Pin(16))
 
-# Pin Chip Select (CS)
-cs = Pin(17, Pin.OUT)
+
 cs.value(1)  # CS inactivo (alto)
 
 # --- Envío de un byte por SPI ---
