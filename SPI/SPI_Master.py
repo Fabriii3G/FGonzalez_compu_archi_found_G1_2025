@@ -7,9 +7,10 @@ import time
 cs = Pin(17, Pin.OUT)
 
 # Configuración SPI
-# SCK = GP18, MOSI = GP19, MISO = GP16
+# Con 50 MHz en FPGA: 500 kHz = 100 ciclos por bit SPI
+# Suficiente para sincronización (2 ciclos) + procesamiento FSM
 spi = SPI(0,
-          baudrate=1000000,  # 1 MHz
+          baudrate=250000,  # 250 kHz = 200 ciclos FPGA por bit SPI
           polarity=0,
           phase=0,
           bits=8,
@@ -18,13 +19,13 @@ spi = SPI(0,
           mosi=Pin(19),
           miso=Pin(16))
 
-cs.value(1)  # CS inactivo (alto)
+cs.value(1)  # CS inactivo
 
 # ============================================================================
-# Constantes del protocolo
+# Constantes
 # ============================================================================
-HANDSHAKE_SEND = 0xA5      # Código de handshake que envía el master
-HANDSHAKE_EXPECT = 0x5A    # Respuesta esperada del slave
+HANDSHAKE_SEND = 0xA5
+HANDSHAKE_EXPECT = 0x5A
 
 # ============================================================================
 # Funciones auxiliares
@@ -32,67 +33,63 @@ HANDSHAKE_EXPECT = 0x5A    # Respuesta esperada del slave
 
 def spi_transfer(tx_byte):
     """
-    Envía un byte por SPI y recibe la respuesta del slave.
-    
-    Args:
-        tx_byte: Byte a enviar (0-255)
-    
-    Returns:
-        Byte recibido del slave
+    Envía un byte por SPI y recibe respuesta.
+    IMPORTANTE: Delays aumentados para dar tiempo a la FSM.
     """
     tx_data = bytes([tx_byte])
     rx_data = bytearray(1)
     
-    cs.value(0)                    # Activar slave
-    time.sleep_us(10)              # Pequeña pausa
+    cs.value(0)
+    time.sleep_ms(1)  # Delay aumentado a 1ms antes de la transferencia
     spi.write_readinto(tx_data, rx_data)
-    time.sleep_us(10)              # Pequeña pausa
-    cs.value(1)                    # Desactivar slave
+    time.sleep_ms(2)  # Delay aumentado a 2ms después de la transferencia
+    cs.value(1)
+    
+    time.sleep_ms(5)  # Delay adicional entre transacciones
     
     return rx_data[0]
 
 
 def do_handshake():
-    """
-    Realiza el handshake con el FPGA slave.
-    
-    Returns:
-        True si el handshake fue exitoso, False si falló
-    """
+    """Realiza handshake con el FPGA."""
     print("Iniciando handshake...")
     response = spi_transfer(HANDSHAKE_SEND)
     
+    # Nota: La PRIMERA respuesta será basura (0x00 típicamente)
+    # porque el TX aún no está preparado. La SEGUNDA respuesta será correcta.
+    print(f"Primera respuesta: 0x{response:02X}")
+    
+    # Enviar handshake de nuevo para obtener la respuesta correcta
+    time.sleep_ms(10)
+    response = spi_transfer(HANDSHAKE_SEND)
+    
     if response == HANDSHAKE_EXPECT:
-        print(f"✓ Handshake exitoso! Enviado: 0x{HANDSHAKE_SEND:02X}, Recibido: 0x{response:02X}")
+        print(f"✓ Handshake exitoso! Recibido: 0x{response:02X}")
         return True
     else:
-        print(f"✗ Handshake fallido! Enviado: 0x{HANDSHAKE_SEND:02X}, Esperado: 0x{HANDSHAKE_EXPECT:02X}, Recibido: 0x{response:02X}")
+        print(f"✗ Handshake fallido! Esperado: 0x{HANDSHAKE_EXPECT:02X}, Recibido: 0x{response:02X}")
         return False
 
 
 def send_led_pattern(pattern_4bits):
     """
-    Envía un patrón de 4 bits al FPGA y verifica la respuesta.
-    
-    Args:
-        pattern_4bits: Valor de 4 bits (0-15) para controlar los LEDs
-    
-    Returns:
-        True si la respuesta coincide, False si no coincide
+    Envía patrón de LEDs y verifica respuesta.
     """
-    # Asegurar que solo usamos 4 bits
     pattern_4bits &= 0x0F
     
-    # Enviar patrón (4 bits en la parte baja del byte)
+    # Primera transacción: enviar el patrón
     response = spi_transfer(pattern_4bits)
+    print(f"Envío inicial - TX: 0b{pattern_4bits:04b}, RX: 0x{response:02X}")
     
-    # Verificar respuesta (debe devolver los mismos 4 bits)
+    # Segunda transacción: leer el echo del FPGA
+    time.sleep_ms(10)
+    response = spi_transfer(0x00)  # Enviar dummy byte
     received_4bits = response & 0x0F
     
     match = (pattern_4bits == received_4bits)
     
-    print(f"Enviado: 0b{pattern_4bits:04b} (0x{pattern_4bits:01X}) | "
-          f"Recibido: 0b{received_4bits:04b} (0x{received_4bits:01X}) | "
+    print(f"Echo - Enviado: 0b{pattern_4bits:04b} | "
+          f"Recibido: 0b{received_4bits:04b} | "
           f"{'✓ MATCH' if match else '✗ ERROR'}")
     
     return match
@@ -105,21 +102,27 @@ def send_led_pattern(pattern_4bits):
 def main():
     print("=" * 60)
     print("Master SPI - Raspberry Pi Pico W")
-    print("Control de 4 LEDs en FPGA con verificación")
+    print("Control de 4 LEDs en FPGA")
     print("=" * 60)
     print()
     
-    # Paso 1: Realizar handshake
-    time.sleep(0.5)  # Esperar a que el FPGA esté listo
+    # Esperar a que el FPGA esté listo
+    print("Esperando inicialización del FPGA...")
+    time.sleep(1)
     
+    # Realizar handshake
     if not do_handshake():
-        print("\n¡ERROR! No se pudo establecer comunicación con el FPGA.")
-        print("Verifica las conexiones:")
-        print("  - GP18 (SCK)  → FPGA SCK")
-        print("  - GP19 (MOSI) → FPGA MOSI")
-        print("  - GP16 (MISO) ← FPGA MISO")
-        print("  - GP17 (CS)   → FPGA CS")
-        print("  - GND         ⟷ FPGA GND")
+        print("\n¡ERROR! No se pudo establecer comunicación.")
+        print("\nVerifica:")
+        print("  - GP18 (SCK)  → FPGA Pin XX")
+        print("  - GP19 (MOSI) → FPGA Pin XX")
+        print("  - GP16 (MISO) ← FPGA Pin XX")
+        print("  - GP17 (CS)   → FPGA Pin XX")
+        print("  - GND común")
+        print("\nTambién verifica que:")
+        print("  - El bitstream esté cargado en la FPGA")
+        print("  - El reloj de la FPGA esté funcionando")
+        print("  - El reset de la FPGA esté desactivado")
         return
     
     print()
@@ -128,91 +131,79 @@ def main():
     print("=" * 60)
     print()
     
-    # Paso 2: Enviar diferentes patrones
+    # Patrones de prueba
     test_patterns = [
-        0b0000,  # Todos apagados
-        0b0001,  # Solo LED 0
-        0b0010,  # Solo LED 1
-        0b0100,  # Solo LED 2
-        0b1000,  # Solo LED 3
-        0b0011,  # LED 0 y 1
-        0b1100,  # LED 2 y 3
-        0b0101,  # LED 0 y 2
-        0b1010,  # LED 1 y 3
-        0b1111,  # Todos encendidos
+        0b0001,  # LED 0
+        0b0010,  # LED 1
+        0b0100,  # LED 2
+        0b1000,  # LED 3
+        0b0011,  # LED 0,1
+        0b1100,  # LED 2,3
+        0b0101,  # LED 0,2
+        0b1010,  # LED 1,3
+        0b1111,  # Todos
+        0b0000,  # Ninguno
     ]
     
-    time.sleep(1)
     success_count = 0
     total_count = 0
     
-    for pattern in test_patterns:
+    for i, pattern in enumerate(test_patterns):
+        print(f"\n--- Test {i+1}/{len(test_patterns)} ---")
         if send_led_pattern(pattern):
             success_count += 1
         total_count += 1
-        time.sleep(1)  # Pausa para observar los LEDs
+        time.sleep(1)
     
     print()
     print("=" * 60)
-    print(f"Prueba completada: {success_count}/{total_count} transmisiones exitosas")
+    print(f"Resultado: {success_count}/{total_count} exitosas")
     print("=" * 60)
     print()
     
-    # Paso 3: Modo interactivo continuo
-    print("Entrando en modo continuo (secuencia automática)...")
-    print("Presiona Ctrl+C para detener")
-    print()
+    # Modo continuo
+    print("Iniciando secuencia automática...")
+    print("Presiona Ctrl+C para detener\n")
     
     try:
         counter = 0
         while True:
-            pattern = counter & 0x0F  # Usar 4 bits del contador
+            pattern = counter & 0x0F
+            print(f"\nContador: {counter}")
             send_led_pattern(pattern)
-            counter += 1
-            time.sleep(0.5)
+            counter = (counter + 1) % 16
+            time.sleep(1)
             
-            # Reiniciar contador después de completar ciclo
-            if counter > 15:
-                counter = 0
-                print("--- Ciclo completado, reiniciando ---")
-                print()
-                
     except KeyboardInterrupt:
-        print("\n\nPrograma detenido por el usuario")
-        # Apagar todos los LEDs
+        print("\n\nDetenido por usuario")
         send_led_pattern(0b0000)
+        time.sleep_ms(100)
+        send_led_pattern(0b0000)  # Enviar dos veces para asegurar
         print("LEDs apagados")
 
 
-# ============================================================================
-# Modo alternativo: Control manual
-# ============================================================================
-
 def manual_mode():
-    """
-    Modo interactivo donde el usuario puede controlar los LEDs manualmente.
-    """
+    """Modo manual para control directo."""
     print("=" * 60)
-    print("Modo Manual - Control de LEDs")
+    print("Modo Manual")
     print("=" * 60)
     print()
     
     if not do_handshake():
-        print("Error en handshake. Abortando.")
+        print("Error en handshake.")
         return
     
-    print("\nIngresa un número de 0 a 15 para controlar los LEDs")
-    print("Ejemplo: 15 = 0b1111 = todos encendidos")
-    print("         5  = 0b0101 = LED 0 y 2 encendidos")
-    print("Escribe 'q' para salir\n")
+    print("\nIngresa 0-15 para controlar LEDs")
+    print("'q' para salir\n")
     
     while True:
         try:
-            user_input = input("Patrón (0-15): ").strip()
+            user_input = input("Patrón: ").strip()
             
             if user_input.lower() == 'q':
-                print("Saliendo...")
-                send_led_pattern(0b0000)  # Apagar LEDs
+                send_led_pattern(0)
+                time.sleep_ms(100)
+                send_led_pattern(0)
                 break
             
             pattern = int(user_input)
@@ -220,14 +211,51 @@ def manual_mode():
             if 0 <= pattern <= 15:
                 send_led_pattern(pattern)
             else:
-                print("Error: Ingresa un número entre 0 y 15")
+                print("Rango: 0-15")
                 
         except ValueError:
-            print("Error: Ingresa un número válido o 'q' para salir")
+            print("Número inválido")
         except KeyboardInterrupt:
-            print("\n\nPrograma detenido")
-            send_led_pattern(0b0000)
+            print("\nDetenido")
+            send_led_pattern(0)
             break
+
+
+# ============================================================================
+# Prueba de diagnóstico básica
+# ============================================================================
+
+def diagnostic_test():
+    """Prueba básica de comunicación SPI."""
+    print("=" * 60)
+    print("PRUEBA DE DIAGNÓSTICO")
+    print("=" * 60)
+    print()
+    
+    print("Test 1: Verificando pines...")
+    print(f"  CS  (GP17): {'OK' if cs else 'ERROR'}")
+    print(f"  SPI configurado: {spi}")
+    print()
+    
+    print("Test 2: Enviando handshake (3 intentos)...")
+    for i in range(3):
+        response = spi_transfer(HANDSHAKE_SEND)
+        print(f"  Intento {i+1}: TX=0x{HANDSHAKE_SEND:02X}, RX=0x{response:02X}")
+        time.sleep_ms(100)
+    print()
+    
+    print("Test 3: Enviando patrones simples...")
+    for pattern in [0x00, 0x0F, 0x05, 0x0A]:
+        response = spi_transfer(pattern)
+        print(f"  TX=0x{pattern:02X}, RX=0x{response:02X}")
+        time.sleep_ms(100)
+    print()
+    
+    print("Diagnóstico completado.")
+    print("Si todas las respuestas son 0x00, verifica:")
+    print("  1. Conexiones físicas")
+    print("  2. Bitstream cargado en FPGA")
+    print("  3. Reloj de FPGA funcionando")
 
 
 # ============================================================================
@@ -235,7 +263,8 @@ def manual_mode():
 # ============================================================================
 
 if __name__ == "__main__":
-    # Descomentar la función que desees usar:
+    # Descomentar la que necesites:
     
-    main()           # Modo automático con secuencia
-    # manual_mode()  # Modo manual interactivo
+    main()              # Modo automático
+    # manual_mode()     # Modo manual
+    # diagnostic_test() # Diagnóstico básico
