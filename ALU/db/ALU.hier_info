@@ -19,21 +19,21 @@ boton2 => comb.IN0
 boton3 => comb.IN1
 boton3 => comb.IN1
 Cin => Cin.IN2
-S[0] <= S[0].DB_MAX_OUTPUT_PORT_TYPE
-S[1] <= S[1].DB_MAX_OUTPUT_PORT_TYPE
-S[2] <= S[2].DB_MAX_OUTPUT_PORT_TYPE
-S[3] <= S[3].DB_MAX_OUTPUT_PORT_TYPE
-Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
-Z <= G_ORZ.oz[2].DB_MAX_OUTPUT_PORT_TYPE
-N <= S[3].DB_MAX_OUTPUT_PORT_TYPE
-V <= V.DB_MAX_OUTPUT_PORT_TYPE
-segments_units[0] <= hex7seg_struct:u_hex.seg
-segments_units[1] <= hex7seg_struct:u_hex.seg
-segments_units[2] <= hex7seg_struct:u_hex.seg
-segments_units[3] <= hex7seg_struct:u_hex.seg
-segments_units[4] <= hex7seg_struct:u_hex.seg
-segments_units[5] <= hex7seg_struct:u_hex.seg
-segments_units[6] <= hex7seg_struct:u_hex.seg
+S[0] << S[0].DB_MAX_OUTPUT_PORT_TYPE
+S[1] << S[1].DB_MAX_OUTPUT_PORT_TYPE
+S[2] << S[2].DB_MAX_OUTPUT_PORT_TYPE
+S[3] << S[3].DB_MAX_OUTPUT_PORT_TYPE
+Cout << Cout.DB_MAX_OUTPUT_PORT_TYPE
+Z << G_ORZ.oz[2].DB_MAX_OUTPUT_PORT_TYPE
+N << S[3].DB_MAX_OUTPUT_PORT_TYPE
+V << V.DB_MAX_OUTPUT_PORT_TYPE
+segments_units[0] << hex7seg_struct:u_hex.seg
+segments_units[1] << hex7seg_struct:u_hex.seg
+segments_units[2] << hex7seg_struct:u_hex.seg
+segments_units[3] << hex7seg_struct:u_hex.seg
+segments_units[4] << hex7seg_struct:u_hex.seg
+segments_units[5] << hex7seg_struct:u_hex.seg
+segments_units[6] << hex7seg_struct:u_hex.seg
 
 
 |alu|sumadorCompletoN:u_sum

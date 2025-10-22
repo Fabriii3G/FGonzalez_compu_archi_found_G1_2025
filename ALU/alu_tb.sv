@@ -12,7 +12,6 @@ module alu_tb;
   // Salidas
   logic [WIDTH-1:0] S;
   logic Cout, Z, N, V;
-  logic [6:0] segments_units; // solo para conectar el DUT (no se usan)
   logic [6:0] segments_tens;  // solo para conectar el DUT (no se usan)
 
   // DUT
@@ -21,7 +20,7 @@ module alu_tb;
     .boton0(boton0), .boton1(boton1), .boton2(boton2), .boton3(boton3),
     .Cin(Cin),
     .S(S), .Cout(Cout), .Z(Z), .N(N), .V(V),
-    .segments_units(segments_units), .segments_tens(segments_tens)
+    .segments_units(segments_units)
   );
 
   // Helpers para poner el opcode de botones

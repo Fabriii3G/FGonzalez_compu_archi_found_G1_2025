@@ -11,24 +11,24 @@ cModel Technology
 Z0 dC:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/simulation/modelsim
 valu
 Z1 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
-Z2 !s110 1761170392
+Z2 !s110 1761171791
 !i10b 1
-!s100 C:L5<8XZO4Co7c^i2h`ZJ1
+!s100 ^<ZLCCKjf@5iK]9LIQek03
 Z3 !s11b Dg1SIo80bB@j0V0VzS_@n1
-IY=;DMdU0ebiU5;6c4cni90
+Ij@J7i?7d?:no<FKKKAYl71
 Z4 VDg1SIo80bB@j0V0VzS_@n1
 S1
 R0
-w1761170357
+w1761171203
 8C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/alu.sv
 FC:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/alu.sv
 !i122 6
-L0 6 111
+L0 5 100
 Z5 OV;L;2020.1;71
 r1
 !s85 0
 31
-Z6 !s108 1761170392.000000
+Z6 !s108 1761171791.000000
 !s107 C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/alu.sv|
 !s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU|C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/alu.sv|
 !i113 1
@@ -39,17 +39,17 @@ valu_tb
 R1
 R2
 !i10b 1
-!s100 [GXzPH1f710_lL[N2[=S[1
+!s100 W3cCaczM5VFDKm:UO@P@Z2
 R3
-I`l_MYO;aWzDJcH8fKIW]11
+I1iaS3WS@zk@Q^bj<cM=5Z2
 R4
 S1
 R0
-Z10 w1761167776
+w1761171773
 8C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/alu_tb.sv
 FC:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/alu_tb.sv
-!i122 9
-L0 3 97
+!i122 10
+L0 3 96
 R5
 r1
 !s85 0
@@ -74,7 +74,7 @@ R0
 w1761169867
 8C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/divisorCompletoN.sv
 FC:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/divisorCompletoN.sv
-!i122 8
+!i122 9
 L0 7 83
 R5
 r1
@@ -88,6 +88,32 @@ R7
 R8
 R9
 ndivisor@completo@n
+vhex7seg_struct
+R1
+R2
+!i10b 1
+!s100 HFFB:=E2PKA<;znB@ZC?S3
+R3
+I_a4L<5c3J[>jUz0RC?Tmb3
+R4
+S1
+R0
+w1761171138
+8C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/hex7seg_struct.sv
+FC:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/hex7seg_struct.sv
+!i122 8
+L0 3 36
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/hex7seg_struct.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU|C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/hex7seg_struct.sv|
+!i113 1
+R7
+R8
+R9
 vmultiplicadorCompletoN
 R1
 R2
@@ -98,7 +124,7 @@ I^_;1OESa<]m`jnOhnC63g3
 R4
 S1
 R0
-w1761169868
+w1761170535
 8C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/multiplicadorCompletoN.sv
 FC:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/multiplicadorCompletoN.sv
 !i122 5
@@ -107,7 +133,7 @@ R5
 r1
 !s85 0
 31
-R6
+Z10 !s108 1761171790.000000
 !s107 C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/multiplicadorCompletoN.sv|
 !s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU|C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/multiplicadorCompletoN.sv|
 !i113 1
@@ -117,7 +143,7 @@ R9
 nmultiplicador@completo@n
 vmux2
 R1
-R2
+Z11 !s110 1761171790
 !i10b 1
 !s100 ]0<Z`EO^TR?eXz=2j4Q[c1
 R3
@@ -134,7 +160,7 @@ R5
 r1
 !s85 0
 31
-R6
+R10
 !s107 C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/mux2.sv|
 !s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU|C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/mux2.sv|
 !i113 1
@@ -143,7 +169,7 @@ R8
 R9
 vrestadorCompleto1bit
 R1
-R2
+R11
 !i10b 1
 !s100 C<D8KZ<hHC7Mzm0TIi1[U3
 R3
@@ -151,7 +177,7 @@ IZWz4`8:UcK:^>@6<U;9ih2
 R4
 S1
 R0
-R10
+Z12 w1761167776
 8C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/restadorCompleto1bit.sv
 FC:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/restadorCompleto1bit.sv
 !i122 3
@@ -160,7 +186,7 @@ R5
 r1
 !s85 0
 31
-R6
+R10
 !s107 C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/restadorCompleto1bit.sv|
 !s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU|C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/restadorCompleto1bit.sv|
 !i113 1
@@ -170,7 +196,7 @@ R9
 nrestador@completo1bit
 vrestadorCompletoN
 R1
-R2
+R11
 !i10b 1
 !s100 RcG14JjoOKUYc2oW8C5XR0
 R3
@@ -178,16 +204,16 @@ I8Ff[b=BA21Gc2o2b86X6O1
 R4
 S1
 R0
-R10
+R12
 8C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/restadorCompletoN.sv
 FC:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/restadorCompletoN.sv
 !i122 2
-Z11 L0 4 29
+Z13 L0 4 29
 R5
 r1
 !s85 0
 31
-R6
+R10
 !s107 C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/restadorCompletoN.sv|
 !s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU|C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/restadorCompletoN.sv|
 !i113 1
@@ -223,7 +249,7 @@ R8
 R9
 vsumadorCompleto1bit
 R1
-Z12 !s110 1761170391
+R11
 !i10b 1
 !s100 gL4JKzf]:_9LI=A8136U21
 R3
@@ -231,7 +257,7 @@ Iz52e[gBd6`O54mjiE[R6c1
 R4
 S1
 R0
-R10
+R12
 8C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/sumadorCompleto1bit.sv
 FC:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/sumadorCompleto1bit.sv
 !i122 1
@@ -240,7 +266,7 @@ R5
 r1
 !s85 0
 31
-Z13 !s108 1761170391.000000
+R10
 !s107 C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/sumadorCompleto1bit.sv|
 !s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU|C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/sumadorCompleto1bit.sv|
 !i113 1
@@ -250,7 +276,7 @@ R9
 nsumador@completo1bit
 vsumadorCompletoN
 R1
-R12
+R11
 !i10b 1
 !s100 <E_C]oOWzTCMf4SD>NV]J3
 R3
@@ -258,16 +284,16 @@ I>_jPF9H<z8ca9Z7d8^b9O1
 R4
 S1
 R0
-R10
+R12
 8C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/sumadorCompletoN.sv
 FC:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/sumadorCompletoN.sv
 !i122 0
-R11
+R13
 R5
 r1
 !s85 0
 31
-R13
+R10
 !s107 C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/sumadorCompletoN.sv|
 !s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU|C:/Users/snipe/OneDrive/Desktop/FGonzalez_compu_archi_found_G1_2025/ALU/sumadorCompletoN.sv|
 !i113 1
