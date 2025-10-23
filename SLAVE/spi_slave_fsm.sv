@@ -35,6 +35,7 @@ module spi_slave_fsm (
     logic counter_enable, counter_clear;
     logic check_handshake;
     logic led_load;
+    logic load_next_cycle;  // ← NUEVO: flag para cargar en siguiente ciclo
     
     // Señales internas
     logic [2:0] bit_count;
@@ -185,6 +186,20 @@ module spi_slave_fsm (
     // ========================================================================
     // Lógica de control - CORREGIDA con mejor timing
     // ========================================================================
+    
+    // Registro para indicar que debemos cargar en el siguiente ciclo
+    always_ff @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            load_next_cycle <= 1'b0;
+        end else begin
+            if (bit_count_terminal && sck_rising) begin
+                load_next_cycle <= 1'b1;
+            end else begin
+                load_next_cycle <= 1'b0;
+            end
+        end
+    end
+    
     always_comb begin
         // Valores por defecto
         rx_enable       = 1'b0;
@@ -199,7 +214,7 @@ module spi_slave_fsm (
         case (current_state)
             IDLE: begin
                 counter_clear = 1'b1;
-                // ✓ CRÍTICO: Cargar TX cuando CS se activa (flanco de bajada)
+                // ✓ CRÍTICO: Cargar TX cuando CS se activa
                 if (cs_falling) begin
                     tx_load = 1'b1;
                 end
@@ -210,14 +225,14 @@ module spi_slave_fsm (
                 if (sck_rising) begin
                     rx_enable      = 1'b1;
                     counter_enable = 1'b1;
-                    
-                    // Cargar buffer RX al completar 8 bits
-                    if (bit_count_terminal) begin
-                        rx_load = 1'b1;
-                    end
                 end
                 
-                // TX: Desplazar en flanco de bajada (preparar siguiente bit)
+                // Cargar RX después de capturar último bit
+                if (load_next_cycle) begin
+                    rx_load = 1'b1;
+                end
+                
+                // TX: Desplazar en flanco de bajada
                 if (sck_falling) begin
                     tx_shift = 1'b1;
                 end
