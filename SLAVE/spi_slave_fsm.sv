@@ -27,6 +27,7 @@ module spi_slave_fsm (
     // Señales sincronizadas
     logic sck_sync, cs_sync, mosi_sync;
     logic sck_rising, sck_falling;
+    logic cs_falling;  // Detectar activación de CS
     
     // Señales de control
     logic rx_enable, rx_load;
@@ -39,7 +40,7 @@ module spi_slave_fsm (
     logic [2:0] bit_count;
     logic bit_count_terminal;
     logic [7:0] rx_data;
-    logic [7:0] tx_data_reg;  // Dato TX actual
+    logic [7:0] tx_data_reg;
     logic is_handshake;
     logic [3:0] led_data;
     
@@ -66,6 +67,13 @@ module spi_slave_fsm (
         .signal_in(sck_sync),
         .rising_edge(sck_rising),
         .falling_edge(sck_falling)
+    );
+    
+    edge_detector edge_det_cs (
+        .clk(clk), .rst_n(rst_n),
+        .signal_in(cs_sync),
+        .rising_edge(),  // No usado
+        .falling_edge(cs_falling)  // CS activándose
     );
     
     // ========================================================================
@@ -101,7 +109,7 @@ module spi_slave_fsm (
     // ========================================================================
     // Verificador de handshake
     // ========================================================================
-    handshake_checker hs_checker (
+    handshake hs_checker (
         .clk(clk), .rst_n(rst_n),
         .check_enable(check_handshake),
         .data_in(rx_data),
@@ -119,13 +127,13 @@ module spi_slave_fsm (
     );
     
     // ========================================================================
-    // Generación del dato TX para la PRÓXIMA transacción
+    // Generación del dato TX - CORREGIDO: preparar ANTES de transacción
     // ========================================================================
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            tx_data_reg <= 8'h00;  // Dato inicial
+            tx_data_reg <= 8'h5A;  // Valor inicial visible para debug
         end else if (current_state == PROCESS) begin
-            // Preparar dato para la PRÓXIMA transacción
+            // Preparar respuesta para la PRÓXIMA transacción
             if (is_handshake) begin
                 tx_data_reg <= 8'h5A;  // Respuesta a handshake
             end else begin
@@ -175,7 +183,7 @@ module spi_slave_fsm (
     end
     
     // ========================================================================
-    // Lógica de control - SIMPLIFICADA
+    // Lógica de control - CORREGIDA con mejor timing
     // ========================================================================
     always_comb begin
         // Valores por defecto
@@ -191,8 +199,8 @@ module spi_slave_fsm (
         case (current_state)
             IDLE: begin
                 counter_clear = 1'b1;
-                // Cargar TX apenas se detecta CS activo
-                if (!cs_sync) begin
+                // ✓ CRÍTICO: Cargar TX cuando CS se activa (flanco de bajada)
+                if (cs_falling) begin
                     tx_load = 1'b1;
                 end
             end
@@ -203,13 +211,14 @@ module spi_slave_fsm (
                     rx_enable      = 1'b1;
                     counter_enable = 1'b1;
                     
+                    // Cargar buffer RX al completar 8 bits
                     if (bit_count_terminal) begin
                         rx_load = 1'b1;
                     end
                 end
                 
-                // TX: Desplazar en flanco de bajada (excepto bit 0)
-                if (sck_falling && bit_count != 3'd0) begin
+                // TX: Desplazar en flanco de bajada (preparar siguiente bit)
+                if (sck_falling) begin
                     tx_shift = 1'b1;
                 end
             end

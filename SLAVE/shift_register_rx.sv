@@ -21,7 +21,7 @@ module shift_register_rx (
             end
             
             if (load) begin
-                data_out <= shift_reg;
+                data_out <= {shift_reg[6:0], serial_in};  // Incluir último bit
             end
         end
     end
