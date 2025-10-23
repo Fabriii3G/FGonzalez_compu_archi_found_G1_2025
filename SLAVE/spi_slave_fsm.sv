@@ -60,51 +60,53 @@ module spi_slave_fsm (
     // ========================================================================
     // Sincronizadores
     // ========================================================================
-    synchronizer sync_sck (
+    synchronizer sync_sck_inst (
         .clk(clk), .rst_n(rst_n),
         .async_in(spi_sck), .sync_out(sck_sync)
     );
     
-    synchronizer sync_cs (
+    synchronizer sync_cs_inst (
         .clk(clk), .rst_n(rst_n),
         .async_in(spi_cs_n), .sync_out(cs_sync)
     );
     
-    synchronizer sync_mosi (
+    synchronizer sync_mosi_inst (
         .clk(clk), .rst_n(rst_n),
         .async_in(spi_mosi), .sync_out(mosi_sync)
     );
     
-    edge_detector edge_det_sck (
+    // ========================================================================
+    // Detectores de flancos
+    // ========================================================================
+    edge_detector edge_sck (
         .clk(clk), .rst_n(rst_n),
         .signal_in(sck_sync),
         .rising_edge(sck_rising),
         .falling_edge(sck_falling)
     );
     
-    edge_detector edge_det_cs (
+    edge_detector edge_cs (
         .clk(clk), .rst_n(rst_n),
         .signal_in(cs_sync),
-        .rising_edge(),  // No usado
-        .falling_edge(cs_falling)  // CS activándose
+        .rising_edge(),
+        .falling_edge(cs_falling)
     );
     
     // ========================================================================
     // Shift registers
     // ========================================================================
-    shift_register_rx rx_shifter (
+    shift_register_rx rx_shift_inst (
         .clk(clk), .rst_n(rst_n),
         .enable(rx_enable),
         .serial_in(mosi_sync),
-        .load(rx_load),
-        .data_out(rx_data)
+        .parallel_out(rx_data)
     );
     
-    shift_register_tx tx_shifter (
+    shift_register_tx tx_shift_inst (
         .clk(clk), .rst_n(rst_n),
         .load(tx_load),
         .shift(tx_shift),
-        .data_in(tx_data_reg),
+        .parallel_in(tx_data_reg),
         .serial_out(spi_miso)
     );
     
@@ -115,31 +117,106 @@ module spi_slave_fsm (
         .clk(clk), .rst_n(rst_n),
         .enable(counter_enable),
         .clear(counter_clear),
-        .count(bit_count),
-        .terminal(bit_count_terminal)
+        .count(bit_count)
     );
     
     // ========================================================================
-    // Verificador de handshake
+    // Comparadores
     // ========================================================================
-    handshake_checker hs_checker (
+    comparator_8bit handshake_comp (
+        .data_a(rx_data),
+        .data_b(HANDSHAKE_CODE),
+        .equal(is_handshake)
+    );
+    
+    assign bit_count_7 = (bit_count == 3'd7);
+    assign cs_active   = ~cs_sync;
+    
+    // ========================================================================
+    // FSM
+    // ========================================================================
+    spi_fsm fsm_inst (
         .clk(clk), .rst_n(rst_n),
-        .check_enable(check_handshake),
-        .data_in(rx_data),
-        .is_handshake(is_handshake)
+        .cs_active(cs_active),
+        .bit_count_7(bit_count_7),
+        .sck_rising(sck_rising),
+        .state_idle(state_idle),
+        .state_transfer(state_transfer),
+        .state_process(state_process)
     );
     
     // ========================================================================
-    // Registro de LEDs
+    // Generador de señales de control
     // ========================================================================
-    led_register led_reg (
+    control_signal_generator ctrl_gen (
         .clk(clk), .rst_n(rst_n),
-        .load(led_load),
+        .state_idle(state_idle),
+        .state_transfer(state_transfer),
+        .state_process(state_process),
+        .cs_falling(cs_falling),
+        .sck_rising(sck_rising),
+        .sck_falling(sck_falling),
+        .bit_count(bit_count),
+        .rx_enable(rx_enable),
+        .tx_load(tx_load),
+        .tx_shift(tx_shift),
+        .counter_enable(counter_enable),
+        .counter_clear(counter_clear)
+    );
+    
+    // ========================================================================
+    // Multiplexor para TX data (handshake vs LED echo)
+    // ========================================================================
+    mux2_8bit tx_mux (
+        .in0({4'h0, led_data}),
+        .in1(HANDSHAKE_RESP),
+        .sel(is_handshake),
+        .out(tx_data_mux)
+    );
+    
+    // ========================================================================
+    // Registro de TX data (actualiza en PROCESS)
+    // ========================================================================
+    register_8bit tx_data_reg_inst (
+        .clk(clk), .rst_n(rst_n),
+        .enable(state_process),
+        .data_in(tx_data_mux),
+        .data_out(tx_data_reg)
+    );
+    
+    // ========================================================================
+    // Registro de LEDs (carga solo si NO es handshake)
+    // ========================================================================
+    assign led_load = state_process & ~is_handshake;
+    
+    register_4bit led_reg (
+        .clk(clk), .rst_n(rst_n),
+        .enable(led_load),
         .data_in(rx_data[3:0]),
         .data_out(led_data)
     );
     
-
+    // ========================================================================
+    // Registro de handshake_ok
+    // ========================================================================
+    logic hs_set;
+    assign hs_set = state_process & is_handshake;
+    
+    always_ff @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            handshake_ok <= 1'b0;
+        end else begin
+            handshake_ok <= hs_set | handshake_ok;
+        end
+    end
+    
+    // ========================================================================
+    // Salidas
+    // ========================================================================
+    assign leds = led_data;
+    assign data_valid = state_process;
+    
+// ahora watchdog y comand
     
     // ========================================================================
     // Decodificador de comandos
