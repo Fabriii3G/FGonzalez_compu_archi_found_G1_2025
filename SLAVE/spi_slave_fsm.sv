@@ -1,6 +1,5 @@
 // ============================================================================
-// Módulo TOP: SPI Slave FSM
-// Optimizado para 50 MHz clock con SPI hasta 1 MHz
+// Módulo TOP: SPI Slave - Diseño Estructural
 // ============================================================================
 module spi_slave_fsm (
     input  logic clk,              // 50 MHz
@@ -83,14 +82,14 @@ module spi_slave_fsm (
     // ========================================================================
     // Shift registers
     // ========================================================================
-    shift_register_rx rx_shift (
+    shift_register_rx rx_shift_inst (
         .clk(clk), .rst_n(rst_n),
         .enable(rx_enable),
         .serial_in(mosi_sync),
         .parallel_out(rx_data)
     );
     
-    shift_register_tx tx_shift (
+    shift_register_tx tx_shift_inst (
         .clk(clk), .rst_n(rst_n),
         .load(tx_load),
         .shift(tx_shift),
