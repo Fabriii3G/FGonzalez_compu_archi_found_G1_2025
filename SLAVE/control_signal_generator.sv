@@ -1,5 +1,5 @@
 // ============================================================================
-// Módulo: Generador de señales de control
+// Módulo: Generador de señales de control - CON REGISTRO AUXILIAR
 // ============================================================================
 module control_signal_generator (
     input  logic clk,
@@ -17,9 +17,18 @@ module control_signal_generator (
     output logic counter_enable,
     output logic counter_clear
 );
-    logic bit_count_less_than_7;
+    logic [2:0] bit_count_prev;
     
-    assign bit_count_less_than_7 = (bit_count < 3'd7);
+    // Capturar el count anterior para saber si debemos hacer shift
+    always_ff @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            bit_count_prev <= 3'd0;
+        end else if (state_transfer & sck_rising) begin
+            bit_count_prev <= bit_count;  // Guardar count ANTES del increment
+        end else if (state_idle) begin
+            bit_count_prev <= 3'd0;
+        end
+    end
     
     // RX: habilitar en flancos de subida durante TRANSFER
     assign rx_enable = state_transfer & sck_rising;
@@ -27,9 +36,10 @@ module control_signal_generator (
     // TX: cargar cuando CS cae en IDLE  
     assign tx_load = state_idle & cs_falling;
     
-    // TX: desplazar en flancos de BAJADA durante TRANSFER
-    // SOLO si count < 7 (bits 0-6 se desplazan, bit 7 NO)
-    assign tx_shift = state_transfer & sck_falling & bit_count_less_than_7;
+    // TX: desplazar si el bit ANTERIOR era 0-6 (no 7)
+    logic should_shift;
+    assign should_shift = (bit_count_prev != 3'd7);
+    assign tx_shift = state_transfer & sck_falling & should_shift;
     
     // Contador: incrementar en flancos de subida durante TRANSFER
     assign counter_enable = state_transfer & sck_rising;

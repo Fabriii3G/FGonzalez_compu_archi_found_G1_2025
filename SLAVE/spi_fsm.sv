@@ -1,5 +1,5 @@
 // ============================================================================
-// Módulo: FSM de 2 bits (codificación one-hot simplificada)
+// Módulo: FSM de 2 bits - SIMPLIFICADA
 // Estados: IDLE=00, TRANSFER=01, PROCESS=10
 // ============================================================================
 module spi_fsm (
