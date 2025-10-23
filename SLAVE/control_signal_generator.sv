@@ -23,12 +23,13 @@ module control_signal_generator (
     // TX: cargar cuando CS cae en IDLE
     assign tx_load = state_idle & cs_falling;
     
-    // TX: desplazar en flancos de bajada durante TRANSFER (excepto bit 0)
+    // TX: desplazar en flancos de bajada durante TRANSFER
+    // IMPORTANTE: NO desplazar cuando count=0 (primer bit ya está en serial_out)
     assign tx_shift = state_transfer & sck_falling & ~bit_count_0;
     
     // Contador: incrementar en flancos de subida durante TRANSFER
     assign counter_enable = state_transfer & sck_rising;
     
-    // Contador: limpiar en IDLE
-    assign counter_clear = state_idle;
+    // Contador: limpiar en IDLE o al entrar a PROCESS
+    assign counter_clear = state_idle | state_process;
 endmodule

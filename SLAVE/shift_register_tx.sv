@@ -17,13 +17,12 @@ module shift_register_tx (
             shift_reg  <= 8'h5A;
             serial_out <= 1'b0;
         end else begin
-            // Prioridad: load > shift > hold
             if (load) begin
                 shift_reg  <= parallel_in;
-                serial_out <= parallel_in[7];  // MSB va primero
+                serial_out <= parallel_in[7];  // Bit 7 (MSB) primero
             end else if (shift) begin
                 shift_reg  <= {shift_reg[6:0], 1'b0};
-                serial_out <= shift_reg[7];    // CORREGIDO: sacar desde [7]
+                serial_out <= shift_reg[6];     // Próximo bit (que será el nuevo [7])
             end
         end
     end
