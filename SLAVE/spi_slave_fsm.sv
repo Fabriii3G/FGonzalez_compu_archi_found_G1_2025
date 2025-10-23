@@ -56,6 +56,104 @@ module spi_slave_fsm (
     // Instanciar módulos auxiliares (sincronizadores, etc.)
     // [Usar el código del documento 3]
     // ========================================================================
+
+    // ========================================================================
+    // Sincronizadores
+    // ========================================================================
+    synchronizer sync_sck (
+        .clk(clk), .rst_n(rst_n),
+        .async_in(spi_sck), .sync_out(sck_sync)
+    );
+    
+    synchronizer sync_cs (
+        .clk(clk), .rst_n(rst_n),
+        .async_in(spi_cs_n), .sync_out(cs_sync)
+    );
+    
+    synchronizer sync_mosi (
+        .clk(clk), .rst_n(rst_n),
+        .async_in(spi_mosi), .sync_out(mosi_sync)
+    );
+    
+    edge_detector edge_det_sck (
+        .clk(clk), .rst_n(rst_n),
+        .signal_in(sck_sync),
+        .rising_edge(sck_rising),
+        .falling_edge(sck_falling)
+    );
+    
+    edge_detector edge_det_cs (
+        .clk(clk), .rst_n(rst_n),
+        .signal_in(cs_sync),
+        .rising_edge(),  // No usado
+        .falling_edge(cs_falling)  // CS activándose
+    );
+    
+    // ========================================================================
+    // Shift registers
+    // ========================================================================
+    shift_register_rx rx_shifter (
+        .clk(clk), .rst_n(rst_n),
+        .enable(rx_enable),
+        .serial_in(mosi_sync),
+        .load(rx_load),
+        .data_out(rx_data)
+    );
+    
+    shift_register_tx tx_shifter (
+        .clk(clk), .rst_n(rst_n),
+        .load(tx_load),
+        .shift(tx_shift),
+        .data_in(tx_data_reg),
+        .serial_out(spi_miso)
+    );
+    
+    // ========================================================================
+    // Contador de bits
+    // ========================================================================
+    bit_counter counter (
+        .clk(clk), .rst_n(rst_n),
+        .enable(counter_enable),
+        .clear(counter_clear),
+        .count(bit_count),
+        .terminal(bit_count_terminal)
+    );
+    
+    // ========================================================================
+    // Verificador de handshake
+    // ========================================================================
+    handshake_checker hs_checker (
+        .clk(clk), .rst_n(rst_n),
+        .check_enable(check_handshake),
+        .data_in(rx_data),
+        .is_handshake(is_handshake)
+    );
+    
+    // ========================================================================
+    // Registro de LEDs
+    // ========================================================================
+    led_register led_reg (
+        .clk(clk), .rst_n(rst_n),
+        .load(led_load),
+        .data_in(rx_data[3:0]),
+        .data_out(led_data)
+    );
+    
+    // ========================================================================
+    // Generación del dato TX - CORREGIDO: preparar ANTES de transacción
+    // ========================================================================
+    always_ff @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            tx_data_reg <= 8'h5A;  // Valor inicial visible para debug
+        end else if (current_state == PROCESS) begin
+            // Preparar respuesta para la PRÓXIMA transacción
+            if (is_handshake) begin
+                tx_data_reg <= 8'h5A;  // Respuesta a handshake
+            end else begin
+                tx_data_reg <= {4'h0, led_data};  // Echo de LEDs
+            end
+        end
+    end
     
     // ========================================================================
     // Decodificador de comandos
