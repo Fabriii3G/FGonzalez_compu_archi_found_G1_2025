@@ -36,7 +36,7 @@ module spi_slave_fsm (
     
     // Señales de comparación
     logic is_handshake;
-    logic bit_count_7, bit_count_0;
+    logic bit_count_7;
     logic cs_active;
     logic led_load;
     
@@ -117,7 +117,6 @@ module spi_slave_fsm (
     );
     
     assign bit_count_7 = (bit_count == 3'd7);
-    assign bit_count_0 = (bit_count == 3'd0);
     assign cs_active   = ~cs_sync;
     
     // ========================================================================
@@ -144,7 +143,7 @@ module spi_slave_fsm (
         .cs_falling(cs_falling),
         .sck_rising(sck_rising),
         .sck_falling(sck_falling),
-        .bit_count_0(bit_count_0),
+        .bit_count(bit_count),
         .rx_enable(rx_enable),
         .tx_load(tx_load),
         .tx_shift(tx_shift),
