@@ -35,7 +35,6 @@ module spi_slave_fsm (
     logic counter_enable, counter_clear;
     logic check_handshake;
     logic led_load;
-    logic load_next_cycle;  // ← NUEVO: flag para cargar en siguiente ciclo
     
     // Señales internas
     logic [2:0] bit_count;
