@@ -139,21 +139,7 @@ module spi_slave_fsm (
         .data_out(led_data)
     );
     
-    // ========================================================================
-    // Generación del dato TX - CORREGIDO: preparar ANTES de transacción
-    // ========================================================================
-    always_ff @(posedge clk or negedge rst_n) begin
-        if (!rst_n) begin
-            tx_data_reg <= 8'h5A;  // Valor inicial visible para debug
-        end else if (current_state == PROCESS) begin
-            // Preparar respuesta para la PRÓXIMA transacción
-            if (is_handshake) begin
-                tx_data_reg <= 8'h5A;  // Respuesta a handshake
-            end else begin
-                tx_data_reg <= {4'h0, led_data};  // Echo de LEDs
-            end
-        end
-    end
+
     
     // ========================================================================
     // Decodificador de comandos
