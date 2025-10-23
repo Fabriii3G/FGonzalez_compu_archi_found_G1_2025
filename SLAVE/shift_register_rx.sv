@@ -21,8 +21,9 @@ module shift_register_rx (
             end
             
             if (load) begin
-                // Cargar incluyendo el último bit recibido
-                data_out <= {shift_reg[6:0], serial_in};
+                // Simplemente cargar el shift_reg completo
+                // Ya tiene los 8 bits porque enable se activó 8 veces
+                data_out <= shift_reg;
             end
         end
     end
