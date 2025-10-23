@@ -109,7 +109,7 @@ module spi_slave_fsm (
     // ========================================================================
     // Verificador de handshake
     // ========================================================================
-    handshake_checker hs_checker (
+    handshake hs_checker (
         .clk(clk), .rst_n(rst_n),
         .check_enable(check_handshake),
         .data_in(rx_data),
