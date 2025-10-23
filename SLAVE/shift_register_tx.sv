@@ -1,27 +1,29 @@
 // ============================================================================
-// Módulo: Registro de desplazamiento para transmisión (MISO)
+// Módulo: Registro de desplazamiento TX (8 bits, MSB primero)
+// CORREGIDO: El shift saca el bit correcto
 // ============================================================================
 module shift_register_tx (
     input  logic clk,
     input  logic rst_n,
     input  logic load,
     input  logic shift,
-    input  logic [7:0] data_in,
+    input  logic [7:0] parallel_in,
     output logic serial_out
 );
     logic [7:0] shift_reg;
     
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            shift_reg  <= 8'h5A;  // Valor por defecto visible
+            shift_reg  <= 8'h5A;
             serial_out <= 1'b0;
         end else begin
+            // Prioridad: load > shift > hold
             if (load) begin
-                shift_reg  <= data_in;
-                serial_out <= data_in[7];  // ✓ Primer bit (MSB) listo
+                shift_reg  <= parallel_in;
+                serial_out <= parallel_in[7];  // MSB va primero
             end else if (shift) begin
                 shift_reg  <= {shift_reg[6:0], 1'b0};
-                serial_out <= shift_reg[6];  // ✓ CORREGIDO: era [7], debe ser [6]
+                serial_out <= shift_reg[7];    // CORREGIDO: sacar desde [7]
             end
         end
     end

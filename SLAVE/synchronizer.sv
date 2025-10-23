@@ -1,5 +1,5 @@
 // ============================================================================
-// Módulo: Sincronizador de señales (anti-metaestabilidad)
+// Módulo: Sincronizador de señales
 // ============================================================================
 module synchronizer (
     input  logic clk,

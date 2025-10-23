@@ -1,30 +1,22 @@
 // ============================================================================
-// Módulo: Registro de desplazamiento para recepción (MOSI)
+// Módulo: Registro de desplazamiento RX (8 bits, MSB primero)
 // ============================================================================
 module shift_register_rx (
     input  logic clk,
     input  logic rst_n,
     input  logic enable,
     input  logic serial_in,
-    input  logic load,
-    output logic [7:0] data_out
+    output logic [7:0] parallel_out
 );
     logic [7:0] shift_reg;
     
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             shift_reg <= 8'h00;
-            data_out  <= 8'h00;
         end else begin
-            if (enable) begin
-                shift_reg <= {shift_reg[6:0], serial_in};
-            end
-            
-            if (load) begin
-                // Simplemente cargar el shift_reg completo
-                // Ya tiene los 8 bits porque enable se activó 8 veces
-                data_out <= shift_reg;
-            end
+            shift_reg <= enable ? {shift_reg[6:0], serial_in} : shift_reg;
         end
     end
+    
+    assign parallel_out = shift_reg;
 endmodule

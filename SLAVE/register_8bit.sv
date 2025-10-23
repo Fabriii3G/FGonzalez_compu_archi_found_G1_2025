@@ -1,22 +1,22 @@
 // ============================================================================
-// Módulo: Contador de 3 bits (0-7)
+// Módulo: Registro de 8 bits con enable
 // ============================================================================
-module bit_counter (
+module register_8bit (
     input  logic clk,
     input  logic rst_n,
     input  logic enable,
-    input  logic clear,
-    output logic [2:0] count
+    input  logic [7:0] data_in,
+    output logic [7:0] data_out
 );
-    logic [2:0] count_reg;
+    logic [7:0] reg_data;
     
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            count_reg <= 3'd0;
+            reg_data <= 8'h00;
         end else begin
-            count_reg <= clear ? 3'd0 : (enable ? count_reg + 3'd1 : count_reg);
+            reg_data <= enable ? data_in : reg_data;
         end
     end
     
-    assign count = count_reg;
+    assign data_out = reg_data;
 endmodule

@@ -18,6 +18,6 @@ module edge_detector (
         end
     end
     
-    assign rising_edge  = signal_in && !signal_prev;
-    assign falling_edge = !signal_in && signal_prev;
+    assign rising_edge  = signal_in & ~signal_prev;
+    assign falling_edge = ~signal_in & signal_prev;
 endmodule
