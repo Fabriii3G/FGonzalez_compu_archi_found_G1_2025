@@ -183,19 +183,22 @@ module spi_slave_fsm (
         .data_out(led_data)
     );
     
-    // ========================================================================
-    // Registro de handshake_ok
-    // ========================================================================
-    logic hs_set;
-    assign hs_set = state_process & is_handshake;
-    
-    always_ff @(posedge clk or negedge rst_n) begin
-        if (!rst_n) begin
-            handshake_ok <= 1'b0;
-        end else begin
-            handshake_ok <= hs_set | handshake_ok;
-        end
-    end
+	// ========================================================================
+	// Registro de handshake_ok (sticky bit: set sincrónico, clear asíncrono)
+	// ========================================================================
+	logic hs_set;
+	assign hs_set = state_process & is_handshake;
+
+	// D = Q | hs_set  -> una vez en 1, permanece hasta reset
+	logic d_hs;
+	assign d_hs = handshake_ok | hs_set;
+
+	dffeas u_hs (
+		.q(handshake_ok), .d(d_hs), .clk(clk),
+		.ena(1'b1), .clrn(rst_n), .prn(1'b1),
+		.asdata(1'b0), .aload(1'b0),
+		.sclr(1'b0), .sload(1'b0)
+	);
     
     // ========================================================================
     // Salidas

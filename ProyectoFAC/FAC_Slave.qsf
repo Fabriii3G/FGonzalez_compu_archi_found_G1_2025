@@ -64,6 +64,20 @@ set_location_assignment PIN_W15 -to spi_cs_n
 set_location_assignment PIN_Y16 -to spi_miso
 set_location_assignment PIN_AK3 -to spi_mosi
 set_location_assignment PIN_AF14 -to clk
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/synchronizer.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/spi_slave_fsm.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/spi_fsm.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/shift_register_tx.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/shift_register_rx.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/register_8bit.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/register_4bit.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/mux2_8bit.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/mux2_1bit.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/edge_detector.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/control_signal_generator.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/comparator_8bit.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/bit_counter.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ALU/sumadorCompletoN.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ALU/sumadorCompleto1bit.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ALU/shl_in.sv
@@ -75,25 +89,8 @@ set_global_assignment -name SYSTEMVERILOG_FILE ALU/hex7seg_struct.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ALU/divisorCompletoN.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ALU/alu_tb.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ALU/alu.sv
-set_global_assignment -name SYSTEMVERILOG_FILE slave/tx_response_generator.sv
-set_global_assignment -name SYSTEMVERILOG_FILE slave/synchronizer.sv
-set_global_assignment -name SYSTEMVERILOG_FILE slave/spi_slave_fsm.sv
-set_global_assignment -name SYSTEMVERILOG_FILE slave/spi_loopback_test.sv
-set_global_assignment -name SYSTEMVERILOG_FILE slave/spi_fsm.sv
-set_global_assignment -name SYSTEMVERILOG_FILE slave/shift_register_tx.sv
-set_global_assignment -name SYSTEMVERILOG_FILE slave/shift_register_rx.sv
-set_global_assignment -name SYSTEMVERILOG_FILE slave/register_8bit.sv
-set_global_assignment -name SYSTEMVERILOG_FILE slave/register_4bit.sv
-set_global_assignment -name SYSTEMVERILOG_FILE slave/mux2_8bit.sv
-set_global_assignment -name SYSTEMVERILOG_FILE slave/led_register.sv
-set_global_assignment -name SYSTEMVERILOG_FILE slave/handshake.sv
-set_global_assignment -name SYSTEMVERILOG_FILE slave/edge_detector.sv
-set_global_assignment -name SYSTEMVERILOG_FILE slave/control_signal_generator.sv
-set_global_assignment -name SYSTEMVERILOG_FILE slave/comparator_8bit.sv
-set_global_assignment -name SYSTEMVERILOG_FILE slave/bit_counter.sv
 set_global_assignment -name SYSTEMVERILOG_FILE PWM/registroN.sv
 set_global_assignment -name SYSTEMVERILOG_FILE PWM/pwm16_struct.sv
 set_global_assignment -name SYSTEMVERILOG_FILE PWM/dff1.sv
 set_global_assignment -name SYSTEMVERILOG_FILE PWM/contadorUpN.sv
 set_global_assignment -name SYSTEMVERILOG_FILE PWM/cmp_lt_strict.sv
-set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
