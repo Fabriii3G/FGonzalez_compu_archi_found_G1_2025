@@ -268,3 +268,5 @@ if __name__ == "__main__":
     main()              # Modo automático
     # manual_mode()     # Modo manual
     # diagnostic_test() # Diagnóstico básico
+
+    # Usar la funcion necesaria segun el caso
