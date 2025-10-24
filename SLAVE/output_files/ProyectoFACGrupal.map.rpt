@@ -1,0 +1,453 @@
+Analysis & Synthesis report for ProyectoFACGrupal
+Thu Oct 23 11:01:03 2025
+Quartus Prime Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Parallel Compilation
+  5. Analysis & Synthesis Source Files Read
+  6. Analysis & Synthesis Resource Usage Summary
+  7. Analysis & Synthesis Resource Utilization by Entity
+  8. State Machine - |spi_slave_fsm|spi_fsm:fsm_inst|state_reg
+  9. Registers Removed During Synthesis
+ 10. General Register Statistics
+ 11. Inverted Register Statistics
+ 12. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 13. Port Connectivity Checks: "mux2_8bit:tx_mux"
+ 14. Port Connectivity Checks: "comparator_8bit:handshake_comp"
+ 15. Port Connectivity Checks: "edge_detector:edge_cs"
+ 16. Post-Synthesis Netlist Statistics for Top Partition
+ 17. Elapsed Time Per Partition
+ 18. Analysis & Synthesis Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2024  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
+
+
+
++----------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                     ;
++---------------------------------+------------------------------------------------+
+; Analysis & Synthesis Status     ; Successful - Thu Oct 23 11:01:03 2025          ;
+; Quartus Prime Version           ; 23.1std.1 Build 993 05/14/2024 SC Lite Edition ;
+; Revision Name                   ; ProyectoFACGrupal                              ;
+; Top-level Entity Name           ; spi_slave_fsm                                  ;
+; Family                          ; Cyclone V                                      ;
+; Logic utilization (in ALMs)     ; N/A                                            ;
+; Total registers                 ; 43                                             ;
+; Total pins                      ; 12                                             ;
+; Total virtual pins              ; 0                                              ;
+; Total block memory bits         ; 0                                              ;
+; Total DSP Blocks                ; 0                                              ;
+; Total HSSI RX PCSs              ; 0                                              ;
+; Total HSSI PMA RX Deserializers ; 0                                              ;
+; Total HSSI TX PCSs              ; 0                                              ;
+; Total HSSI PMA TX Serializers   ; 0                                              ;
+; Total PLLs                      ; 0                                              ;
+; Total DLLs                      ; 0                                              ;
++---------------------------------+------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                                             ;
++---------------------------------------------------------------------------------+--------------------+--------------------+
+; Option                                                                          ; Setting            ; Default Value      ;
++---------------------------------------------------------------------------------+--------------------+--------------------+
+; Device                                                                          ; 5CSXFC6D6F31C6     ;                    ;
+; Top-level entity name                                                           ; spi_slave_fsm      ; ProyectoFACGrupal  ;
+; Family name                                                                     ; Cyclone V          ; Cyclone V          ;
+; Use smart compilation                                                           ; Off                ; Off                ;
+; Enable parallel Assembler and Timing Analyzer during compilation                ; On                 ; On                 ;
+; Enable compact report table                                                     ; Off                ; Off                ;
+; Restructure Multiplexers                                                        ; Auto               ; Auto               ;
+; MLAB Add Timing Constraints For Mixed-Port Feed-Through Mode Setting Don't Care ; Off                ; Off                ;
+; Create Debugging Nodes for IP Cores                                             ; Off                ; Off                ;
+; Preserve fewer node names                                                       ; On                 ; On                 ;
+; Intel FPGA IP Evaluation Mode                                                   ; Enable             ; Enable             ;
+; Verilog Version                                                                 ; Verilog_2001       ; Verilog_2001       ;
+; VHDL Version                                                                    ; VHDL_1993          ; VHDL_1993          ;
+; State Machine Processing                                                        ; Auto               ; Auto               ;
+; Safe State Machine                                                              ; Off                ; Off                ;
+; Extract Verilog State Machines                                                  ; On                 ; On                 ;
+; Extract VHDL State Machines                                                     ; On                 ; On                 ;
+; Ignore Verilog initial constructs                                               ; Off                ; Off                ;
+; Iteration limit for constant Verilog loops                                      ; 5000               ; 5000               ;
+; Iteration limit for non-constant Verilog loops                                  ; 250                ; 250                ;
+; Add Pass-Through Logic to Inferred RAMs                                         ; On                 ; On                 ;
+; Infer RAMs from Raw Logic                                                       ; On                 ; On                 ;
+; Parallel Synthesis                                                              ; On                 ; On                 ;
+; DSP Block Balancing                                                             ; Auto               ; Auto               ;
+; NOT Gate Push-Back                                                              ; On                 ; On                 ;
+; Power-Up Don't Care                                                             ; On                 ; On                 ;
+; Remove Redundant Logic Cells                                                    ; Off                ; Off                ;
+; Remove Duplicate Registers                                                      ; On                 ; On                 ;
+; Ignore CARRY Buffers                                                            ; Off                ; Off                ;
+; Ignore CASCADE Buffers                                                          ; Off                ; Off                ;
+; Ignore GLOBAL Buffers                                                           ; Off                ; Off                ;
+; Ignore ROW GLOBAL Buffers                                                       ; Off                ; Off                ;
+; Ignore LCELL Buffers                                                            ; Off                ; Off                ;
+; Ignore SOFT Buffers                                                             ; On                 ; On                 ;
+; Limit AHDL Integers to 32 Bits                                                  ; Off                ; Off                ;
+; Optimization Technique                                                          ; Balanced           ; Balanced           ;
+; Carry Chain Length                                                              ; 70                 ; 70                 ;
+; Auto Carry Chains                                                               ; On                 ; On                 ;
+; Auto Open-Drain Pins                                                            ; On                 ; On                 ;
+; Perform WYSIWYG Primitive Resynthesis                                           ; Off                ; Off                ;
+; Auto ROM Replacement                                                            ; On                 ; On                 ;
+; Auto RAM Replacement                                                            ; On                 ; On                 ;
+; Auto DSP Block Replacement                                                      ; On                 ; On                 ;
+; Auto Shift Register Replacement                                                 ; Auto               ; Auto               ;
+; Allow Shift Register Merging across Hierarchies                                 ; Auto               ; Auto               ;
+; Auto Clock Enable Replacement                                                   ; On                 ; On                 ;
+; Strict RAM Replacement                                                          ; Off                ; Off                ;
+; Allow Synchronous Control Signals                                               ; On                 ; On                 ;
+; Force Use of Synchronous Clear Signals                                          ; Off                ; Off                ;
+; Auto Resource Sharing                                                           ; Off                ; Off                ;
+; Allow Any RAM Size For Recognition                                              ; Off                ; Off                ;
+; Allow Any ROM Size For Recognition                                              ; Off                ; Off                ;
+; Allow Any Shift Register Size For Recognition                                   ; Off                ; Off                ;
+; Use LogicLock Constraints during Resource Balancing                             ; On                 ; On                 ;
+; Ignore translate_off and synthesis_off directives                               ; Off                ; Off                ;
+; Timing-Driven Synthesis                                                         ; On                 ; On                 ;
+; Report Parameter Settings                                                       ; On                 ; On                 ;
+; Report Source Assignments                                                       ; On                 ; On                 ;
+; Report Connectivity Checks                                                      ; On                 ; On                 ;
+; Ignore Maximum Fan-Out Assignments                                              ; Off                ; Off                ;
+; Synchronization Register Chain Length                                           ; 3                  ; 3                  ;
+; Power Optimization During Synthesis                                             ; Normal compilation ; Normal compilation ;
+; HDL message level                                                               ; Level2             ; Level2             ;
+; Suppress Register Optimization Related Messages                                 ; Off                ; Off                ;
+; Number of Removed Registers Reported in Synthesis Report                        ; 5000               ; 5000               ;
+; Number of Swept Nodes Reported in Synthesis Report                              ; 5000               ; 5000               ;
+; Number of Inverted Registers Reported in Synthesis Report                       ; 100                ; 100                ;
+; Clock MUX Protection                                                            ; On                 ; On                 ;
+; Auto Gated Clock Conversion                                                     ; Off                ; Off                ;
+; Block Design Naming                                                             ; Auto               ; Auto               ;
+; SDC constraint protection                                                       ; Off                ; Off                ;
+; Synthesis Effort                                                                ; Auto               ; Auto               ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal                    ; On                 ; On                 ;
+; Pre-Mapping Resynthesis Optimization                                            ; Off                ; Off                ;
+; Analysis & Synthesis Message Level                                              ; Medium             ; Medium             ;
+; Disable Register Merging Across Hierarchies                                     ; Auto               ; Auto               ;
+; Resource Aware Inference For Block RAM                                          ; On                 ; On                 ;
+; Automatic Parallel Synthesis                                                    ; On                 ; On                 ;
+; Partial Reconfiguration Bitstream ID                                            ; Off                ; Off                ;
++---------------------------------------------------------------------------------+--------------------+--------------------+
+
+
++------------------------------------------+
+; Parallel Compilation                     ;
++----------------------------+-------------+
+; Processors                 ; Number      ;
++----------------------------+-------------+
+; Number detected on machine ; 8           ;
+; Maximum allowed            ; 8           ;
+;                            ;             ;
+; Average used               ; 1.00        ;
+; Maximum used               ; 8           ;
+;                            ;             ;
+; Usage by Processor         ; % Time Used ;
+;     Processor 1            ; 100.0%      ;
+;     Processors 2-8         ;   0.0%      ;
++----------------------------+-------------+
+
+
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                                                              ;
++----------------------------------+-----------------+------------------------------+-------------------------------------------------------------------------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type                    ; File Name with Absolute Path                                                                          ; Library ;
++----------------------------------+-----------------+------------------------------+-------------------------------------------------------------------------------------------------------+---------+
+; spi_fsm.sv                       ; yes             ; User SystemVerilog HDL File  ; C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/spi_fsm.sv                  ;         ;
+; register_8bit.sv                 ; yes             ; User SystemVerilog HDL File  ; C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/register_8bit.sv            ;         ;
+; register_4bit.sv                 ; yes             ; User SystemVerilog HDL File  ; C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/register_4bit.sv            ;         ;
+; mux2_8bit.sv                     ; yes             ; User SystemVerilog HDL File  ; C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/mux2_8bit.sv                ;         ;
+; control_signal_generator.sv      ; yes             ; User SystemVerilog HDL File  ; C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/control_signal_generator.sv ;         ;
+; comparator_8bit.sv               ; yes             ; User SystemVerilog HDL File  ; C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/comparator_8bit.sv          ;         ;
+; synchronizer.sv                  ; yes             ; User SystemVerilog HDL File  ; C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/synchronizer.sv             ;         ;
+; spi_slave_fsm.sv                 ; yes             ; User SystemVerilog HDL File  ; C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/spi_slave_fsm.sv            ;         ;
+; shift_register_tx.sv             ; yes             ; User SystemVerilog HDL File  ; C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/shift_register_tx.sv        ;         ;
+; shift_register_rx.sv             ; yes             ; User SystemVerilog HDL File  ; C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/shift_register_rx.sv        ;         ;
+; edge_detector.sv                 ; yes             ; User SystemVerilog HDL File  ; C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/edge_detector.sv            ;         ;
+; bit_counter.sv                   ; yes             ; User SystemVerilog HDL File  ; C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/bit_counter.sv              ;         ;
++----------------------------------+-----------------+------------------------------+-------------------------------------------------------------------------------------------------------+---------+
+
+
++---------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary             ;
++---------------------------------------------+-----------+
+; Resource                                    ; Usage     ;
++---------------------------------------------+-----------+
+; Estimate of Logic utilization (ALMs needed) ; 25        ;
+;                                             ;           ;
+; Combinational ALUT usage for logic          ; 32        ;
+;     -- 7 input functions                    ; 0         ;
+;     -- 6 input functions                    ; 2         ;
+;     -- 5 input functions                    ; 12        ;
+;     -- 4 input functions                    ; 10        ;
+;     -- <=3 input functions                  ; 8         ;
+;                                             ;           ;
+; Dedicated logic registers                   ; 43        ;
+;                                             ;           ;
+; I/O pins                                    ; 12        ;
+;                                             ;           ;
+; Total DSP Blocks                            ; 0         ;
+;                                             ;           ;
+; Maximum fan-out node                        ; clk~input ;
+; Maximum fan-out                             ; 43        ;
+; Total fan-out                               ; 310       ;
+; Average fan-out                             ; 3.13      ;
++---------------------------------------------+-----------+
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                          ;
++----------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+--------------------------------------------------+--------------------------+--------------+
+; Compilation Hierarchy Node             ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                              ; Entity Name              ; Library Name ;
++----------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+--------------------------------------------------+--------------------------+--------------+
+; |spi_slave_fsm                         ; 32 (2)              ; 43 (1)                    ; 0                 ; 0          ; 12   ; 0            ; |spi_slave_fsm                                   ; spi_slave_fsm            ; work         ;
+;    |bit_counter:counter|               ; 4 (4)               ; 3 (3)                     ; 0                 ; 0          ; 0    ; 0            ; |spi_slave_fsm|bit_counter:counter               ; bit_counter              ; work         ;
+;    |comparator_8bit:handshake_comp|    ; 2 (2)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |spi_slave_fsm|comparator_8bit:handshake_comp    ; comparator_8bit          ; work         ;
+;    |control_signal_generator:ctrl_gen| ; 6 (6)               ; 3 (3)                     ; 0                 ; 0          ; 0    ; 0            ; |spi_slave_fsm|control_signal_generator:ctrl_gen ; control_signal_generator ; work         ;
+;    |edge_detector:edge_cs|             ; 0 (0)               ; 1 (1)                     ; 0                 ; 0          ; 0    ; 0            ; |spi_slave_fsm|edge_detector:edge_cs             ; edge_detector            ; work         ;
+;    |edge_detector:edge_sck|            ; 0 (0)               ; 1 (1)                     ; 0                 ; 0          ; 0    ; 0            ; |spi_slave_fsm|edge_detector:edge_sck            ; edge_detector            ; work         ;
+;    |mux2_8bit:tx_mux|                  ; 4 (4)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |spi_slave_fsm|mux2_8bit:tx_mux                  ; mux2_8bit                ; work         ;
+;    |register_4bit:led_reg|             ; 0 (0)               ; 4 (4)                     ; 0                 ; 0          ; 0    ; 0            ; |spi_slave_fsm|register_4bit:led_reg             ; register_4bit            ; work         ;
+;    |register_8bit:tx_data_reg_inst|    ; 0 (0)               ; 5 (5)                     ; 0                 ; 0          ; 0    ; 0            ; |spi_slave_fsm|register_8bit:tx_data_reg_inst    ; register_8bit            ; work         ;
+;    |shift_register_rx:rx_shift_inst|   ; 0 (0)               ; 8 (8)                     ; 0                 ; 0          ; 0    ; 0            ; |spi_slave_fsm|shift_register_rx:rx_shift_inst   ; shift_register_rx        ; work         ;
+;    |shift_register_tx:tx_shift_inst|   ; 10 (10)             ; 8 (8)                     ; 0                 ; 0          ; 0    ; 0            ; |spi_slave_fsm|shift_register_tx:tx_shift_inst   ; shift_register_tx        ; work         ;
+;    |spi_fsm:fsm_inst|                  ; 4 (4)               ; 3 (3)                     ; 0                 ; 0          ; 0    ; 0            ; |spi_slave_fsm|spi_fsm:fsm_inst                  ; spi_fsm                  ; work         ;
+;    |synchronizer:sync_cs_inst|         ; 0 (0)               ; 2 (2)                     ; 0                 ; 0          ; 0    ; 0            ; |spi_slave_fsm|synchronizer:sync_cs_inst         ; synchronizer             ; work         ;
+;    |synchronizer:sync_mosi_inst|       ; 0 (0)               ; 2 (2)                     ; 0                 ; 0          ; 0    ; 0            ; |spi_slave_fsm|synchronizer:sync_mosi_inst       ; synchronizer             ; work         ;
+;    |synchronizer:sync_sck_inst|        ; 0 (0)               ; 2 (2)                     ; 0                 ; 0          ; 0    ; 0            ; |spi_slave_fsm|synchronizer:sync_sck_inst        ; synchronizer             ; work         ;
++----------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+--------------------------------------------------+--------------------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
+Encoding Type:  One-Hot
++-----------------------------------------------------------+
+; State Machine - |spi_slave_fsm|spi_fsm:fsm_inst|state_reg ;
++--------------+--------------+--------------+--------------+
+; Name         ; state_reg.00 ; state_reg.10 ; state_reg.01 ;
++--------------+--------------+--------------+--------------+
+; state_reg.00 ; 0            ; 0            ; 0            ;
+; state_reg.01 ; 1            ; 0            ; 1            ;
+; state_reg.10 ; 1            ; 1            ; 0            ;
++--------------+--------------+--------------+--------------+
+
+
++-------------------------------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                                                    ;
++----------------------------------------------+--------------------------------------------------------+
+; Register name                                ; Reason for Removal                                     ;
++----------------------------------------------+--------------------------------------------------------+
+; register_8bit:tx_data_reg_inst|reg_data[5,7] ; Stuck at GND due to stuck port data_in                 ;
+; register_8bit:tx_data_reg_inst|reg_data[4]   ; Merged with register_8bit:tx_data_reg_inst|reg_data[6] ;
+; Total Number of Removed Registers = 3        ;                                                        ;
++----------------------------------------------+--------------------------------------------------------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 43    ;
+; Number of registers using Synchronous Clear  ; 0     ;
+; Number of registers using Synchronous Load   ; 0     ;
+; Number of registers using Asynchronous Clear ; 43    ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 30    ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++--------------------------------------------------------+
+; Inverted Register Statistics                           ;
++----------------------------------------------+---------+
+; Inverted Register                            ; Fan out ;
++----------------------------------------------+---------+
+; shift_register_tx:tx_shift_inst|serial_out   ; 1       ;
+; shift_register_tx:tx_shift_inst|shift_reg[6] ; 1       ;
+; shift_register_tx:tx_shift_inst|shift_reg[4] ; 1       ;
+; shift_register_tx:tx_shift_inst|shift_reg[3] ; 1       ;
+; shift_register_tx:tx_shift_inst|shift_reg[1] ; 1       ;
+; Total number of inverted registers = 5       ;         ;
++----------------------------------------------+---------+
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                                   ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+--------------------------------------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                         ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+--------------------------------------------------------------------+
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |spi_slave_fsm|control_signal_generator:ctrl_gen|bit_count_prev[2] ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |spi_slave_fsm|bit_counter:counter|count_reg[0]                    ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |spi_slave_fsm|shift_register_tx:tx_shift_inst|shift_reg[6]        ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |spi_slave_fsm|spi_fsm:fsm_inst|state_reg                          ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+--------------------------------------------------------------------+
+
+
++----------------------------------------------+
+; Port Connectivity Checks: "mux2_8bit:tx_mux" ;
++-----------+-------+----------+---------------+
+; Port      ; Type  ; Severity ; Details       ;
++-----------+-------+----------+---------------+
+; in0[7..4] ; Input ; Info     ; Stuck at GND  ;
+; in1[4..3] ; Input ; Info     ; Stuck at VCC  ;
+; in1[7]    ; Input ; Info     ; Stuck at GND  ;
+; in1[6]    ; Input ; Info     ; Stuck at VCC  ;
+; in1[5]    ; Input ; Info     ; Stuck at GND  ;
+; in1[2]    ; Input ; Info     ; Stuck at GND  ;
+; in1[1]    ; Input ; Info     ; Stuck at VCC  ;
+; in1[0]    ; Input ; Info     ; Stuck at GND  ;
++-----------+-------+----------+---------------+
+
+
++------------------------------------------------------------+
+; Port Connectivity Checks: "comparator_8bit:handshake_comp" ;
++--------------+-------+----------+--------------------------+
+; Port         ; Type  ; Severity ; Details                  ;
++--------------+-------+----------+--------------------------+
+; data_b[4..3] ; Input ; Info     ; Stuck at GND             ;
+; data_b[7]    ; Input ; Info     ; Stuck at VCC             ;
+; data_b[6]    ; Input ; Info     ; Stuck at GND             ;
+; data_b[5]    ; Input ; Info     ; Stuck at VCC             ;
+; data_b[2]    ; Input ; Info     ; Stuck at VCC             ;
+; data_b[1]    ; Input ; Info     ; Stuck at GND             ;
+; data_b[0]    ; Input ; Info     ; Stuck at VCC             ;
++--------------+-------+----------+--------------------------+
+
+
++----------------------------------------------------------+
+; Port Connectivity Checks: "edge_detector:edge_cs"        ;
++-------------+--------+----------+------------------------+
+; Port        ; Type   ; Severity ; Details                ;
++-------------+--------+----------+------------------------+
+; rising_edge ; Output ; Info     ; Explicitly unconnected ;
++-------------+--------+----------+------------------------+
+
+
++-----------------------------------------------------+
+; Post-Synthesis Netlist Statistics for Top Partition ;
++-----------------------+-----------------------------+
+; Type                  ; Count                       ;
++-----------------------+-----------------------------+
+; arriav_ff             ; 43                          ;
+;     CLR               ; 13                          ;
+;     ENA CLR           ; 30                          ;
+; arriav_lcell_comb     ; 33                          ;
+;     normal            ; 33                          ;
+;         1 data inputs ; 1                           ;
+;         2 data inputs ; 4                           ;
+;         3 data inputs ; 4                           ;
+;         4 data inputs ; 10                          ;
+;         5 data inputs ; 12                          ;
+;         6 data inputs ; 2                           ;
+; boundary_port         ; 12                          ;
+;                       ;                             ;
+; Max LUT depth         ; 2.00                        ;
+; Average LUT depth     ; 1.30                        ;
++-----------------------+-----------------------------+
+
+
++-------------------------------+
+; Elapsed Time Per Partition    ;
++----------------+--------------+
+; Partition Name ; Elapsed Time ;
++----------------+--------------+
+; Top            ; 00:00:00     ;
++----------------+--------------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime Analysis & Synthesis
+    Info: Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
+    Info: Processing started: Thu Oct 23 11:00:51 2025
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off ProyectoFACGrupal -c ProyectoFACGrupal
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (20030): Parallel compilation is enabled and will use 8 of the 8 processors detected
+Warning (12019): Can't analyze file -- file watchdog_timer.sv is missing
+Warning (12019): Can't analyze file -- file command_decoder.sv is missing
+Info (12021): Found 1 design units, including 1 entities, in source file spi_fsm.sv
+    Info (12023): Found entity 1: spi_fsm File: C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/spi_fsm.sv Line: 5
+Info (12021): Found 1 design units, including 1 entities, in source file register_8bit.sv
+    Info (12023): Found entity 1: register_8bit File: C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/register_8bit.sv Line: 4
+Info (12021): Found 1 design units, including 1 entities, in source file register_4bit.sv
+    Info (12023): Found entity 1: register_4bit File: C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/register_4bit.sv Line: 4
+Info (12021): Found 1 design units, including 1 entities, in source file mux2_8bit.sv
+    Info (12023): Found entity 1: mux2_8bit File: C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/mux2_8bit.sv Line: 4
+Info (12021): Found 1 design units, including 1 entities, in source file control_signal_generator.sv
+    Info (12023): Found entity 1: control_signal_generator File: C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/control_signal_generator.sv Line: 4
+Info (12021): Found 1 design units, including 1 entities, in source file comparator_8bit.sv
+    Info (12023): Found entity 1: comparator_8bit File: C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/comparator_8bit.sv Line: 4
+Info (12021): Found 1 design units, including 1 entities, in source file tx_response_generator.sv
+    Info (12023): Found entity 1: tx_response_generator File: C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/tx_response_generator.sv Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file synchronizer.sv
+    Info (12023): Found entity 1: synchronizer File: C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/synchronizer.sv Line: 4
+Info (12021): Found 1 design units, including 1 entities, in source file spi_slave_fsm.sv
+    Info (12023): Found entity 1: spi_slave_fsm File: C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/spi_slave_fsm.sv Line: 4
+Info (12021): Found 1 design units, including 1 entities, in source file spi_loopback_test.sv
+    Info (12023): Found entity 1: spi_loopback_test File: C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/spi_loopback_test.sv Line: 5
+Info (12021): Found 1 design units, including 1 entities, in source file shift_register_tx.sv
+    Info (12023): Found entity 1: shift_register_tx File: C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/shift_register_tx.sv Line: 5
+Info (12021): Found 1 design units, including 1 entities, in source file shift_register_rx.sv
+    Info (12023): Found entity 1: shift_register_rx File: C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/shift_register_rx.sv Line: 4
+Info (12021): Found 1 design units, including 1 entities, in source file led_register.sv
+    Info (12023): Found entity 1: led_register File: C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/led_register.sv Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file handshake.sv
+    Info (12023): Found entity 1: handshake File: C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/handshake.sv Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file edge_detector.sv
+    Info (12023): Found entity 1: edge_detector File: C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/edge_detector.sv Line: 4
+Info (12021): Found 1 design units, including 1 entities, in source file bit_counter.sv
+    Info (12023): Found entity 1: bit_counter File: C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/bit_counter.sv Line: 4
+Info (12127): Elaborating entity "spi_slave_fsm" for the top level hierarchy
+Info (12128): Elaborating entity "synchronizer" for hierarchy "synchronizer:sync_sck_inst" File: C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/spi_slave_fsm.sv Line: 53
+Info (12128): Elaborating entity "edge_detector" for hierarchy "edge_detector:edge_sck" File: C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/spi_slave_fsm.sv Line: 73
+Info (12128): Elaborating entity "shift_register_rx" for hierarchy "shift_register_rx:rx_shift_inst" File: C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/spi_slave_fsm.sv Line: 90
+Info (12128): Elaborating entity "shift_register_tx" for hierarchy "shift_register_tx:tx_shift_inst" File: C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/spi_slave_fsm.sv Line: 98
+Info (12128): Elaborating entity "bit_counter" for hierarchy "bit_counter:counter" File: C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/spi_slave_fsm.sv Line: 108
+Info (12128): Elaborating entity "comparator_8bit" for hierarchy "comparator_8bit:handshake_comp" File: C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/spi_slave_fsm.sv Line: 117
+Info (12128): Elaborating entity "spi_fsm" for hierarchy "spi_fsm:fsm_inst" File: C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/spi_slave_fsm.sv Line: 133
+Info (12128): Elaborating entity "control_signal_generator" for hierarchy "control_signal_generator:ctrl_gen" File: C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/spi_slave_fsm.sv Line: 152
+Info (12128): Elaborating entity "mux2_8bit" for hierarchy "mux2_8bit:tx_mux" File: C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/spi_slave_fsm.sv Line: 162
+Info (12128): Elaborating entity "register_8bit" for hierarchy "register_8bit:tx_data_reg_inst" File: C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/spi_slave_fsm.sv Line: 172
+Info (12128): Elaborating entity "register_4bit" for hierarchy "register_4bit:led_reg" File: C:/Proyectos/FAC/ProyectoGrupal/FGonzalez_compu_archi_found_G1_2025/SLAVE/spi_slave_fsm.sv Line: 184
+Info (286030): Timing-Driven Synthesis is running
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Info (21057): Implemented 64 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 5 input pins
+    Info (21059): Implemented 7 output pins
+    Info (21061): Implemented 52 logic cells
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 3 warnings
+    Info: Peak virtual memory: 4868 megabytes
+    Info: Processing ended: Thu Oct 23 11:01:03 2025
+    Info: Elapsed time: 00:00:12
+    Info: Total CPU time (on all processors): 00:00:26
+
+

@@ -1,0 +1,326 @@
+|spi_slave_fsm
+clk => clk.IN12
+rst_n => rst_n.IN12
+spi_sck => spi_sck.IN1
+spi_mosi => spi_mosi.IN1
+spi_cs_n => spi_cs_n.IN1
+spi_miso <= shift_register_tx:tx_shift_inst.serial_out
+leds[0] <= led_data[0].DB_MAX_OUTPUT_PORT_TYPE
+leds[1] <= led_data[1].DB_MAX_OUTPUT_PORT_TYPE
+leds[2] <= led_data[2].DB_MAX_OUTPUT_PORT_TYPE
+leds[3] <= led_data[3].DB_MAX_OUTPUT_PORT_TYPE
+handshake_ok <= handshake_ok~reg0.DB_MAX_OUTPUT_PORT_TYPE
+data_valid <= state_process.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|spi_slave_fsm|synchronizer:sync_sck_inst
+clk => sync_out~reg0.CLK
+clk => sync_ff1.CLK
+rst_n => sync_out~reg0.ACLR
+rst_n => sync_ff1.ACLR
+async_in => sync_ff1.DATAIN
+sync_out <= sync_out~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|spi_slave_fsm|synchronizer:sync_cs_inst
+clk => sync_out~reg0.CLK
+clk => sync_ff1.CLK
+rst_n => sync_out~reg0.ACLR
+rst_n => sync_ff1.ACLR
+async_in => sync_ff1.DATAIN
+sync_out <= sync_out~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|spi_slave_fsm|synchronizer:sync_mosi_inst
+clk => sync_out~reg0.CLK
+clk => sync_ff1.CLK
+rst_n => sync_out~reg0.ACLR
+rst_n => sync_ff1.ACLR
+async_in => sync_ff1.DATAIN
+sync_out <= sync_out~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|spi_slave_fsm|edge_detector:edge_sck
+clk => signal_prev.CLK
+rst_n => signal_prev.ACLR
+signal_in => rising_edge.IN1
+signal_in => signal_prev.DATAIN
+signal_in => falling_edge.IN1
+rising_edge <= rising_edge.DB_MAX_OUTPUT_PORT_TYPE
+falling_edge <= falling_edge.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|spi_slave_fsm|edge_detector:edge_cs
+clk => signal_prev.CLK
+rst_n => signal_prev.ACLR
+signal_in => rising_edge.IN1
+signal_in => signal_prev.DATAIN
+signal_in => falling_edge.IN1
+rising_edge <= rising_edge.DB_MAX_OUTPUT_PORT_TYPE
+falling_edge <= falling_edge.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|spi_slave_fsm|shift_register_rx:rx_shift_inst
+clk => shift_reg[0].CLK
+clk => shift_reg[1].CLK
+clk => shift_reg[2].CLK
+clk => shift_reg[3].CLK
+clk => shift_reg[4].CLK
+clk => shift_reg[5].CLK
+clk => shift_reg[6].CLK
+clk => shift_reg[7].CLK
+rst_n => shift_reg[0].ACLR
+rst_n => shift_reg[1].ACLR
+rst_n => shift_reg[2].ACLR
+rst_n => shift_reg[3].ACLR
+rst_n => shift_reg[4].ACLR
+rst_n => shift_reg[5].ACLR
+rst_n => shift_reg[6].ACLR
+rst_n => shift_reg[7].ACLR
+enable => shift_reg[0].ENA
+enable => shift_reg[7].ENA
+enable => shift_reg[6].ENA
+enable => shift_reg[5].ENA
+enable => shift_reg[4].ENA
+enable => shift_reg[3].ENA
+enable => shift_reg[2].ENA
+enable => shift_reg[1].ENA
+serial_in => shift_reg[0].DATAIN
+parallel_out[0] <= shift_reg[0].DB_MAX_OUTPUT_PORT_TYPE
+parallel_out[1] <= shift_reg[1].DB_MAX_OUTPUT_PORT_TYPE
+parallel_out[2] <= shift_reg[2].DB_MAX_OUTPUT_PORT_TYPE
+parallel_out[3] <= shift_reg[3].DB_MAX_OUTPUT_PORT_TYPE
+parallel_out[4] <= shift_reg[4].DB_MAX_OUTPUT_PORT_TYPE
+parallel_out[5] <= shift_reg[5].DB_MAX_OUTPUT_PORT_TYPE
+parallel_out[6] <= shift_reg[6].DB_MAX_OUTPUT_PORT_TYPE
+parallel_out[7] <= shift_reg[7].DB_MAX_OUTPUT_PORT_TYPE
+
+
+|spi_slave_fsm|shift_register_tx:tx_shift_inst
+clk => serial_out~reg0.CLK
+clk => shift_reg[0].CLK
+clk => shift_reg[1].CLK
+clk => shift_reg[2].CLK
+clk => shift_reg[3].CLK
+clk => shift_reg[4].CLK
+clk => shift_reg[5].CLK
+clk => shift_reg[6].CLK
+rst_n => serial_out~reg0.PRESET
+rst_n => shift_reg[0].ACLR
+rst_n => shift_reg[1].PRESET
+rst_n => shift_reg[2].ACLR
+rst_n => shift_reg[3].PRESET
+rst_n => shift_reg[4].PRESET
+rst_n => shift_reg[5].ACLR
+rst_n => shift_reg[6].PRESET
+load => shift_reg.OUTPUTSELECT
+load => shift_reg.OUTPUTSELECT
+load => shift_reg.OUTPUTSELECT
+load => shift_reg.OUTPUTSELECT
+load => shift_reg.OUTPUTSELECT
+load => shift_reg.OUTPUTSELECT
+load => shift_reg.OUTPUTSELECT
+load => serial_out.OUTPUTSELECT
+shift => shift_reg.OUTPUTSELECT
+shift => shift_reg.OUTPUTSELECT
+shift => shift_reg.OUTPUTSELECT
+shift => shift_reg.OUTPUTSELECT
+shift => shift_reg.OUTPUTSELECT
+shift => shift_reg.OUTPUTSELECT
+shift => shift_reg.OUTPUTSELECT
+shift => serial_out.OUTPUTSELECT
+parallel_in[0] => shift_reg.DATAB
+parallel_in[1] => shift_reg.DATAB
+parallel_in[2] => shift_reg.DATAB
+parallel_in[3] => shift_reg.DATAB
+parallel_in[4] => shift_reg.DATAB
+parallel_in[5] => shift_reg.DATAB
+parallel_in[6] => shift_reg.DATAB
+parallel_in[7] => serial_out.DATAB
+serial_out <= serial_out~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|spi_slave_fsm|bit_counter:counter
+clk => count_reg[0].CLK
+clk => count_reg[1].CLK
+clk => count_reg[2].CLK
+rst_n => count_reg[0].ACLR
+rst_n => count_reg[1].ACLR
+rst_n => count_reg[2].ACLR
+enable => count_reg.OUTPUTSELECT
+enable => count_reg.OUTPUTSELECT
+enable => count_reg.OUTPUTSELECT
+clear => count_reg.OUTPUTSELECT
+clear => count_reg.OUTPUTSELECT
+clear => count_reg.OUTPUTSELECT
+count[0] <= count_reg[0].DB_MAX_OUTPUT_PORT_TYPE
+count[1] <= count_reg[1].DB_MAX_OUTPUT_PORT_TYPE
+count[2] <= count_reg[2].DB_MAX_OUTPUT_PORT_TYPE
+
+
+|spi_slave_fsm|comparator_8bit:handshake_comp
+data_a[0] => Equal0.IN7
+data_a[1] => Equal0.IN6
+data_a[2] => Equal0.IN5
+data_a[3] => Equal0.IN4
+data_a[4] => Equal0.IN3
+data_a[5] => Equal0.IN2
+data_a[6] => Equal0.IN1
+data_a[7] => Equal0.IN0
+data_b[0] => Equal0.IN15
+data_b[1] => Equal0.IN14
+data_b[2] => Equal0.IN13
+data_b[3] => Equal0.IN12
+data_b[4] => Equal0.IN11
+data_b[5] => Equal0.IN10
+data_b[6] => Equal0.IN9
+data_b[7] => Equal0.IN8
+equal <= Equal0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|spi_slave_fsm|spi_fsm:fsm_inst
+clk => state_reg~4.DATAIN
+rst_n => state_reg~6.DATAIN
+cs_active => state_reg.DATAB
+cs_active => state_reg.OUTPUTSELECT
+cs_active => state_reg.OUTPUTSELECT
+cs_active => state_reg.OUTPUTSELECT
+cs_active => state_reg.DATAB
+bit_count_7 => always0.IN0
+sck_rising => always0.IN1
+state_idle <= state_idle.DB_MAX_OUTPUT_PORT_TYPE
+state_transfer <= state_transfer.DB_MAX_OUTPUT_PORT_TYPE
+state_process <= state_process.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|spi_slave_fsm|control_signal_generator:ctrl_gen
+clk => bit_count_prev[0].CLK
+clk => bit_count_prev[1].CLK
+clk => bit_count_prev[2].CLK
+rst_n => bit_count_prev[0].ACLR
+rst_n => bit_count_prev[1].ACLR
+rst_n => bit_count_prev[2].ACLR
+state_idle => bit_count_prev.OUTPUTSELECT
+state_idle => bit_count_prev.OUTPUTSELECT
+state_idle => bit_count_prev.OUTPUTSELECT
+state_idle => tx_load.IN0
+state_idle => counter_clear.DATAIN
+state_transfer => rx_enable.IN0
+state_transfer => tx_shift.IN0
+state_transfer => counter_enable.IN0
+state_process => ~NO_FANOUT~
+cs_falling => tx_load.IN1
+sck_rising => rx_enable.IN1
+sck_rising => counter_enable.IN1
+sck_falling => tx_shift.IN1
+bit_count[0] => bit_count_prev.DATAB
+bit_count[1] => bit_count_prev.DATAB
+bit_count[2] => bit_count_prev.DATAB
+rx_enable <= rx_enable.DB_MAX_OUTPUT_PORT_TYPE
+tx_load <= tx_load.DB_MAX_OUTPUT_PORT_TYPE
+tx_shift <= tx_shift.DB_MAX_OUTPUT_PORT_TYPE
+counter_enable <= counter_enable.DB_MAX_OUTPUT_PORT_TYPE
+counter_clear <= state_idle.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|spi_slave_fsm|mux2_8bit:tx_mux
+in0[0] => out.DATAA
+in0[1] => out.DATAA
+in0[2] => out.DATAA
+in0[3] => out.DATAA
+in0[4] => out.DATAA
+in0[5] => out.DATAA
+in0[6] => out.DATAA
+in0[7] => out.DATAA
+in1[0] => out.DATAB
+in1[1] => out.DATAB
+in1[2] => out.DATAB
+in1[3] => out.DATAB
+in1[4] => out.DATAB
+in1[5] => out.DATAB
+in1[6] => out.DATAB
+in1[7] => out.DATAB
+sel => out.OUTPUTSELECT
+sel => out.OUTPUTSELECT
+sel => out.OUTPUTSELECT
+sel => out.OUTPUTSELECT
+sel => out.OUTPUTSELECT
+sel => out.OUTPUTSELECT
+sel => out.OUTPUTSELECT
+sel => out.OUTPUTSELECT
+out[0] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[1] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[2] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[3] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[4] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[5] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[6] <= out.DB_MAX_OUTPUT_PORT_TYPE
+out[7] <= out.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|spi_slave_fsm|register_8bit:tx_data_reg_inst
+clk => reg_data[0].CLK
+clk => reg_data[1].CLK
+clk => reg_data[2].CLK
+clk => reg_data[3].CLK
+clk => reg_data[4].CLK
+clk => reg_data[5].CLK
+clk => reg_data[6].CLK
+clk => reg_data[7].CLK
+rst_n => reg_data[0].ACLR
+rst_n => reg_data[1].ACLR
+rst_n => reg_data[2].ACLR
+rst_n => reg_data[3].ACLR
+rst_n => reg_data[4].ACLR
+rst_n => reg_data[5].ACLR
+rst_n => reg_data[6].ACLR
+rst_n => reg_data[7].ACLR
+enable => reg_data[0].ENA
+enable => reg_data[7].ENA
+enable => reg_data[6].ENA
+enable => reg_data[5].ENA
+enable => reg_data[4].ENA
+enable => reg_data[3].ENA
+enable => reg_data[2].ENA
+enable => reg_data[1].ENA
+data_in[0] => reg_data[0].DATAIN
+data_in[1] => reg_data[1].DATAIN
+data_in[2] => reg_data[2].DATAIN
+data_in[3] => reg_data[3].DATAIN
+data_in[4] => reg_data[4].DATAIN
+data_in[5] => reg_data[5].DATAIN
+data_in[6] => reg_data[6].DATAIN
+data_in[7] => reg_data[7].DATAIN
+data_out[0] <= reg_data[0].DB_MAX_OUTPUT_PORT_TYPE
+data_out[1] <= reg_data[1].DB_MAX_OUTPUT_PORT_TYPE
+data_out[2] <= reg_data[2].DB_MAX_OUTPUT_PORT_TYPE
+data_out[3] <= reg_data[3].DB_MAX_OUTPUT_PORT_TYPE
+data_out[4] <= reg_data[4].DB_MAX_OUTPUT_PORT_TYPE
+data_out[5] <= reg_data[5].DB_MAX_OUTPUT_PORT_TYPE
+data_out[6] <= reg_data[6].DB_MAX_OUTPUT_PORT_TYPE
+data_out[7] <= reg_data[7].DB_MAX_OUTPUT_PORT_TYPE
+
+
+|spi_slave_fsm|register_4bit:led_reg
+clk => reg_data[0].CLK
+clk => reg_data[1].CLK
+clk => reg_data[2].CLK
+clk => reg_data[3].CLK
+rst_n => reg_data[0].ACLR
+rst_n => reg_data[1].ACLR
+rst_n => reg_data[2].ACLR
+rst_n => reg_data[3].ACLR
+enable => reg_data[0].ENA
+enable => reg_data[3].ENA
+enable => reg_data[2].ENA
+enable => reg_data[1].ENA
+data_in[0] => reg_data[0].DATAIN
+data_in[1] => reg_data[1].DATAIN
+data_in[2] => reg_data[2].DATAIN
+data_in[3] => reg_data[3].DATAIN
+data_out[0] <= reg_data[0].DB_MAX_OUTPUT_PORT_TYPE
+data_out[1] <= reg_data[1].DB_MAX_OUTPUT_PORT_TYPE
+data_out[2] <= reg_data[2].DB_MAX_OUTPUT_PORT_TYPE
+data_out[3] <= reg_data[3].DB_MAX_OUTPUT_PORT_TYPE
+
+
