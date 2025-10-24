@@ -41,17 +41,17 @@
 /*
 !/*.gitignore
 ##
-!*.qpf
-!*.qsf
-!*.qws
-!*.bdf
-!*.vhd
-!*.v
-!*.ptf
-!*.bsf
-!**/class.ptf
-!*.tbd
-!*.sof
+# Ignorar archivos temporales y bloqueados de Quartus
+db/
+incremental_db/
+output_files/
+*.qpf~
+*.qsf~
+*.sof
+*.pof
+*.rpt
+*.bak
+*.sv~
 
 # Permitir la carpeta SLAVE y archivos .sv
 !SLAVE/
