@@ -1,0 +1,45 @@
+# ===========================
+# Ignorar archivos temporales y bloqueados de Quartus
+# ===========================
+db/
+incremental_db/
+output_files/
+*.qpf~
+*.qsf~
+*.sof
+*.pof
+*.rpt
+*.bak
+*.sv~
+
+# ===========================
+# Ignorar archivos de Thonny y MicroPython
+# ===========================
+# Archivos compilados por MicroPython
+*.mpy
+
+# Archivos temporales o de caché de Thonny
+.thonny/
+__pycache__/
+*.pyc
+*.pyo
+*.bak
+
+# Archivos de configuración y ejecución
+.env/
+.venv/
+*.log
+*.tmp
+
+# Archivos de dispositivo o firmware
+*.uf2
+*.hex
+*.bin
+
+# Archivos generados al subir código o logs de puerto serie
+*.log
+
+
+# Copias locales o temporales de sesiones
+*.backup
+*.autosave
