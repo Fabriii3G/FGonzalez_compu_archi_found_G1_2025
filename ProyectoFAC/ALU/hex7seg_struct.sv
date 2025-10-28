@@ -1,38 +1,37 @@
-// Decodificador HEX -> 7 segmentos (activo-alto)
-// Salida seg[6:0] = {a,b,c,d,e,f,g}
+// Entrada: hex[3:0]; Salida: seg[6:0] orden a..g, activo-alto (1=segmento encendido)
 module hex7seg_struct(
-  input  logic [3:0] hex,     // {h3 h2 h1 h0}
-  output logic [6:0] seg      // {a,b,c,d,e,f,g}
+    input  logic [3:0] hex,
+    output logic [6:0] seg
 );
-  wire h3=hex[3], h2=hex[2], h1=hex[1], h0=hex[0];
-  wire n3=~h3,    n2=~h2,    n1=~h1,    n0=~h0;
+    // One-hot comparadores
+    wire h0  = ~(hex[3]|hex[2]|hex[1]|hex[0]);
+    wire h1  = ~hex[3] & ~hex[2] & ~hex[1] &  hex[0];
+    wire h2  = ~hex[3] & ~hex[2] &  hex[1] & ~hex[0];
+    wire h3  = ~hex[3] & ~hex[2] &  hex[1] &  hex[0];
+    wire h4  = ~hex[3] &  hex[2] & ~hex[1] & ~hex[0];
+    wire h5  = ~hex[3] &  hex[2] & ~hex[1] &  hex[0];
+    wire h6  = ~hex[3] &  hex[2] &  hex[1] & ~hex[0];
+    wire h7  = ~hex[3] &  hex[2] &  hex[1] &  hex[0];
+    wire h8  =  hex[3] & ~hex[2] & ~hex[1] & ~hex[0];
+    wire h9  =  hex[3] & ~hex[2] & ~hex[1] &  hex[0];
+    wire hA  =  hex[3] & ~hex[2] &  hex[1] & ~hex[0];
+    wire hB  =  hex[3] & ~hex[2] &  hex[1] &  hex[0];
+    wire hC  =  hex[3] &  hex[2] & ~hex[1] & ~hex[0];
+    wire hD  =  hex[3] &  hex[2] & ~hex[1] &  hex[0];
+    wire hE  =  hex[3] &  hex[2] &  hex[1] & ~hex[0];
+    wire hF  =  hex[3] &  hex[2] &  hex[1] &  hex[0];
 
-  // Minterminos 0..15 (one-hot)
-  wire m0  = n3 & n2 & n1 & n0;
-  wire m1  = n3 & n2 & n1 & h0;
-  wire m2  = n3 & n2 & h1 & n0;
-  wire m3  = n3 & n2 & h1 & h0;
-  wire m4  = n3 & h2 & n1 & n0;
-  wire m5  = n3 & h2 & n1 & h0;
-  wire m6  = n3 & h2 & h1 & n0;
-  wire m7  = n3 & h2 & h1 & h0;
-  wire m8  = h3 & n2 & n1 & n0;
-  wire m9  = h3 & n2 & n1 & h0;
-  wire m10 = h3 & n2 & h1 & n0;
-  wire m11 = h3 & n2 & h1 & h0;
-  wire m12 = h3 & h2 & n1 & n0;
-  wire m13 = h3 & h2 & n1 & h0;
-  wire m14 = h3 & h2 & h1 & n0;
-  wire m15 = h3 & h2 & h1 & h0;
-
-  // Segmentos activos (a..g) para 0..F (común cátodo, activo-alto)
-  wire a = m0 | m2 | m3 | m5 | m6 | m7 | m8 | m9 | m10 | m12 | m14 | m15;
-  wire b = m0 | m1 | m2 | m3 | m4 | m7 | m8 | m9 | m10 | m13;
-  wire c = m0 | m1 | m3 | m4 | m5 | m6 | m7 | m8 | m9 | m10 | m11 | m13;
-  wire d = m0 | m2 | m3 | m5 | m6 | m8 | m9 | m11 | m12 | m13 | m14;
-  wire e = m0 | m2 | m6 | m8 | m10 | m11 | m12 | m13 | m14 | m15;
-  wire f = m0 | m4 | m5 | m6 | m8 | m9 | m10 | m11 | m12 | m14 | m15;
-  wire g =       m2 | m3 | m4 | m5 | m6 | m8 | m9 | m10 | m11 | m13 | m14 | m15;
-
-  assign seg = {a,b,c,d,e,f,g};
+    // Tabla a..g (activo-alto) sin ?: (OR de constantes enmascaradas)
+    // 0→ 1111110, 1→ 0110000, 2→ 1101101, 3→1111001, 4→0110011
+    // 5→ 1011011, 6→ 1011111, 7→1110000, 8→1111111, 9→1111011
+    // A→ 1110111, b→ 0011111, C→1001110, d→0111101, E→1001111, F→1000111
+    assign seg =
+      ({7{h0}} & 7'b1111110) | ({7{h1}} & 7'b0110000) |
+      ({7{h2}} & 7'b1101101) | ({7{h3}} & 7'b1111001) |
+      ({7{h4}} & 7'b0110011) | ({7{h5}} & 7'b1011011) |
+      ({7{h6}} & 7'b1011111) | ({7{h7}} & 7'b1110000) |
+      ({7{h8}} & 7'b1111111) | ({7{h9}} & 7'b1111011) |
+      ({7{hA}} & 7'b1110111) | ({7{hB}} & 7'b0011111) |
+      ({7{hC}} & 7'b1001110) | ({7{hD}} & 7'b0111101) |
+      ({7{hE}} & 7'b1001111) | ({7{hF}} & 7'b1000111);
 endmodule

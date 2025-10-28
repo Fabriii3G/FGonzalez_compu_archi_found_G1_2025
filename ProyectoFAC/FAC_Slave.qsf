@@ -39,7 +39,7 @@
 
 set_global_assignment -name FAMILY "Cyclone V"
 set_global_assignment -name DEVICE 5CSXFC6D6F31C6
-set_global_assignment -name TOP_LEVEL_ENTITY spi_slave_fsm
+set_global_assignment -name TOP_LEVEL_ENTITY spi_alu_top
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 20.1.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "23:41:51  OCTOBER 23, 2025"
 set_global_assignment -name LAST_QUARTUS_VERSION "20.1.0 Lite Edition"
@@ -49,9 +49,6 @@ set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
 set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
-set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
-set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
-set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_location_assignment PIN_AK2 -to spi_sck
 set_location_assignment PIN_AJ2 -to data_valid
 set_location_assignment PIN_AJ1 -to handshake_ok
@@ -93,4 +90,21 @@ set_global_assignment -name SYSTEMVERILOG_FILE PWM/pwm16_struct.sv
 set_global_assignment -name SYSTEMVERILOG_FILE PWM/dff1.sv
 set_global_assignment -name SYSTEMVERILOG_FILE PWM/contadorUpN.sv
 set_global_assignment -name SYSTEMVERILOG_FILE PWM/cmp_lt_strict.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ALU/multiplicadorCompletoN.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/spi_alu_top.sv
+set_location_assignment PIN_Y27 -to switches[0]
+set_location_assignment PIN_AB28 -to switches[1]
+set_location_assignment PIN_AC30 -to switches[2]
+set_location_assignment PIN_W25 -to switches[3]
+set_location_assignment PIN_W17 -to display[0]
+set_location_assignment PIN_V18 -to display[1]
+set_location_assignment PIN_AG17 -to display[2]
+set_location_assignment PIN_AG16 -to display[3]
+set_location_assignment PIN_AH17 -to display[4]
+set_location_assignment PIN_AG18 -to display[5]
+set_location_assignment PIN_AH18 -to display[6]
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name SYSTEMVERILOG_FILE 7SEG/DisplayAdapter.sv
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
