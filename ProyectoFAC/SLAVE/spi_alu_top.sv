@@ -1,18 +1,15 @@
 // ============================================================================
 // TOP: SPI Slave + ALU — Protocolo TOP1, lógica estructural (sin if/case/?)
-//  - Handshake 0xA5 -> 0x5A MISMO byte (preload 0x5A mientras !handshake_ok)
-//  - 0x1N = A, 0x2N = B, 0x30 = READ_RESULT (resultado en siguiente byte)
-//  - Modo-0: RX=SCK↑, MISO cambia en SCK↓, load en CS↓
-//  - Fix1: B_for_alu usa rx_lo en el cierre de B (sel_b)
-//  - Fix2: Latch de rx_byte y control con latch_byte (1 ciclo después del cierre)
-//  - Swap opcional de nibbles para ACKs y RESULT (para alinear con tu master.py)
+//  - LEDs[3:0] = resultado binario estático
+//  - pwm_led   = LED aparte con PWM (XOR para activo-bajo)
+//  - pwm_out   = misma señal PWM hacia pin externo
 // ============================================================================
-
 module spi_alu_top #(
-    parameter bit SW_ACTIVE_LOW     = 1'b0,
-    parameter bit LOOSE_HANDSHAKE   = 1'b1,  // 1 = acepta 1er byte como handshake aunque no sea 0xA5
-    parameter bit ACK_SWAP_NIBBLES  = 1'b1,  // 1 = swapea nibbles en ACK (recomendado con tu TX)
-    parameter bit RES_SWAP_NIBBLES  = 1'b1   // 1 = swapea nibbles en RESULT (recomendado con tu TX)
+    parameter bit SW_ACTIVE_LOW       = 1'b0,
+    parameter bit LOOSE_HANDSHAKE     = 1'b1,  // 1 = acepta 1er byte como handshake aunque no sea 0xA5
+    parameter bit ACK_SWAP_NIBBLES    = 1'b1,  // 1 = swapea nibbles en ACK
+    parameter bit RES_SWAP_NIBBLES    = 1'b1,  // 1 = swapea nibbles en RESULT
+    parameter bit PWM_LED_ACTIVE_LOW  = 1'b1   // 1 si el LED onboard para PWM es activo-bajo
 )(
     input  logic        clk,
     input  logic        rst_n,
@@ -27,10 +24,14 @@ module spi_alu_top #(
     input  logic [3:0]  switches,
 
     // Salidas
-    output logic [3:0]  leds,
-    output logic [6:0]  display,
+    output logic [3:0]  leds,       // ← SIEMPRE el número (resultado) en binario
+    output logic [6:0]  display,    // 7 segmentos (HEX del resultado)
     output logic        handshake_ok,
-    output logic        data_valid
+    output logic        data_valid,
+
+    // PWM
+    output logic        pwm_out,    // pin externo (driver/motor/filtro RC)
+    output logic        pwm_led     // LED aparte para ver el PWM sin tocar leds[3:0]
 );
 
     // ------------------------------ Constantes
@@ -52,8 +53,6 @@ module spi_alu_top #(
     logic [7:0] rx_data;
     logic [7:0] tx_data_reg;
 
-    // shift_register_rx: MSB-first en SCK↑
-    // shift_register_tx: saca MSB en SCK↓; carga con tx_load (CS↓)
     shift_register_rx rx_shift_inst (
         .clk(clk), .rst_n(rst_n),
         .enable(rx_enable),
@@ -61,7 +60,7 @@ module spi_alu_top #(
         .parallel_out(rx_data)
     );
 
-    // PRELOAD 0x5A mientras !handshake_ok → handshake 1-byte garantizado
+    // PRELOAD 0x5A mientras !handshake_ok
     wire [7:0] tx_preload =
         ({8{ handshake_ok}} & tx_data_reg   ) |
         ({8{~handshake_ok}} & HANDSHAKE_RESP);
@@ -74,7 +73,7 @@ module spi_alu_top #(
         .serial_out(spi_miso)
     );
 
-    // ------------------------------ Contador y control Modo-0
+    // ------------------------------ Control SPI modo-0
     logic [2:0] bit_count;
     bit_counter u_cnt (.clk(clk), .rst_n(rst_n), .enable(counter_enable), .clear(counter_clear), .count(bit_count));
 
@@ -90,13 +89,13 @@ module spi_alu_top #(
     wire bit_count_7   = (bit_count == 3'd7);
     wire process_pulse = cs_active & sck_rising & bit_count_7;
 
-    // *** Fix2: retrasa 1 ciclo el pulso de cierre de byte para evitar off-by-one ***
-    logic latch_byte; // 1 ciclo después del 8º SCK↑
+    // *** Fix2: retrasa 1 ciclo el cierre de byte ***
+    logic latch_byte;
     dffeas u_pp (.q(latch_byte), .d(process_pulse), .clk(clk),
                  .ena(1'b1), .clrn(rst_n), .prn(1'b1),
                  .asdata(1'b0), .aload(1'b0), .sclr(1'b0), .sload(1'b0));
 
-    // ------------------------------ Byte latcheado (con latch_byte)
+    // ------------------------------ Byte latcheado
     logic [7:0] rx_byte;
     wire  [7:0] rx_byte_d = ({8{ latch_byte}} & rx_data) | ({8{~latch_byte}} & rx_byte);
 
@@ -112,10 +111,10 @@ module spi_alu_top #(
     wire [3:0] rx_hi = rx_byte[7:4];
     wire [3:0] rx_lo = rx_byte[3:0];
 
-    // ------------------------------ Handshake (sobre rx_byte)
+    // ------------------------------ Handshake
     wire is_handshake_byte = (rx_byte == HANDSHAKE_CODE);
 
-    // ------------------------------ Switches sincronizados y operación efectiva
+    // ------------------------------ Switches sincronizados
     logic [3:0] sw_sync1, sw_sync2;
     genvar sw_i;
     generate
@@ -130,19 +129,19 @@ module spi_alu_top #(
     endgenerate
     wire [3:0] op_eff = sw_sync2 ^ {4{SW_ACTIVE_LOW}};
 
-    // ------------------------------ Decodificación (sobre rx_byte)
+    // ------------------------------ Decodificación
     wire dec_A = (rx_hi == 4'h1);                         // 0x1N
     wire dec_B = (rx_hi == 4'h2);                         // 0x2N
     wire dec_R = (rx_byte == 8'h30) | (rx_hi == 4'h3);    // 0x30 ó 0x3N
 
-    // Priorización (hs > A > B > R > keep)
+    // Priorización
     wire sel_hs = is_handshake_byte;
     wire sel_a  = (~sel_hs) &  dec_A;
     wire sel_b  = (~sel_hs) & (~dec_A) & dec_B;
     wire sel_r  = (~sel_hs) & (~dec_A) & (~dec_B) & dec_R;
     wire sel_k  = (~sel_hs) & (~dec_A) & (~dec_B) & (~dec_R);
 
-    // ------------------------------ Banco de registros A/B/OP (carga con latch_byte)
+    // ------------------------------ Banco de registros A/B/OP
     logic [3:0] A_reg, B_reg, op_latched;
 
     wire load_A = sel_a & latch_byte;
@@ -171,7 +170,7 @@ module spi_alu_top #(
         end
     endgenerate
 
-    // ------------------------------ ALU combinacional (B_for_alu con rx_lo en B)
+    // ------------------------------ ALU combinacional
     wire [3:0] B_for_alu =
         ({4{ sel_b}} & rx_lo ) |
         ({4{~sel_b}} & B_reg );
@@ -194,7 +193,7 @@ module spi_alu_top #(
         .segments_units(seg_unused)
     );
 
-    // ------------------------------ Resultado registrado (cuando llega B)
+    // ------------------------------ Resultado registrado
     logic [3:0] result_reg;
     wire [3:0] result_d = ({4{ load_B}} & alu_S) | ({4{~load_B}} & result_reg);
 
@@ -214,16 +213,14 @@ module spi_alu_top #(
                  .asdata(1'b0), .aload(1'b0), .sclr(1'b0), .sload(1'b0));
 
     // ------------------------------ TX path (ACK / RESULT para la SIGUIENTE transacción)
-    // ACK base (sobre rx_byte latcheado)
     wire [7:0] ack_A_base = {4'hA, rx_lo};
     wire [7:0] ack_B_base = {4'hB, rx_lo};
-    // Swap opcional de nibbles por si tu TX/lectura los invierte
+
     wire [7:0] ack_A = ({8{~ACK_SWAP_NIBBLES}} & ack_A_base) |
                        ({8{ ACK_SWAP_NIBBLES}} & {ack_A_base[3:0], ack_A_base[7:4]});
     wire [7:0] ack_B = ({8{~ACK_SWAP_NIBBLES}} & ack_B_base) |
                        ({8{ ACK_SWAP_NIBBLES}} & {ack_B_base[3:0], ack_B_base[7:4]});
 
-    // Resultado (swap opcional igual que ACK)
     wire [7:0] tx_prep_res_base = {4'h0, result_reg};
     wire [7:0] tx_prep_res      = ({8{~RES_SWAP_NIBBLES}} & tx_prep_res_base) |
                                   ({8{ RES_SWAP_NIBBLES}} & {tx_prep_res_base[3:0], tx_prep_res_base[7:4]});
@@ -237,7 +234,6 @@ module spi_alu_top #(
         ({8{ sel_r }} & tx_prep_res) |
         ({8{ sel_k }} & tx_data_reg);
 
-    // Registrar el TX al cierre del byte (latch_byte)
     wire [7:0] tx_d =
         ({8{ latch_byte}} & tx_sel_process) |
         ({8{~latch_byte}} & tx_data_reg);
@@ -251,7 +247,7 @@ module spi_alu_top #(
         end
     endgenerate
 
-    // ------------------------------ Handshake_ok robusto (con latch_byte)
+    // ------------------------------ Handshake_ok
     logic seen_first_byte;
     wire  seen_first_byte_d = seen_first_byte | latch_byte;
     dffeas u_seen (.q(seen_first_byte), .d(seen_first_byte_d), .clk(clk),
@@ -269,11 +265,11 @@ module spi_alu_top #(
                  .ena(1'b1), .clrn(rst_n), .prn(1'b1),
                  .asdata(1'b0), .aload(1'b0), .sclr(1'b0), .sload(1'b0));
 
-    // ------------------------------ Salidas
-    assign leds       = result_reg;
+    // ------------------------------ Salidas paralelas básicas
+    assign leds       = result_reg;   // ← los cuatro LEDs quedan como número
     assign data_valid = result_pulse;
 
-    // ------------------------------ Display 7-seg directo (ajústalo a tu placa)
+    // ------------------------------ Display 7-seg (ajusta a tu placa)
     wire [6:0] seg_ah_abcdefg; // a..g activo-alto
     hex7seg_struct u_hex (.hex(result_reg), .seg(seg_ah_abcdefg));
 
@@ -302,5 +298,26 @@ module spi_alu_top #(
     assign display =
         ({7{~COMMON_ANODE}} &  seg_ordered) |
         ({7{ COMMON_ANODE}} & ~seg_ordered);
+
+    // ============================== PWM ==============================
+    // f_pwm = f_clk / 2^CNTR_BITS. Con 50 MHz y 11 → ~24.4 kHz.
+    localparam int unsigned PWM_CNTR_BITS = 11;
+
+    wire pwm_en  = handshake_ok;   // o 1'b1 si quieres verlo siempre
+    wire [3:0] duty4 = result_reg; // 0..15
+
+    wire pwm_raw;
+    pwm16_struct #(.CNTR_BITS(PWM_CNTR_BITS)) u_pwm (
+        .clk    (clk),
+        .en     (pwm_en),
+        .duty   (duty4),
+        .pwm_out(pwm_raw)
+    );
+
+    // Mismo PWM hacia un pin externo…
+    assign pwm_out = pwm_raw;
+
+    // …y hacia un LED separado (XOR para activo-bajo si aplica)
+    assign pwm_led = pwm_raw ^ PWM_LED_ACTIVE_LOW;
 
 endmodule
