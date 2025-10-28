@@ -4,6 +4,7 @@
 //  - pwm_led   = LED aparte con PWM (XOR para activo-bajo)
 //  - pwm_out   = misma señal PWM hacia pin externo
 // ============================================================================
+
 module spi_alu_top #(
     parameter bit SW_ACTIVE_LOW       = 1'b0,
     parameter bit LOOSE_HANDSHAKE     = 1'b1,  // 1 = acepta 1er byte como handshake aunque no sea 0xA5
@@ -32,6 +33,13 @@ module spi_alu_top #(
     // PWM
     output logic        pwm_out,    // pin externo (driver/motor/filtro RC)
     output logic        pwm_led     // LED aparte para ver el PWM sin tocar leds[3:0]
+
+    // NUEVOS:
+    input  logic       sensor_serial,    // 1 pin GPIO del sensor
+    input  logic       sensor_btn,       // Botón KEY para capturar
+    output logic [3:0] sensor_leds,      // LEDs para mostrar bits capturados
+    output logic       sensor_valid_led  // LED: se enciende al completar 4 bits
+
 );
 
     // ------------------------------ Constantes
@@ -319,5 +327,22 @@ module spi_alu_top #(
 
     // …y hacia un LED separado (XOR para activo-bajo si aplica)
     assign pwm_led = pwm_raw ^ PWM_LED_ACTIVE_LOW;
+
+    // Instanciar sensor
+
+    logic [3:0] captured_data;
+    logic       capture_complete;
+    
+    sensor_capture u_sensor (
+        .clk         (clk),
+        .rst_n       (rst_n),
+        .sensor_data (sensor_serial),
+        .capture_btn (sensor_btn),
+        .stored_data (captured_data),
+        .data_valid  (capture_complete)
+    );
+    
+    assign sensor_leds      = captured_data;
+    assign sensor_valid_led = capture_complete;
 
 endmodule
