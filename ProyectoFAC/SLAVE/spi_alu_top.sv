@@ -4,13 +4,15 @@
 //  - 0x1N = A, 0x2N = B, 0x30 = READ_RESULT (resultado en siguiente byte)
 //  - Modo-0: RX=SCK↑, MISO cambia en SCK↓, load en CS↓
 //  - Fix1: B_for_alu usa rx_lo en el cierre de B (sel_b)
-//  - Fix2: Latch de rx_byte y control se hacen con latch_byte (1 ciclo después)
+//  - Fix2: Latch de rx_byte y control con latch_byte (1 ciclo después del cierre)
+//  - Swap opcional de nibbles para ACKs y RESULT (para alinear con tu master.py)
 // ============================================================================
 
 module spi_alu_top #(
     parameter bit SW_ACTIVE_LOW     = 1'b0,
     parameter bit LOOSE_HANDSHAKE   = 1'b1,  // 1 = acepta 1er byte como handshake aunque no sea 0xA5
-    parameter bit ACK_SWAP_NIBBLES  = 1'b0   // 1 = swapea nibbles en ACK si tu TX invierte nibbles
+    parameter bit ACK_SWAP_NIBBLES  = 1'b1,  // 1 = swapea nibbles en ACK (recomendado con tu TX)
+    parameter bit RES_SWAP_NIBBLES  = 1'b1   // 1 = swapea nibbles en RESULT (recomendado con tu TX)
 )(
     input  logic        clk,
     input  logic        rst_n,
@@ -50,11 +52,8 @@ module spi_alu_top #(
     logic [7:0] rx_data;
     logic [7:0] tx_data_reg;
 
-    // *** IMPORTANTE ***
-    // Asegúrate que shift_register_rx sea MSB-first en SCK↑:
-    //   parallel_out <= {serial_in, parallel_out[7:1]};
-    // y que shift_register_tx saque primero el MSB en SCK↓:
-    //   serial_out = shreg[7]; shreg <= {shreg[6:0],1'b0} en cada shift.
+    // shift_register_rx: MSB-first en SCK↑
+    // shift_register_tx: saca MSB en SCK↓; carga con tx_load (CS↓)
     shift_register_rx rx_shift_inst (
         .clk(clk), .rst_n(rst_n),
         .enable(rx_enable),
@@ -218,14 +217,18 @@ module spi_alu_top #(
     // ACK base (sobre rx_byte latcheado)
     wire [7:0] ack_A_base = {4'hA, rx_lo};
     wire [7:0] ack_B_base = {4'hB, rx_lo};
-    // Swap opcional de nibbles por si tu TX los invierte
+    // Swap opcional de nibbles por si tu TX/lectura los invierte
     wire [7:0] ack_A = ({8{~ACK_SWAP_NIBBLES}} & ack_A_base) |
                        ({8{ ACK_SWAP_NIBBLES}} & {ack_A_base[3:0], ack_A_base[7:4]});
     wire [7:0] ack_B = ({8{~ACK_SWAP_NIBBLES}} & ack_B_base) |
                        ({8{ ACK_SWAP_NIBBLES}} & {ack_B_base[3:0], ack_B_base[7:4]});
 
+    // Resultado (swap opcional igual que ACK)
+    wire [7:0] tx_prep_res_base = {4'h0, result_reg};
+    wire [7:0] tx_prep_res      = ({8{~RES_SWAP_NIBBLES}} & tx_prep_res_base) |
+                                  ({8{ RES_SWAP_NIBBLES}} & {tx_prep_res_base[3:0], tx_prep_res_base[7:4]});
+
     wire [7:0] tx_prep_hs  = HANDSHAKE_RESP;
-    wire [7:0] tx_prep_res = {4'h0, result_reg};
 
     wire [7:0] tx_sel_process =
         ({8{ sel_hs}} & tx_prep_hs ) |
@@ -234,7 +237,7 @@ module spi_alu_top #(
         ({8{ sel_r }} & tx_prep_res) |
         ({8{ sel_k }} & tx_data_reg);
 
-    // *** Usar latch_byte (no process_pulse) para registrar el TX al cierre del byte ***
+    // Registrar el TX al cierre del byte (latch_byte)
     wire [7:0] tx_d =
         ({8{ latch_byte}} & tx_sel_process) |
         ({8{~latch_byte}} & tx_data_reg);
@@ -249,8 +252,6 @@ module spi_alu_top #(
     endgenerate
 
     // ------------------------------ Handshake_ok robusto (con latch_byte)
-    // - Set si rx_byte == 0xA5 en el primer latch de byte (estricto)
-    // - O (si LOOSE_HANDSHAKE=1) set también si es el PRIMER byte tras reset
     logic seen_first_byte;
     wire  seen_first_byte_d = seen_first_byte | latch_byte;
     dffeas u_seen (.q(seen_first_byte), .d(seen_first_byte_d), .clk(clk),
