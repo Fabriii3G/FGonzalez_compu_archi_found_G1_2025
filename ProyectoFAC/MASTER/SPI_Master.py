@@ -5,6 +5,7 @@ import time
 # Configuración de pines
 # ============================================================================
 cs = Pin(17, Pin.OUT)
+sensor = Pin(15, Pin.OUT)
 
 # SPI (Pico W: SCK=GP18, MOSI=GP19, MISO=GP16) — Modo-0
 spi = SPI(0,
@@ -18,6 +19,7 @@ spi = SPI(0,
           miso=Pin(16))
 
 cs.value(1)  # CS inactivo
+sensor.value(1)
 
 # ============================================================================
 # Protocolo
@@ -25,9 +27,8 @@ cs.value(1)  # CS inactivo
 HANDSHAKE_SEND   = 0xA5
 HANDSHAKE_EXPECT = 0x5A
 
-CMD_SEND_A       = 0x10   # 0x1N
-CMD_SEND_B       = 0x20   # 0x2N
-CMD_READ_RESULT  = 0x30   # preparar resultado; recoger en dummy posterior
+CMD_SEND_A       = 0x10   # 0x1N → envía operando A
+CMD_READ_RESULT  = 0x30   # leer resultado de ALU
 
 # ============================================================================
 # Utilidades
@@ -64,135 +65,142 @@ def do_handshake():
     return False
 
 # ============================================================================
-# Comandos altos (con “doble dummy” para alinear pipeline)
+# Comandos
 # ============================================================================
 def send_operand_a(value):
-    """Envía A como 0x1N. El ACK final 0xAN llega tras dos dummies."""
+    """
+    Envía A como 0x1N. 
+    El operando B ahora viene del SENSOR (4 bits capturados con botón).
+    ACK final 0xAN llega tras dos dummies.
+    """
     value &= 0x0F
     cmd = CMD_SEND_A | value
-    print(f"Enviando operando A: 0x{value:X} (0b{value:04b})")
+    print(f"\nEnviando operando A: 0x{value:X} (0b{value:04b}, decimal {value})")
+    print("  (El operando B viene del sensor en la FPGA)")
+    
     _r0 = spi_transfer(cmd)
     _r1 = spi_transfer(0x00)
-    ack = spi_transfer(0x00)   # <-- aquí debe llegar 0xAN (con swap ya tratado en el TOP)
-    print(f"  ACK A (final): 0x{ack:02X}  (esperado 0xA{value:X})")
-    time.sleep(0.1)
-    return ack
-
-def send_operand_b(value):
-    """Envía B como 0x2N. El ACK final 0xBN llega tras dos dummies."""
-    value &= 0x0F
-    cmd = CMD_SEND_B | value
-    print(f"Enviando operando B: 0x{value:X} (0b{value:04b})")
-    _r0 = spi_transfer(cmd)
-    _r1 = spi_transfer(0x00)
-    ack = spi_transfer(0x00)   # <-- aquí debe llegar 0xBN
-    print(f"  ACK B (final): 0x{ack:02X}  (esperado 0xB{value:X})")
+    ack = spi_transfer(0x00)
+    print(f"  ACK A recibido: 0x{ack:02X} (esperado 0xA{value:X})")
     time.sleep(0.1)
     return ack
 
 def read_result():
     """
     Lee el resultado de la ALU (4 bits).
-    Protocolo: mandar 0x30 y luego DOS dummies para recoger {0,result}.
+    Protocolo: mandar 0x30 y luego DOS dummies para recoger el resultado.
     """
-    print("Solicitando resultado de ALU...")
-    _r0 = spi_transfer(CMD_READ_RESULT)  # prepara
-    _r1 = spi_transfer(0x00)             # arrastra posible previo
-    result_byte = spi_transfer(0x00)     # <-- aquí llega {0,result} (TOP ya manda nibble bajo)
+    print("\nSolicitando resultado de ALU...")
+    _r0 = spi_transfer(CMD_READ_RESULT)
+    _r1 = spi_transfer(0x00)
+    result_byte = spi_transfer(0x00)
     result_4 = result_byte & 0x0F
-    print(f"Resultado: 0x{result_4:X} (0b{result_4:04b}) = {result_4}")
+    print(f"Resultado ALU: 0x{result_4:X} (0b{result_4:04b}, decimal {result_4})")
     return result_4
 
 # ============================================================================
-# Modo simple e integración
+# Modo interactivo
 # ============================================================================
-def simple_mode():
+def interactive_mode():
     print("\n" + "=" * 70)
-    print("MODO SIMPLE: 0x1N (A), 0x2N (B), 0x30 (READ) + doble dummy")
+    print("MODO INTERACTIVO")
     print("=" * 70)
+    print("\nInstrucciones:")
+    print("  1. Captura los 4 bits del operando B usando el sensor y el botón")
+    print("  2. Ajusta los SWITCHES para elegir la operación deseada")
+    print("  3. Envía el operando A desde aquí")
+    print("  4. El resultado se calcula automáticamente: A op B")
+    print("=" * 70)
+    
     while True:
         try:
             print("\n" + "-" * 70)
-            a_input = input("Operando A (0-F, o 'q' para salir): ").strip().upper()
+            a_input = input("Operando A (0-F hex, o 'q' para salir): ").strip().upper()
+            
             if a_input == 'Q':
                 print("Saliendo...")
                 break
-            b_input = input("Operando B (0-F): ").strip().upper()
-
+            
             try:
                 a = int(a_input, 16)
-                b = int(b_input, 16)
-                if not (0 <= a <= 15 and 0 <= b <= 15):
-                    print("Error: Valores deben estar entre 0 y F")
+                if not (0 <= a <= 15):
+                    print("Error: Valor debe estar entre 0 y F")
                     continue
-
+                
+                # Enviar operando A (triggers cálculo con B del sensor)
                 send_operand_a(a)
-                time.sleep(0.2)
-                send_operand_b(b)
-                time.sleep(0.4)
-
-                #print("\n⚡ Leyendo resultado desde FPGA...")
-                #result = read_result()
-                #print(f"✓ Resultado leído: 0x{result:X} (decimal: {result})")
-
+                time.sleep(0.3)
+                
+                # Opcionalmente leer resultado
+                read_opt = input("¿Leer resultado? (s/n): ").strip().lower()
+                if read_opt == 's':
+                    read_result()
+                
             except ValueError:
-                print("Error: Ingresa valores hexadecimales válidos (0-F)")
-
+                print("Error: Ingresa un valor hexadecimal válido (0-F)")
+        
         except KeyboardInterrupt:
             print("\n\nPrograma detenido")
             break
 
+# ============================================================================
+# Main
+# ============================================================================
 def main():
+    
     print("=" * 70)
-    print("Master SPI - Control de ALU en FPGA (TOP2 protocolo TOP1)")
-    print("Proyecto: Máquinas de estados y protocolo SPI")
+    print("Master SPI - Control de ALU con SENSOR")
+    print("Operando A: desde Raspberry Pi")
+    print("Operando B: desde sensor en FPGA (4 bits capturados con botón)")
     print("=" * 70)
     print()
-
+    
     time.sleep(0.5)
     if not do_handshake():
         print("\n¡ERROR! No se pudo establecer comunicación con el FPGA.")
         return
-
+    
     print("\n✓ Comunicación SPI establecida")
-
-    # Limpiar bien el byte sembrado del handshake y cualquier rezago
+    
+    # Limpiar pipeline
     print("\nLimpiando pipeline del slave...")
     flush(3)
     time.sleep(0.1)
-    print()
-
-    # Demo corta
+    
+    # Prueba inicial
+    print("\n" + "=" * 70)
+    print("PRUEBA INICIAL")
     print("=" * 70)
-    print("CASO DE PRUEBA")
-    print("=" * 70)
+    print("\nPASOS:")
+    print("  1. Captura 4 bits en el sensor (presiona el botón 4 veces)")
+    print("  2. Ajusta los SWITCHES para elegir la operación")
+    print("  3. El siguiente comando enviará A=5 y calculará: 5 op B_sensor")
     print()
-
+    
+    input("Presiona ENTER cuando hayas capturado los 4 bits del sensor...")
+    
+    # Enviar operando A de prueba
     A_test = 0x5
-    B_test = 0x3
-
-    print(f"Operando A = 0x{A_test:X} (decimal: {A_test})")
-    print(f"Operando B = 0x{B_test:X} (decimal: {B_test})")
-    print("\nAjusta los SWITCHES en la FPGA para elegir la operación.\n")
-
     send_operand_a(A_test)
-    time.sleep(0.3)
-    send_operand_b(B_test)
     time.sleep(0.5)
-
-    #print("\n" + "-" * 70)
-    #print("Leyendo resultado...")
-    #_ = read_result()
-    #print("-" * 70)
-
-    print("\n✓ Prueba completada\n")
-
+    
+    print("\n" + "-" * 70)
+    print("Leyendo resultado...")
+    read_result()
+    print("-" * 70)
+    
+    print("\n✓ Prueba completada")
+    print("\nAhora puedes:")
+    print("  • Ver el resultado en los LEDs de la FPGA")
+    print("  • Ver los bits capturados en sensor_leds")
+    print("  • Cambiar operaciones con los SWITCHES")
+    
     try:
         input("\nPresiona ENTER para modo interactivo, o Ctrl+C para salir...")
-        simple_mode()
+        interactive_mode()
     except KeyboardInterrupt:
         pass
-
+    
     print("\nFinalizando. Flushing...")
     flush(2)
     print("Listo.")
