@@ -1,0 +1,234 @@
+# Reading pref.tcl
+# do FAC_Slave_run_msim_rtl_verilog.do
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Model Technology ModelSim - Intel FPGA Edition vmap 2020.1 Lib Mapping Utility 2020.02 Feb 28 2020
+# vmap work rtl_work 
+# Copying C:/intelFPGA_lite/20.1/modelsim_ase/win32aloem/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# 
+# vlog -sv -work work +incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE {C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/sensor_capture.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 12:55:28 on Nov 01,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE" C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/sensor_capture.sv 
+# -- Compiling module sensor_capture
+# 
+# Top level modules:
+# 	sensor_capture
+# End time: 12:55:29 on Nov 01,2025, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE {C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/synchronizer.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 12:55:29 on Nov 01,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE" C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/synchronizer.sv 
+# -- Compiling module synchronizer
+# 
+# Top level modules:
+# 	synchronizer
+# End time: 12:55:29 on Nov 01,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE {C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/shift_register_tx.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 12:55:29 on Nov 01,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE" C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/shift_register_tx.sv 
+# -- Compiling module shift_register_tx
+# 
+# Top level modules:
+# 	shift_register_tx
+# End time: 12:55:29 on Nov 01,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE {C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/shift_register_rx.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 12:55:29 on Nov 01,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE" C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/shift_register_rx.sv 
+# -- Compiling module shift_register_rx
+# 
+# Top level modules:
+# 	shift_register_rx
+# End time: 12:55:29 on Nov 01,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE {C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/edge_detector.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 12:55:29 on Nov 01,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE" C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/edge_detector.sv 
+# -- Compiling module dff_aclr_n_intel
+# -- Compiling module edge_detector
+# 
+# Top level modules:
+# 	edge_detector
+# End time: 12:55:29 on Nov 01,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE {C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/bit_counter.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 12:55:29 on Nov 01,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE" C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/bit_counter.sv 
+# -- Compiling module bit_counter
+# 
+# Top level modules:
+# 	bit_counter
+# End time: 12:55:29 on Nov 01,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU {C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/sumadorCompletoN.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 12:55:29 on Nov 01,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU" C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/sumadorCompletoN.sv 
+# -- Compiling module sumadorCompletoN
+# 
+# Top level modules:
+# 	sumadorCompletoN
+# End time: 12:55:29 on Nov 01,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU {C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/sumadorCompleto1bit.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 12:55:29 on Nov 01,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU" C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/sumadorCompleto1bit.sv 
+# -- Compiling module sumadorCompleto1bit
+# 
+# Top level modules:
+# 	sumadorCompleto1bit
+# End time: 12:55:29 on Nov 01,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU {C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/shl_in.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 12:55:29 on Nov 01,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU" C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/shl_in.sv 
+# -- Compiling module shl_in
+# 
+# Top level modules:
+# 	shl_in
+# End time: 12:55:29 on Nov 01,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU {C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/restadorCompletoN.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 12:55:30 on Nov 01,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU" C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/restadorCompletoN.sv 
+# -- Compiling module restadorCompletoN
+# 
+# Top level modules:
+# 	restadorCompletoN
+# End time: 12:55:30 on Nov 01,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU {C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/restadorCompleto1bit.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 12:55:30 on Nov 01,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU" C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/restadorCompleto1bit.sv 
+# -- Compiling module restadorCompleto1bit
+# 
+# Top level modules:
+# 	restadorCompleto1bit
+# End time: 12:55:30 on Nov 01,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU {C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/mux2.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 12:55:32 on Nov 01,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU" C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/mux2.sv 
+# -- Compiling module mux2
+# 
+# Top level modules:
+# 	mux2
+# End time: 12:55:32 on Nov 01,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU {C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/hex7seg_struct.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 12:55:32 on Nov 01,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU" C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/hex7seg_struct.sv 
+# -- Compiling module hex7seg_struct
+# 
+# Top level modules:
+# 	hex7seg_struct
+# End time: 12:55:32 on Nov 01,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU {C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/alu.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 12:55:32 on Nov 01,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU" C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/alu.sv 
+# -- Compiling module alu
+# 
+# Top level modules:
+# 	alu
+# End time: 12:55:32 on Nov 01,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM {C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM/registroN.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 12:55:32 on Nov 01,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM" C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM/registroN.sv 
+# -- Compiling module registroN
+# 
+# Top level modules:
+# 	registroN
+# End time: 12:55:32 on Nov 01,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM {C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM/pwm16_struct.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 12:55:32 on Nov 01,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM" C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM/pwm16_struct.sv 
+# -- Compiling module pwm16_struct
+# 
+# Top level modules:
+# 	pwm16_struct
+# End time: 12:55:32 on Nov 01,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM {C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM/dff1.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 12:55:32 on Nov 01,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM" C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM/dff1.sv 
+# -- Compiling module dff1
+# 
+# Top level modules:
+# 	dff1
+# End time: 12:55:32 on Nov 01,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM {C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM/contadorUpN.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 12:55:32 on Nov 01,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM" C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM/contadorUpN.sv 
+# -- Compiling module contadorUpN
+# 
+# Top level modules:
+# 	contadorUpN
+# End time: 12:55:33 on Nov 01,2025, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM {C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM/cmp_lt_strict.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 12:55:33 on Nov 01,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM" C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM/cmp_lt_strict.sv 
+# -- Compiling module cmp_lt_strict
+# 
+# Top level modules:
+# 	cmp_lt_strict
+# End time: 12:55:33 on Nov 01,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU {C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/multiplicadorCompletoN.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 12:55:33 on Nov 01,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU" C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/multiplicadorCompletoN.sv 
+# -- Compiling module multiplicadorCompletoN
+# 
+# Top level modules:
+# 	multiplicadorCompletoN
+# End time: 12:55:33 on Nov 01,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE {C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/spi_alu_top.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 12:55:33 on Nov 01,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE" C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/spi_alu_top.sv 
+# -- Compiling module spi_alu_top
+# 
+# Top level modules:
+# 	spi_alu_top
+# End time: 12:55:33 on Nov 01,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU {C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/divisorCompletoN.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 12:55:33 on Nov 01,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU" C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/divisorCompletoN.sv 
+# -- Compiling module divisorCompletoN
+# 
+# Top level modules:
+# 	divisorCompletoN
+# End time: 12:55:33 on Nov 01,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
