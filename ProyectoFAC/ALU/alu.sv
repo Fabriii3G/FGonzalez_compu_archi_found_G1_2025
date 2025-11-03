@@ -60,10 +60,12 @@ module alu #(parameter WIDTH=4)(
   assign S = m_sum | m_res | m_mul | m_div;
 
   // Cout/borrow solo en suma/resta
-  assign Cout = (sum_Cout & sel_sum) | (rest_borrow & sel_rest);
+  // assign Cout = (sum_Cout & sel_sum) | (rest_borrow & sel_rest);
+  assign Cout = (sum_Cout & sel_sum);
 
   // -------- Flags --------
-  assign N = S[WIDTH-1];
+  // assign N = S[WIDTH-1] & sel_rest;
+  assign N = (rest_borrow & sel_rest);
 
   // Z sin '==': OR-chain
   logic anyS;
