@@ -1,0 +1,32 @@
+// Sumador N (WIDTH) bits parametrizable y combinacional
+// Hace: A + B + Cin
+
+module sumadorCompletoN #(parameter WIDTH = 8) (
+    input  logic [WIDTH-1:0] A,    // Suma, vector pues depende de parametro
+    input  logic [WIDTH-1:0] B,    // Suma
+    input  logic Cin,              // Carry inicial
+    output logic [WIDTH-1:0] S,    // Resultado
+    output logic Cout              // Carry final
+);
+
+    logic [WIDTH:0] aux; // vector auxiliar para poder pasar el Cout al Cin siguiente
+
+    assign aux[0] = Cin; // Se asigna el primer auxiliar a Cin
+
+    // Generación de N sumadores de 1 bit
+    genvar i; // define una variable i para poder iterar
+    generate
+        for (i = 0; i < WIDTH; i++) begin : loop //inicia el loop
+            sumadorCompleto1bit u_rest ( //u_rest es una instancia del sumador completo de 1 bit
+                .A   (A[i]),
+                .B   (B[i]),
+                .Cin (aux[i]), //se asigna el bit correspondiente al vector actual i 
+                .S   (S[i]),
+                .Cout(aux[i+1]) // +1 porque se necesita que el Cout sea el Cin del siguiente
+            );
+        end
+    endgenerate
+
+    assign Cout = aux[WIDTH]; // se asegura que el borrow final coincida con el ultimo aux
+
+endmodule

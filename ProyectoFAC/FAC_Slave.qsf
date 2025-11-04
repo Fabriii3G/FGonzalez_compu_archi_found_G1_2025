@@ -1,0 +1,161 @@
+# -------------------------------------------------------------------------- #
+#
+# Copyright (C) 2020  Intel Corporation. All rights reserved.
+# Your use of Intel Corporation's design tools, logic functions 
+# and other software and tools, and any partner logic 
+# functions, and any output files from any of the foregoing 
+# (including device programming or simulation files), and any 
+# associated documentation or information are expressly subject 
+# to the terms and conditions of the Intel Program License 
+# Subscription Agreement, the Intel Quartus Prime License Agreement,
+# the Intel FPGA IP License Agreement, or other applicable license
+# agreement, including, without limitation, that your use is for
+# the sole purpose of programming logic devices manufactured by
+# Intel and sold by Intel or its authorized distributors.  Please
+# refer to the applicable agreement for further details, at
+# https://fpgasoftware.intel.com/eula.
+#
+# -------------------------------------------------------------------------- #
+#
+# Quartus Prime
+# Version 20.1.0 Build 711 06/05/2020 SJ Lite Edition
+# Date created = 23:41:51  October 23, 2025
+#
+# -------------------------------------------------------------------------- #
+#
+# Notes:
+#
+# 1) The default values for assignments are stored in the file:
+#		FAC_Slave_assignment_defaults.qdf
+#    If this file doesn't exist, see file:
+#		assignment_defaults.qdf
+#
+# 2) Altera recommends that you do not modify this file. This
+#    file is updated automatically by the Quartus Prime software
+#    and any changes you make may be lost or overwritten.
+#
+# -------------------------------------------------------------------------- #
+
+
+set_global_assignment -name FAMILY "Cyclone V"
+set_global_assignment -name DEVICE 5CSXFC6D6F31C6
+set_global_assignment -name TOP_LEVEL_ENTITY spi_alu_top_final
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION 20.1.0
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "23:41:51  OCTOBER 23, 2025"
+set_global_assignment -name LAST_QUARTUS_VERSION "20.1.0 Lite Edition"
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+set_global_assignment -name BOARD "Cyclone V SoC Development Kit"
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
+set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+set_location_assignment PIN_AK2 -to spi_sck
+set_location_assignment PIN_AJ1 -to handshake_ok
+set_location_assignment PIN_AB30 -to rst_n
+set_location_assignment PIN_W15 -to spi_cs_n
+set_location_assignment PIN_Y16 -to spi_miso
+set_location_assignment PIN_AK3 -to spi_mosi
+set_location_assignment PIN_AF14 -to clk
+set_location_assignment PIN_Y27 -to switches[0]
+set_location_assignment PIN_AB28 -to switches[1]
+set_location_assignment PIN_AC30 -to switches[2]
+set_location_assignment PIN_W25 -to switches[3]
+set_location_assignment PIN_AH3 -to sensor_serial
+set_location_assignment PIN_AJ4 -to sensor_btn
+set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (SystemVerilog)"
+set_global_assignment -name EDA_OUTPUT_DATA_FORMAT "SYSTEMVERILOG HDL" -section_id eda_simulation
+set_location_assignment PIN_W17 -to display_ALU_result[6]
+set_location_assignment PIN_V18 -to display_ALU_result[5]
+set_location_assignment PIN_AG17 -to display_ALU_result[4]
+set_location_assignment PIN_AG16 -to display_ALU_result[3]
+set_location_assignment PIN_AH17 -to display_ALU_result[2]
+set_location_assignment PIN_AG18 -to display_ALU_result[1]
+set_location_assignment PIN_AH18 -to display_ALU_result[0]
+set_location_assignment PIN_AD24 -to operand_a_leds[3]
+set_location_assignment PIN_AC23 -to operand_a_leds[2]
+set_location_assignment PIN_AB23 -to operand_a_leds[1]
+set_location_assignment PIN_AA24 -to operand_a_leds[0]
+set_location_assignment PIN_AF24 -to operand_b_leds[3]
+set_location_assignment PIN_AE24 -to operand_b_leds[2]
+set_location_assignment PIN_AF25 -to operand_b_leds[1]
+set_location_assignment PIN_AG25 -to operand_b_leds[0]
+set_location_assignment PIN_AF16 -to alu_flag_zero_segments[6]
+set_location_assignment PIN_V16 -to alu_flag_zero_segments[5]
+set_location_assignment PIN_AE16 -to alu_flag_zero_segments[4]
+set_location_assignment PIN_AD17 -to alu_flag_zero_segments[3]
+set_location_assignment PIN_AE18 -to alu_flag_zero_segments[2]
+set_location_assignment PIN_AE17 -to alu_flag_zero_segments[1]
+set_location_assignment PIN_V17 -to alu_flag_zero_segments[0]
+set_location_assignment PIN_AA21 -to alu_flag_negative_segments[6]
+set_location_assignment PIN_AB17 -to alu_flag_negative_segments[5]
+set_location_assignment PIN_AA18 -to alu_flag_negative_segments[4]
+set_location_assignment PIN_Y17 -to alu_flag_negative_segments[3]
+set_location_assignment PIN_Y18 -to alu_flag_negative_segments[2]
+set_location_assignment PIN_AF18 -to alu_flag_negative_segments[1]
+set_location_assignment PIN_W16 -to alu_flag_negative_segments[0]
+set_location_assignment PIN_Y19 -to alu_flag_carry_segments[6]
+set_location_assignment PIN_W19 -to alu_flag_carry_segments[5]
+set_location_assignment PIN_AD19 -to alu_flag_carry_segments[4]
+set_location_assignment PIN_AA20 -to alu_flag_carry_segments[3]
+set_location_assignment PIN_AC20 -to alu_flag_carry_segments[2]
+set_location_assignment PIN_AA19 -to alu_flag_carry_segments[1]
+set_location_assignment PIN_AD20 -to alu_flag_carry_segments[0]
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/spi_alu_top_final.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/shift_register_nibble.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/decoder_4x16.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/external_input_syncronizer.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/seven_segment_adapter.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/spi_alu_top_fix.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/sensor_capture.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/synchronizer.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/spi_slave_fsm.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/spi_fsm.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/shift_register_tx.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/shift_register_rx.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/register_8bit.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/register_4bit.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/mux2_8bit.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/mux2_1bit.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/edge_detector.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/control_signal_generator.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/comparator_8bit.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/bit_counter.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ALU/sumadorCompletoN.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ALU/sumadorCompleto1bit.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ALU/shl_in.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ALU/restadorCompletoN.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ALU/restadorCompleto1bit.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ALU/mux4.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ALU/mux2.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ALU/hex7seg_struct.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ALU/divisorCompletoN.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ALU/alu_tb.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ALU/alu.sv
+set_global_assignment -name SYSTEMVERILOG_FILE PWM/registroN.sv
+set_global_assignment -name SYSTEMVERILOG_FILE PWM/pwm16_struct.sv
+set_global_assignment -name SYSTEMVERILOG_FILE PWM/dff1.sv
+set_global_assignment -name SYSTEMVERILOG_FILE PWM/contadorUpN.sv
+set_global_assignment -name SYSTEMVERILOG_FILE PWM/cmp_lt_strict.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ALU/multiplicadorCompletoN.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SLAVE/spi_alu_top.sv
+set_global_assignment -name SYSTEMVERILOG_FILE 7SEG/DisplayAdapter.sv
+set_global_assignment -name SOURCE_FILE db/FAC_Slave.cmp.rdb
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_location_assignment PIN_AH2 -to pwm_out
+set_location_assignment PIN_AD21 -to always_high_for_unused_segments_0[6]
+set_location_assignment PIN_AG22 -to always_high_for_unused_segments_0[5]
+set_location_assignment PIN_AE22 -to always_high_for_unused_segments_0[4]
+set_location_assignment PIN_AE23 -to always_high_for_unused_segments_0[3]
+set_location_assignment PIN_AG23 -to always_high_for_unused_segments_0[2]
+set_location_assignment PIN_AF23 -to always_high_for_unused_segments_0[1]
+set_location_assignment PIN_AH22 -to always_high_for_unused_segments_0[0]
+set_location_assignment PIN_AF21 -to always_high_for_unused_segments_1[6]
+set_location_assignment PIN_AG21 -to always_high_for_unused_segments_1[5]
+set_location_assignment PIN_AF20 -to always_high_for_unused_segments_1[4]
+set_location_assignment PIN_AG20 -to always_high_for_unused_segments_1[3]
+set_location_assignment PIN_AE19 -to always_high_for_unused_segments_1[2]
+set_location_assignment PIN_AF19 -to always_high_for_unused_segments_1[1]
+set_location_assignment PIN_AB21 -to always_high_for_unused_segments_1[0]
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

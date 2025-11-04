@@ -1,0 +1,617 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/simulation/modelsim
+valu
+Z1 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
+Z2 !s110 1762023332
+!i10b 1
+!s100 ^<ZLCCKjf@5iK]9LIQek03
+Z3 !s11b Dg1SIo80bB@j0V0VzS_@n1
+IkYMnYD59aTgj=Zn841<C72
+Z4 VDg1SIo80bB@j0V0VzS_@n1
+S1
+R0
+Z5 w1761689465
+8C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/alu.sv
+FC:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/alu.sv
+!i122 13
+L0 5 100
+Z6 OV;L;2020.1;71
+r1
+!s85 0
+31
+Z7 !s108 1762023332.000000
+!s107 C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/alu.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU|C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/alu.sv|
+!i113 1
+Z8 o-sv -work work
+Z9 !s92 -sv -work work +incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU
+Z10 tCvgOpt 0
+vbit_counter
+R1
+Z11 !s110 1762023329
+!i10b 1
+!s100 EGY^c6ABENa^:Z>bc>Y2a3
+R3
+I[`:`JbMMAFoimhP1XUTQ?0
+R4
+S1
+R0
+R5
+8C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/bit_counter.sv
+FC:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/bit_counter.sv
+!i122 5
+L0 7 54
+R6
+r1
+!s85 0
+31
+Z12 !s108 1762023329.000000
+!s107 C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/bit_counter.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE|C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/bit_counter.sv|
+!i113 1
+R8
+Z13 !s92 -sv -work work +incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE
+R10
+vcmp_lt_strict
+R1
+Z14 !s110 1762023333
+!i10b 1
+!s100 RYjdzBaaUMYnD]z@gI8nP1
+R3
+IA]3@5[a:>H]Y`>L<3CZd10
+R4
+S1
+R0
+R5
+8C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM/cmp_lt_strict.sv
+FC:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM/cmp_lt_strict.sv
+!i122 18
+L0 2 13
+R6
+r1
+!s85 0
+31
+Z15 !s108 1762023333.000000
+!s107 C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM/cmp_lt_strict.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM|C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM/cmp_lt_strict.sv|
+!i113 1
+R8
+Z16 !s92 -sv -work work +incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM
+R10
+vcontadorUpN
+R1
+R14
+!i10b 1
+!s100 Df0N8L`M0mdEBB1N`6a:C2
+R3
+IBjm]><kmLA>C7Y5:<fPG=3
+R4
+S1
+R0
+R5
+8C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM/contadorUpN.sv
+FC:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM/contadorUpN.sv
+!i122 17
+L0 2 18
+R6
+r1
+!s85 0
+31
+R7
+!s107 C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM/contadorUpN.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM|C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM/contadorUpN.sv|
+!i113 1
+R8
+R16
+R10
+ncontador@up@n
+vdff1
+R1
+R2
+!i10b 1
+!s100 75R5O<GV53`?9MF`K4g@53
+R3
+IH]21CA47fHc>9[m^^<4N;3
+R4
+S1
+R0
+R5
+8C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM/dff1.sv
+FC:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM/dff1.sv
+!i122 16
+L0 2 7
+R6
+r1
+!s85 0
+31
+R7
+!s107 C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM/dff1.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM|C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM/dff1.sv|
+!i113 1
+R8
+R16
+R10
+vdff_aclr_n_intel
+R1
+R11
+!i10b 1
+!s100 THQhJi?]lX]OkiCG_OVDD2
+R3
+IO<HS9]@eUhDLQAH=VPWVO3
+R4
+S1
+R0
+R5
+Z17 8C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/edge_detector.sv
+Z18 FC:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/edge_detector.sv
+!i122 4
+L0 4 19
+R6
+r1
+!s85 0
+31
+R12
+Z19 !s107 C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/edge_detector.sv|
+Z20 !s90 -reportprogress|300|-sv|-work|work|+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE|C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/edge_detector.sv|
+!i113 1
+R8
+R13
+R10
+vdivisorCompletoN
+R1
+R14
+!i10b 1
+!s100 _WJz3YVUozC4Th4IMZY4j0
+R3
+I1UVeB8<2Xcn:><cGFCj1o0
+R4
+S1
+R0
+R5
+8C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/divisorCompletoN.sv
+FC:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/divisorCompletoN.sv
+!i122 21
+L0 7 83
+R6
+r1
+!s85 0
+31
+R15
+!s107 C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/divisorCompletoN.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU|C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/divisorCompletoN.sv|
+!i113 1
+R8
+R9
+R10
+ndivisor@completo@n
+vedge_detector
+R1
+R11
+!i10b 1
+!s100 9@V=jho2Z79>=Hha[i9`A3
+R3
+Ib2^ooD]43BUmTama==Yhz1
+R4
+S1
+R0
+R5
+R17
+R18
+!i122 4
+L0 27 21
+R6
+r1
+!s85 0
+31
+R12
+R19
+R20
+!i113 1
+R8
+R13
+R10
+vhex7seg_struct
+R1
+R2
+!i10b 1
+!s100 n45I1@ZH6;=3Az432:K5;0
+R3
+I4T0NFQm1e]2z:dY4iK57b3
+R4
+S1
+R0
+R5
+8C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/hex7seg_struct.sv
+FC:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/hex7seg_struct.sv
+!i122 12
+L0 2 36
+R6
+r1
+!s85 0
+31
+R7
+!s107 C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/hex7seg_struct.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU|C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/hex7seg_struct.sv|
+!i113 1
+R8
+R9
+R10
+vmultiplicadorCompletoN
+R1
+R14
+!i10b 1
+!s100 MkU5d_9<W4U:ZG4OiNUT:0
+R3
+IHl``gIO:WTOWioU:GG1PJ0
+R4
+S1
+R0
+R5
+8C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/multiplicadorCompletoN.sv
+FC:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/multiplicadorCompletoN.sv
+!i122 19
+L0 2 55
+R6
+r1
+!s85 0
+31
+R15
+!s107 C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/multiplicadorCompletoN.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU|C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/multiplicadorCompletoN.sv|
+!i113 1
+R8
+R9
+R10
+nmultiplicador@completo@n
+vmux2
+R1
+R2
+!i10b 1
+!s100 ]0<Z`EO^TR?eXz=2j4Q[c1
+R3
+IYd^ZWB?Hzn^GnG4I40O8U2
+R4
+S1
+R0
+R5
+8C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/mux2.sv
+FC:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/mux2.sv
+!i122 11
+L0 2 9
+R6
+r1
+!s85 0
+31
+R7
+!s107 C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/mux2.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU|C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/mux2.sv|
+!i113 1
+R8
+R9
+R10
+vpwm16_struct
+R1
+R2
+!i10b 1
+!s100 bf7:HD?Lj=nc>lO@ZZSQN3
+R3
+Im?2jGfIT0Vn[^4BPFfLQj1
+R4
+S1
+R0
+R5
+8C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM/pwm16_struct.sv
+FC:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM/pwm16_struct.sv
+!i122 15
+L0 3 22
+R6
+r1
+!s85 0
+31
+R7
+!s107 C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM/pwm16_struct.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM|C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM/pwm16_struct.sv|
+!i113 1
+R8
+R16
+R10
+vregistroN
+R1
+R2
+!i10b 1
+!s100 Cgb=j^lKZeWb:NDioK>JN2
+R3
+I@:_dl8Mg;PR0M[9z6`6EF2
+R4
+S1
+R0
+R5
+8C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM/registroN.sv
+FC:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM/registroN.sv
+!i122 14
+L0 2 12
+R6
+r1
+!s85 0
+31
+R7
+!s107 C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM/registroN.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM|C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/PWM/registroN.sv|
+!i113 1
+R8
+R16
+R10
+nregistro@n
+vrestadorCompleto1bit
+R1
+Z21 !s110 1762023330
+!i10b 1
+!s100 C<D8KZ<hHC7Mzm0TIi1[U3
+R3
+IVQ^N`V7I3>70PMB<lzf741
+R4
+S1
+R0
+R5
+8C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/restadorCompleto1bit.sv
+FC:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/restadorCompleto1bit.sv
+!i122 10
+L0 5 15
+R6
+r1
+!s85 0
+31
+Z22 !s108 1762023330.000000
+!s107 C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/restadorCompleto1bit.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU|C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/restadorCompleto1bit.sv|
+!i113 1
+R8
+R9
+R10
+nrestador@completo1bit
+vrestadorCompletoN
+R1
+R21
+!i10b 1
+!s100 RcG14JjoOKUYc2oW8C5XR0
+R3
+IXz9gTHX]X3CQJF5zXMzhC0
+R4
+S1
+R0
+R5
+8C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/restadorCompletoN.sv
+FC:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/restadorCompletoN.sv
+!i122 9
+Z23 L0 4 29
+R6
+r1
+!s85 0
+31
+R22
+!s107 C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/restadorCompletoN.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU|C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/restadorCompletoN.sv|
+!i113 1
+R8
+R9
+R10
+nrestador@completo@n
+vsensor_capture
+R1
+R11
+!i10b 1
+!s100 k[OGJ[jb9_hoz>UzWd=@V2
+R3
+I?5>FA3HCc]iz@j^Ji47P=1
+R4
+S1
+R0
+w1761691992
+8C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/sensor_capture.sv
+FC:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/sensor_capture.sv
+!i122 0
+L0 6 148
+R6
+r1
+!s85 0
+31
+!s108 1762023328.000000
+!s107 C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/sensor_capture.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE|C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/sensor_capture.sv|
+!i113 1
+R8
+R13
+R10
+vshift_register_rx
+R1
+R11
+!i10b 1
+!s100 7gnB5@7UPgBaTQE=C<hHg1
+R3
+I2[WPQEDNH[VlYI9^n9BET2
+R4
+S1
+R0
+R5
+8C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/shift_register_rx.sv
+FC:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/shift_register_rx.sv
+!i122 3
+L0 8 21
+R6
+r1
+!s85 0
+31
+R12
+!s107 C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/shift_register_rx.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE|C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/shift_register_rx.sv|
+!i113 1
+R8
+R13
+R10
+vshift_register_tx
+R1
+R11
+!i10b 1
+!s100 jI4;F0@z1H[]^FfPXjXbJ0
+R3
+ITEm9;n97o2ME?D5X166Oz1
+R4
+S1
+R0
+R5
+8C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/shift_register_tx.sv
+FC:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/shift_register_tx.sv
+!i122 2
+L0 8 109
+R6
+r1
+!s85 0
+31
+R12
+!s107 C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/shift_register_tx.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE|C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/shift_register_tx.sv|
+!i113 1
+R8
+R13
+R10
+vshl_in
+R1
+R11
+!i10b 1
+!s100 ]Qcg6`aO=YJmH`m`9OnhC1
+R3
+I^31IT6deA:]`;WioG>IG52
+R4
+S1
+R0
+R5
+8C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/shl_in.sv
+FC:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/shl_in.sv
+!i122 8
+L0 1 8
+R6
+r1
+!s85 0
+31
+R12
+!s107 C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/shl_in.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU|C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/shl_in.sv|
+!i113 1
+R8
+R9
+R10
+vspi_alu_top
+R1
+R14
+!i10b 1
+!s100 6coS1EHP5Wb28oRFGOMzk2
+R3
+IkF1613[>hZO<WE2]z;GCj0
+R4
+S1
+R0
+w1762022466
+8C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/spi_alu_top.sv
+FC:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/spi_alu_top.sv
+!i122 20
+L0 5 464
+R6
+r1
+!s85 0
+31
+R15
+!s107 C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/spi_alu_top.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE|C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/spi_alu_top.sv|
+!i113 1
+R8
+R13
+R10
+vsumadorCompleto1bit
+R1
+R11
+!i10b 1
+!s100 gL4JKzf]:_9LI=A8136U21
+R3
+Ie4Rzd2V]0YmABo608o7bO0
+R4
+S1
+R0
+R5
+8C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/sumadorCompleto1bit.sv
+FC:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/sumadorCompleto1bit.sv
+!i122 7
+L0 5 17
+R6
+r1
+!s85 0
+31
+R12
+!s107 C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/sumadorCompleto1bit.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU|C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/sumadorCompleto1bit.sv|
+!i113 1
+R8
+R9
+R10
+nsumador@completo1bit
+vsumadorCompletoN
+R1
+R11
+!i10b 1
+!s100 <E_C]oOWzTCMf4SD>NV]J3
+R3
+I?7HMKe[]4R?T1ASVJm5690
+R4
+S1
+R0
+R5
+8C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/sumadorCompletoN.sv
+FC:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/sumadorCompletoN.sv
+!i122 6
+R23
+R6
+r1
+!s85 0
+31
+R12
+!s107 C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/sumadorCompletoN.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU|C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/ALU/sumadorCompletoN.sv|
+!i113 1
+R8
+R9
+R10
+nsumador@completo@n
+vsynchronizer
+R1
+R11
+!i10b 1
+!s100 4SBhZS<VSXdRaCa8G8hY;3
+R3
+IWM[6^9aN>gD_:fHJgYPZo3
+R4
+S1
+R0
+R5
+8C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/synchronizer.sv
+FC:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/synchronizer.sv
+!i122 1
+L0 5 18
+R6
+r1
+!s85 0
+31
+R12
+!s107 C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/synchronizer.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE|C:/repositorios_quartus/FGonzalez_compu_archi_found_G1_2025/ProyectoFAC/SLAVE/synchronizer.sv|
+!i113 1
+R8
+R13
+R10
