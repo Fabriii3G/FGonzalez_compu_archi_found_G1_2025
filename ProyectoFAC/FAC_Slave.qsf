@@ -60,7 +60,6 @@ set_location_assignment PIN_Y27 -to switches[0]
 set_location_assignment PIN_AB28 -to switches[1]
 set_location_assignment PIN_AC30 -to switches[2]
 set_location_assignment PIN_W25 -to switches[3]
-set_location_assignment PIN_AH2 -to pwm_led
 set_location_assignment PIN_AH3 -to sensor_serial
 set_location_assignment PIN_AJ4 -to sensor_btn
 set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (SystemVerilog)"
@@ -144,4 +143,19 @@ set_global_assignment -name SOURCE_FILE db/FAC_Slave.cmp.rdb
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_location_assignment PIN_AH2 -to pwm_out
+set_location_assignment PIN_AD21 -to always_high_for_unused_segments_0[6]
+set_location_assignment PIN_AG22 -to always_high_for_unused_segments_0[5]
+set_location_assignment PIN_AE22 -to always_high_for_unused_segments_0[4]
+set_location_assignment PIN_AE23 -to always_high_for_unused_segments_0[3]
+set_location_assignment PIN_AG23 -to always_high_for_unused_segments_0[2]
+set_location_assignment PIN_AF23 -to always_high_for_unused_segments_0[1]
+set_location_assignment PIN_AH22 -to always_high_for_unused_segments_0[0]
+set_location_assignment PIN_AF21 -to always_high_for_unused_segments_1[6]
+set_location_assignment PIN_AG21 -to always_high_for_unused_segments_1[5]
+set_location_assignment PIN_AF20 -to always_high_for_unused_segments_1[4]
+set_location_assignment PIN_AG20 -to always_high_for_unused_segments_1[3]
+set_location_assignment PIN_AE19 -to always_high_for_unused_segments_1[2]
+set_location_assignment PIN_AF19 -to always_high_for_unused_segments_1[1]
+set_location_assignment PIN_AB21 -to always_high_for_unused_segments_1[0]
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

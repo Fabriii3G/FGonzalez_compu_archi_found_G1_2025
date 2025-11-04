@@ -33,6 +33,10 @@ module spi_alu_top_final #(
     output logic [6:0] alu_flag_negative_segments,    // show a '-', or nothing.
     output logic [6:0] alu_flag_zero_segments,        // show a 0, or nothing.
     output logic [6:0] alu_flag_carry_segments,       // show a C, or nothing.
+
+    output logic [6:0] always_high_for_unused_segments_0,       // Always high values to ensure the unused seven segment displays are off.
+    output logic [6:0] always_high_for_unused_segments_1,
+
     
     // PWM
     output logic        pwm_out,
@@ -467,6 +471,9 @@ module spi_alu_top_final #(
     .out(alu_flag_carry_segments_8_bit)
     );
     assign alu_flag_carry_segments = alu_flag_carry_segments_8_bit[6:0];  // Take out the MSB to have an 7 bit array.
+
+    assign always_high_for_unused_segments_0 = 7'b1111111;  // ensure the unused seven segment displays stay off with a permanent high value.
+    assign always_high_for_unused_segments_1 = 7'b1111111;
 
 
     // ========================================================================
