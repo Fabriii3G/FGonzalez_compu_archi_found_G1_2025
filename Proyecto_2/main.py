@@ -484,7 +484,7 @@ class MiniIDEWindow(QMainWindow):
         grp.setExclusive(True)
 
         self.act_view_editor = QAction("Editor", self, checkable=True)
-        self.act_view_processor = QAction("Processor", self, checkable=True)
+        self.act_view_processor = QAction("Procesador", self, checkable=True)
 
         grp.addAction(self.act_view_editor)
         grp.addAction(self.act_view_processor)
