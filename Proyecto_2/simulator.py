@@ -1,8 +1,75 @@
 from dataclasses import dataclass
 from typing import Optional, List, Dict
+from enum import Enum
 
 from instruction import Instruction
 from assembler import assemble, AssemblerError
+
+
+# ------------------------------------------------------------
+# Políticas de riesgos
+# ------------------------------------------------------------
+class HazardPolicy(Enum):
+    """
+    Políticas de resolución de riesgos en el pipeline:
+    
+    a) NO_HAZARD_UNIT: Sin unidad de riesgos
+       - NO forwarding
+       - Stalls para TODAS las dependencias RAW
+       - NO predicción de saltos
+       - Mayor cantidad de ciclos
+    
+    b) WITH_HAZARD_UNIT: Con unidad de riesgos
+       - SÍ forwarding (desde EX/MEM y MEM/WB)
+       - Solo stalls en load-use hazard
+       - NO predicción de saltos
+       - Menor cantidad de ciclos que (a)
+    
+    c) WITH_BRANCH_PRED: Con predicción de saltos
+       - NO forwarding
+       - Stalls para dependencias RAW
+       - SÍ predicción de saltos
+       - Reduce stalls por control hazards
+    
+    d) FULL_HAZARD: Con unidad de riesgos Y predicción
+       - SÍ forwarding
+       - Solo stalls en load-use hazard
+       - SÍ predicción de saltos
+       - Menor cantidad de ciclos (óptimo)
+    """
+    NO_HAZARD_UNIT = 1
+    WITH_HAZARD_UNIT = 2
+    WITH_BRANCH_PRED = 3
+    FULL_HAZARD = 4
+
+
+# ------------------------------------------------------------
+# Métricas de ejecución
+# ------------------------------------------------------------
+@dataclass
+class ExecutionMetrics:
+    cycles: int = 0
+    instructions_executed: int = 0
+    stalls: int = 0
+    branch_mispredictions: int = 0
+    correct_predictions: int = 0
+    data_hazards: int = 0
+    control_hazards: int = 0
+    
+    @property
+    def cpi(self) -> float:
+        """Cycles per instruction"""
+        if self.instructions_executed == 0:
+            return 0.0
+        return self.cycles / self.instructions_executed
+    
+    @property
+    def branch_accuracy(self) -> float:
+        """Porcentaje de predicciones correctas"""
+        total = self.branch_mispredictions + self.correct_predictions
+        if total == 0:
+            return 0.0
+        return (self.correct_predictions / total) * 100
 
 
 # ------------------------------------------------------------
@@ -68,7 +135,9 @@ class Simulator:
     Cada llamada a step() = 1 ciclo de reloj del pipeline.
     """
 
-    def __init__(self):
+    def __init__(self, hazard_policy: HazardPolicy = HazardPolicy.FULL_HAZARD, name: str = "Simulator"):
+        self.hazard_policy = hazard_policy
+        self.name = name
         self.program_loaded = False
         self.instructions: List[Instruction] = []
         self.pc: int = 0            # PC para el FETCH (en bytes)
@@ -83,6 +152,12 @@ class Simulator:
         self.MEM_WB = MEM_WB_Reg()
 
         self.cycle = 0
+        
+        # Métricas
+        self.metrics = ExecutionMetrics()
+        
+        # Predicción de saltos (simple: siempre tomado o no tomado)
+        self.branch_prediction = True  # True = siempre predicho como tomado
 
     # --------------------------------------------------------
     # Carga de programa / reset
@@ -125,7 +200,8 @@ class Simulator:
         self.halted = False
         self.cycle = 0
         self._reset_pipeline_regs()
-        print("[Simulator] Reset.")
+        self.metrics = ExecutionMetrics()
+        print(f"[{self.name}] Reset.")
 
     # --------------------------------------------------------
     # Ejecución (pipeline)
@@ -141,7 +217,8 @@ class Simulator:
             return
 
         self.cycle += 1
-        print(f"[Simulator] Ciclo {self.cycle}, PC(fetch)={self.pc}")
+        self.metrics.cycles += 1
+        print(f"[{self.name}] Ciclo {self.cycle}, PC(fetch)={self.pc}")
 
         # Copias "viejas" de los registros de pipeline
         old_IF_ID = self.IF_ID
@@ -155,6 +232,7 @@ class Simulator:
         # ----------------------------------------------------
         if old_MEM_WB.instr is not None:
             instr = old_MEM_WB.instr
+            self.metrics.instructions_executed += 1
             if instr_writes_rd(instr):
                 rd = instr.rd
                 if rd is not None and rd != 0:
@@ -211,10 +289,15 @@ class Simulator:
             rs2_val = old_ID_EX.rs2_val
 
             # ---- Forwarding (EX/MEM, MEM/WB) ----
+            # Solo activo si tiene unidad de riesgos
             def forward(val: int, regnum: int) -> int:
                 if regnum == 0:
                     return val
-
+                
+                # Forwarding solo con unidad de riesgos
+                if self.hazard_policy not in (HazardPolicy.WITH_HAZARD_UNIT, HazardPolicy.FULL_HAZARD):
+                    return val
+                
                 # Desde EX/MEM (solo si no es lw, porque ahí alu_result es dirección)
                 if old_EX_MEM.instr is not None:
                     i_em = old_EX_MEM.instr
@@ -261,11 +344,34 @@ class Simulator:
                 alu_result = old_ID_EX.pc + 4
                 branch_taken_local = True
 
+            # Manejo de saltos
             if op in ("beq", "bne"):
-                if branch_taken_local:
-                    branch_taken = True
-                    branch_target = instr.target_addr
+                # CON PREDICCIÓN: Se asume el salto y solo se corrige si falla
+                if self.hazard_policy in (HazardPolicy.WITH_BRANCH_PRED, HazardPolicy.FULL_HAZARD):
+                    # Predicción: siempre asumimos que el branch se toma
+                    predicted_taken = self.branch_prediction
+                    
+                    if branch_taken_local == predicted_taken:
+                        # Predicción correcta
+                        self.metrics.correct_predictions += 1
+                        if branch_taken_local:
+                            branch_taken = True
+                            branch_target = instr.target_addr
+                    else:
+                        # Predicción incorrecta: flush del pipeline
+                        self.metrics.branch_mispredictions += 1
+                        if branch_taken_local:
+                            branch_taken = True
+                            branch_target = instr.target_addr
+                        # Si no se toma pero predijimos que sí, también hay flush (branch_taken queda False)
+                else:
+                    # SIN PREDICCIÓN: Siempre esperamos a resolver el branch (flush siempre)
+                    if branch_taken_local:
+                        branch_taken = True
+                        branch_target = instr.target_addr
+                        
             elif op == "jal":
+                # JAL siempre se toma
                 branch_taken = True
                 branch_target = instr.target_addr
 
@@ -282,21 +388,48 @@ class Simulator:
         if old_IF_ID.instr is not None:
             instr = old_IF_ID.instr
 
-            # Hazard de carga-uso: si hay lw en EX (old_ID_EX) y esta instr usa rd
+            # Detección de hazards de datos
             load_use_stall = False
-            if old_ID_EX.instr is not None and old_ID_EX.instr.opcode == "lw":
-                lw_instr = old_ID_EX.instr
-                lw_rd = lw_instr.rd
-                if lw_rd is not None and lw_rd != 0:
-                    uses_rs1 = (instr.rs1 == lw_rd)
-                    uses_rs2 = (instr.rs2 == lw_rd)
-                    if uses_rs1 or uses_rs2:
-                        load_use_stall = True
+            data_hazard_stall = False
+            
+            # SIN UNIDAD DE RIESGOS: necesita stalls para TODAS las dependencias RAW
+            if self.hazard_policy in (HazardPolicy.NO_HAZARD_UNIT, HazardPolicy.WITH_BRANCH_PRED):
+                # Stall si la instrucción en EX escribe a un registro que esta usa
+                if old_ID_EX.instr is not None and instr_writes_rd(old_ID_EX.instr):
+                    ex_rd = old_ID_EX.instr.rd
+                    if ex_rd is not None and ex_rd != 0:
+                        if instr.rs1 == ex_rd or instr.rs2 == ex_rd:
+                            data_hazard_stall = True
+                            self.metrics.data_hazards += 1
+                            self.metrics.stalls += 1
+                
+                # Stall si la instrucción en MEM escribe a un registro que esta usa
+                if not data_hazard_stall and old_EX_MEM.instr is not None and instr_writes_rd(old_EX_MEM.instr):
+                    mem_rd = old_EX_MEM.instr.rd
+                    if mem_rd is not None and mem_rd != 0:
+                        if instr.rs1 == mem_rd or instr.rs2 == mem_rd:
+                            data_hazard_stall = True
+                            self.metrics.data_hazards += 1
+                            self.metrics.stalls += 1
+            
+            # CON UNIDAD DE RIESGOS: solo hazard de carga-uso (lw seguido de uso inmediato)
+            elif self.hazard_policy in (HazardPolicy.WITH_HAZARD_UNIT, HazardPolicy.FULL_HAZARD):
+                if old_ID_EX.instr is not None and old_ID_EX.instr.opcode == "lw":
+                    lw_instr = old_ID_EX.instr
+                    lw_rd = lw_instr.rd
+                    if lw_rd is not None and lw_rd != 0:
+                        uses_rs1 = (instr.rs1 == lw_rd)
+                        uses_rs2 = (instr.rs2 == lw_rd)
+                        if uses_rs1 or uses_rs2:
+                            load_use_stall = True
+                            self.metrics.data_hazards += 1
+                            self.metrics.stalls += 1
 
             if branch_taken:
                 # Se tomó un branch en EX: vaciamos esta etapa (flush)
+                self.metrics.control_hazards += 1
                 pass  # new_ID_EX sigue siendo NOP
-            elif load_use_stall:
+            elif load_use_stall or data_hazard_stall:
                 # Insertar burbuja en EX, congelar IF/ID y PC
                 stall_IF = True
             else:
@@ -362,7 +495,8 @@ class Simulator:
         )
         if no_more_fetch and pipeline_empty:
             self.halted = True
-            print("[Simulator] Pipeline vacío, programa terminado.")
+            print(f"[{self.name}] Pipeline vacío, programa terminado.")
+            print(f"[{self.name}] Métricas finales: CPI={self.metrics.cpi:.2f}, Stalls={self.metrics.stalls}, Branch Accuracy={self.metrics.branch_accuracy:.1f}%")
 
     def run(self, max_cycles: int = 10000):
         """
@@ -378,9 +512,9 @@ class Simulator:
             cycles += 1
 
         if cycles >= max_cycles:
-            print("[Simulator] Se alcanzó max_cycles, posible loop infinito.")
+            print(f"[{self.name}] Se alcanzó max_cycles, posible loop infinito.")
         else:
-            print(f"[Simulator] Ejecución completa en {cycles} ciclos.")
+            print(f"[{self.name}] Ejecución completa en {cycles} ciclos.")
 
     # --------------------------------------------------------
     # Estado para la GUI
@@ -408,4 +542,16 @@ class Simulator:
                 "MEM": self._stage_info(self.EX_MEM),   # salida de EX / entrada de MEM
                 "WB": self._stage_info(self.MEM_WB),
             },
+            "metrics": {
+                "cycles": self.metrics.cycles,
+                "instructions": self.metrics.instructions_executed,
+                "cpi": self.metrics.cpi,
+                "stalls": self.metrics.stalls,
+                "branch_mispredictions": self.metrics.branch_mispredictions,
+                "correct_predictions": self.metrics.correct_predictions,
+                "branch_accuracy": self.metrics.branch_accuracy,
+                "data_hazards": self.metrics.data_hazards,
+                "control_hazards": self.metrics.control_hazards,
+            },
+            "hazard_policy": self.hazard_policy.name,
         }
