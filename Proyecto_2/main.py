@@ -869,7 +869,7 @@ class MiniIDEWindow(QMainWindow):
         self._update_simulator_view(self.simulator1, self.txt_pipeline1, self.txt_regs1, self.txt_mem1)
         self._update_simulator_view(self.simulator2, self.txt_pipeline2, self.txt_regs2, self.txt_mem2)
         self._update_comparison_view()
-    
+
     def _update_simulator_view(self, simulator, txt_pipeline, txt_regs, txt_mem):
         """Actualizar vista de un simulador específico"""
         if not simulator.program_loaded:
@@ -906,7 +906,6 @@ class MiniIDEWindow(QMainWindow):
             "",
             "=== PIPELINE ===",
         ]
-
         stage_labels = [
             ("IF", "IF"),
             ("ID", "ID"),
@@ -914,7 +913,6 @@ class MiniIDEWindow(QMainWindow):
             ("MEM", "MEM"),
             ("WB", "WB"),
         ]
-
         for key, label in stage_labels:
             info = pipeline.get(key, {})
             opcode = info.get("opcode")
@@ -925,7 +923,14 @@ class MiniIDEWindow(QMainWindow):
                 instr_str = text if text else opcode
                 lines.append(f"{label}: {instr_str}")
 
+        # Guardar posición del scroll antes de actualizar
+        scrollbar = txt_pipeline.verticalScrollBar()
+        scroll_pos = scrollbar.value()
+
         txt_pipeline.setPlainText("\n".join(lines))
+
+        # Restaurar posición del scroll
+        scrollbar.setValue(scroll_pos)
 
         # Registros (compacto)
         if regs and len(regs) == 32:
