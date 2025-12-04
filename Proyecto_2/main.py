@@ -12,11 +12,13 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtGui import (
     QAction, QActionGroup, QColor, QPainter, QTextFormat,
-    QFont, QSyntaxHighlighter, QTextCharFormat
+    QFont, QSyntaxHighlighter, QTextCharFormat, QPixmap
 )
 from PySide6.QtCore import Qt, QRect, QSize, QRegularExpression, QTimer
 
 from simulator import Simulator, HazardPolicy, ExecutionMetrics
+
+
 
 EDITOR_PLAIN_STYLE = """
 QPlainTextEdit {
@@ -26,6 +28,149 @@ QPlainTextEdit {
     border: 1px solid #cccccc;
 }
 """
+
+
+# ============================================================
+# Widget de diagrama del procesador.
+# ============================================================
+###########
+class ProcessorDiagramWidget(QWidget):
+    def __init__(self, simulator, parent=None):
+        super().__init__(parent)
+        self.sim = simulator        # reference to Simulator
+        self.has_forwarding = False
+        if self.sim.hazard_policy in (HazardPolicy.WITH_HAZARD_UNIT, HazardPolicy.FULL_HAZARD):
+            self.image = QPixmap("diagrama_procesador_full_hazard.png")  # your screenshot
+            self.has_forwarding = True
+        else:
+            self.image = QPixmap("diagrama_procesador_sin_forwarding.png")  # your screenshot
+        # self.setMinimumSize(self.image.size())
+        self.original_width = self.image.width()
+        self.original_height = self.image.height()
+
+
+
+
+    # def paintEvent(self, event):
+    #     painter = QPainter(self)
+
+
+    #     # Pick a max width for the diagram (fits nicely)
+    #     max_width = min(self.width(), 900)
+
+    #     scaled = self.image.scaled(
+    #     max_width,
+    #     max_width * self.image.height() / self.image.width(),
+    #     Qt.KeepAspectRatio,
+    #     Qt.SmoothTransformation
+    #     )
+
+    #     # Center horizontally
+    #     x = (self.width() - scaled.width()) // 2
+    #     painter.drawPixmap(x, 0, scaled)
+
+    #     # Example: draw multiplexer selection numbers
+    #     # You will supply (x, y) coordinates for each MUX
+    #     mux_positions = [
+    #         (120, 80),   # MUX 0 coordinates
+    #         (300, 150),  # MUX 1
+    #         # ...
+    #     ]
+
+    #     # Get the multiplexer states from the simulator
+    #     # (You must define the attributes based on your simulation.)
+    #     selected_channels = self.sim.get_mux_and_enablers_states()
+    #     # this returns fetch_muxes + execute_muxes + writeback_mux + write_enable_registers + write_enable_memory
+
+    #     painter.setPen(Qt.red)
+    #     painter.setFont(QFont("Arial", 14, QFont.Bold))
+
+    #     for i, (x, y) in enumerate(mux_positions):
+    #         if i < len(selected_channels):
+    #             painter.drawText(x, y, str(selected_channels[i]))
+
+
+
+    def paintEvent(self, event):
+        painter = QPainter(self)
+
+        # Pick a max width for the diagram (fits nicely)
+        max_width = min(self.width(), 900)
+
+        scaled = self.image.scaled(
+            max_width,
+            max_width * self.image.height() / self.image.width(),
+            Qt.KeepAspectRatio,
+            Qt.SmoothTransformation
+        )
+
+        # Center horizontally (y stays at 0)
+        x_offset = (self.width() - scaled.width()) // 2
+        y_offset = 0
+
+        # Draw scaled image
+        painter.drawPixmap(x_offset, y_offset, scaled)
+
+        # Draw MUX states
+        if self.has_forwarding:
+            mux_positions = [
+                (107, 130),         # Fetch muxes
+                (53, 267),          # Fetch muxes
+                (808, 240),         # Execute muxes
+                (863, 226),         # Execute muxes
+                (795, 307),         # Execute muxes
+                (877, 363),         # Execute muxes
+                (1440, 281),        # Writeback mux
+                (508, 308),         # Write Enable Reg File
+                (1167, 350),        # Write Enable Memory.
+                (336, 492),         # instruction in Decode pipe.
+                (693, 492),        # instruction in Execute pipe.
+                (1091, 492),         # instruction in Memory pipe.
+                (1352, 492)         # instruction in Writeback pipe.
+                # ...
+            ]
+        else:
+                mux_positions = [
+                (147, 130),         # Fetch muxes
+                (106, 269),          # Fetch muxes
+                (808, 240),         # Execute muxes
+                (862, 240),         # Execute muxes
+                (795, 307),         # Execute muxes
+                (876, 351),         # Execute muxes
+                (1468, 268),        # Writeback mux
+                (576, 309),         # Write Enable Reg File
+                (1195, 378),        # Write Enable Memory.
+                (390, 492),         # instruction in Decode pipe.
+                (761, 492),        # instruction in Execute pipe.
+                (1105, 492),         # instruction in Memory pipe.
+                (1380, 492)         # instruction in Writeback pipe.
+                # ...
+            ]
+
+        # resulting_mux_selection_list = fetch_muxes + execute_muxes + writeback_mux + write_enable_registers + write_enable_memory
+        selected_channels = self.sim.get_mux_and_enablers_states()
+
+        painter.setPen(Qt.black)
+        painter.setFont(QFont("Courier New", 8, QFont.Bold))
+
+        # Compute scaling factors
+        scale_x = scaled.width() / self.original_width
+        scale_y = scaled.height() / self.original_height
+
+        for i, (orig_x, orig_y) in enumerate(mux_positions):
+            if i < len(selected_channels) and not((i==2 or i==4) and (self.sim.hazard_policy in (HazardPolicy.NO_HAZARD_UNIT, HazardPolicy.WITH_BRANCH_PRED))):
+
+                # Scale original positions
+                sx = int(orig_x * scale_x) + x_offset
+                sy = int(orig_y * scale_y) + y_offset
+
+                painter.drawText(sx, sy, str(selected_channels[i]))
+
+
+############
+
+
+
 
 
 # ============================================================
@@ -250,83 +395,144 @@ class FixedSplitter(QSplitter):
         event.ignore()
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# # ============================================================
+# # Vista gráfica del procesador (solo visual, sin lógica)
+# # ============================================================
+# class ProcessorView(QWidget):
+#     """
+#     Vista tipo diagrama: 5-stage RISC-V Processor.
+#     Por ahora solo cajas estáticas, luego podemos colorearlas según uso.
+#     """
+#     def __init__(self, parent=None):
+#         super().__init__(parent)
+
+#         layout = QVBoxLayout(self)
+#         layout.setContentsMargins(16, 16, 16, 16)
+#         layout.setSpacing(16)
+
+#         title = QLabel("5-stage RISC-V Processor")
+#         title.setStyleSheet("font-weight: bold; font-size: 16px;")
+#         layout.addWidget(title)
+
+#         # Contenedor principal de etapas
+#         stages_layout = QHBoxLayout()
+#         stages_layout.setSpacing(20)
+#         layout.addLayout(stages_layout)
+
+#         # Helper para crear cada etapa
+#         def make_stage(title_text: str, blocks: list[str]) -> QGroupBox:
+#             g = QGroupBox(title_text)
+#             g.setStyleSheet("""
+#                 QGroupBox {
+#                     border: 1px solid #999999;
+#                     border-radius: 4px;
+#                     margin-top: 8px;
+#                     font-weight: bold;
+#                 }
+#                 QGroupBox::title {
+#                     subcontrol-origin: margin;
+#                     left: 8px;
+#                     top: -2px;
+#                 }
+#             """)
+#             v = QVBoxLayout(g)
+#             v.setContentsMargins(8, 16, 8, 8)
+#             v.setSpacing(8)
+
+#             for b in blocks:
+#                 frame = QFrame()
+#                 frame.setFrameShape(QFrame.Box)
+#                 frame.setStyleSheet("""
+#                     QFrame {
+#                         background-color: #f8f9fa;
+#                         border: 1px solid #bbbbbb;
+#                     }
+#                 """)
+#                 frame_layout = QVBoxLayout(frame)
+#                 frame_layout.setContentsMargins(4, 4, 4, 4)
+#                 label = QLabel(b)
+#                 label.setAlignment(Qt.AlignCenter)
+#                 frame_layout.addWidget(label)
+#                 v.addWidget(frame)
+
+#             v.addStretch(1)
+#             return g
+
+#         # Etapas inspiradas en Ripes
+#         if_stage = make_stage("IF", ["PC", "Instruction memory", "IF/ID"])
+#         id_stage = make_stage("ID", ["Decode", "Register file", "ID/EX"])
+#         ex_stage = make_stage("EX", ["ALU", "Branch unit", "EX/MEM"])
+#         mem_stage = make_stage("MEM", ["Data memory", "MEM/WB"])
+#         wb_stage = make_stage("WB", ["Write-back mux"])
+
+#         stages_layout.addWidget(if_stage)
+#         stages_layout.addWidget(id_stage)
+#         stages_layout.addWidget(ex_stage)
+#         stages_layout.addWidget(mem_stage)
+#         stages_layout.addWidget(wb_stage)
+
+#         stages_layout.addStretch(1)
+
+
 # ============================================================
 # Vista gráfica del procesador (solo visual, sin lógica)
 # ============================================================
 class ProcessorView(QWidget):
-    """
-    Vista tipo diagrama: 5-stage RISC-V Processor.
-    Por ahora solo cajas estáticas, luego podemos colorearlas según uso.
-    """
-    def __init__(self, parent=None):
+    def __init__(self, simulator1, simulator2, parent=None):
         super().__init__(parent)
 
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(16, 16, 16, 16)
-        layout.setSpacing(16)
+        
+        # title = QLabel("Diagramas del Procesador (Simulador 1 y 2)")
+        # title.setStyleSheet("font-weight: bold; font-size: 16px;")
+        # layout.addWidget(title)
 
-        title = QLabel("5-stage RISC-V Processor")
-        title.setStyleSheet("font-weight: bold; font-size: 16px;")
-        layout.addWidget(title)
+        diagrams_layout = QVBoxLayout()
+        layout.addLayout(diagrams_layout)
 
-        # Contenedor principal de etapas
-        stages_layout = QHBoxLayout()
-        stages_layout.setSpacing(20)
-        layout.addLayout(stages_layout)
+        # Two processor diagrams
+        self.diagram1 = ProcessorDiagramWidget(simulator1)
+        self.diagram2 = ProcessorDiagramWidget(simulator2)
 
-        # Helper para crear cada etapa
-        def make_stage(title_text: str, blocks: list[str]) -> QGroupBox:
-            g = QGroupBox(title_text)
-            g.setStyleSheet("""
-                QGroupBox {
-                    border: 1px solid #999999;
-                    border-radius: 4px;
-                    margin-top: 8px;
-                    font-weight: bold;
-                }
-                QGroupBox::title {
-                    subcontrol-origin: margin;
-                    left: 8px;
-                    top: -2px;
-                }
-            """)
-            v = QVBoxLayout(g)
-            v.setContentsMargins(8, 16, 8, 8)
-            v.setSpacing(8)
+        diagrams_layout.addWidget(self.diagram1)
+        diagrams_layout.addWidget(self.diagram2)
 
-            for b in blocks:
-                frame = QFrame()
-                frame.setFrameShape(QFrame.Box)
-                frame.setStyleSheet("""
-                    QFrame {
-                        background-color: #f8f9fa;
-                        border: 1px solid #bbbbbb;
-                    }
-                """)
-                frame_layout = QVBoxLayout(frame)
-                frame_layout.setContentsMargins(4, 4, 4, 4)
-                label = QLabel(b)
-                label.setAlignment(Qt.AlignCenter)
-                frame_layout.addWidget(label)
-                v.addWidget(frame)
+        diagrams_layout.setSpacing(20)
 
-            v.addStretch(1)
-            return g
 
-        # Etapas inspiradas en Ripes
-        if_stage = make_stage("IF", ["PC", "Instruction memory", "IF/ID"])
-        id_stage = make_stage("ID", ["Decode", "Register file", "ID/EX"])
-        ex_stage = make_stage("EX", ["ALU", "Branch unit", "EX/MEM"])
-        mem_stage = make_stage("MEM", ["Data memory", "MEM/WB"])
-        wb_stage = make_stage("WB", ["Write-back mux"])
 
-        stages_layout.addWidget(if_stage)
-        stages_layout.addWidget(id_stage)
-        stages_layout.addWidget(ex_stage)
-        stages_layout.addWidget(mem_stage)
-        stages_layout.addWidget(wb_stage)
 
-        stages_layout.addStretch(1)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # ============================================================
@@ -770,10 +976,19 @@ class MiniIDEWindow(QMainWindow):
         editor_layout.addWidget(splitter)
 
         # --- Página 1: ProcessorView (diagrama gráfico) ---
-        self.processor_page = ProcessorView()
+        # self.processor_page = ProcessorView()
+        self.processor_page = ProcessorView(self.simulator1, self.simulator2)
+
         
         # --- Página 2: History (historial de ejecuciones) ---
         self.history_page = self._create_history_page()
+
+        # ########## ProcessorDiagramWidget
+        # self.processor_view1 = ProcessorDiagramWidget(self.simulator1)
+        # self.central_stack.addWidget(self.processor_view1)
+
+        # ########## ProcessorDiagramWidget
+
 
         # Añadir al stack
         self.central_stack.addWidget(self.editor_page)     # index 0
@@ -868,6 +1083,13 @@ class MiniIDEWindow(QMainWindow):
         """Actualizar vistas de ambos simuladores"""
         self._update_simulator_view(self.simulator1, self.txt_pipeline1, self.txt_regs1, self.txt_mem1)
         self._update_simulator_view(self.simulator2, self.txt_pipeline2, self.txt_regs2, self.txt_mem2)
+        # # TODO: Add uppdate of processor widget.
+        # # Widget de diagrama del procesador.
+        # self.processor_view1.update()   # TODO: SUS
+        if self.processor_page:
+            self.processor_page.diagram1.update()
+            self.processor_page.diagram2.update()
+
         self._update_comparison_view()
 
     def _update_simulator_view(self, simulator, txt_pipeline, txt_regs, txt_mem):
@@ -971,6 +1193,8 @@ class MiniIDEWindow(QMainWindow):
             ("Política", state1.get('hazard_policy', 'N/A'), state2.get('hazard_policy', 'N/A'), ""),
             ("Ciclos totales", str(m1.get('cycles', 0)), str(m2.get('cycles', 0)), 
              f"{m2.get('cycles', 0) - m1.get('cycles', 0):+d}"),
+            ("Tiempo total (ns)", str(m1.get('latencia', 0)), str(m2.get('latencia', 0)), 
+            f"{m2.get('latencia', 0) - m1.get('latencia', 0):+d}"),
             ("Instrucciones", str(m1.get('instructions', 0)), str(m2.get('instructions', 0)), 
              f"{m2.get('instructions', 0) - m1.get('instructions', 0):+d}"),
             ("CPI", f"{m1.get('cpi', 0.0):.3f}", f"{m2.get('cpi', 0.0):.3f}", 

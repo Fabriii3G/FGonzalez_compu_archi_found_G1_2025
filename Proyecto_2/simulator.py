@@ -13,25 +13,25 @@ class HazardPolicy(Enum):
     """
     Políticas de resolución de riesgos en el pipeline:
     
-    a) NO_HAZARD_UNIT: Sin unidad de riesgos
+    a) NO_HAZARD_UNIT: Sin unidad de riesgos        Latencia: 20ns
        - NO forwarding
        - Stalls para TODAS las dependencias RAW
        - NO predicción de saltos
        - Mayor cantidad de ciclos
     
-    b) WITH_HAZARD_UNIT: Con unidad de riesgos
+    b) WITH_HAZARD_UNIT: Con unidad de riesgos      Latencia: 25ns
        - SÍ forwarding (desde EX/MEM y MEM/WB)
        - Solo stalls en load-use hazard
        - NO predicción de saltos
        - Menor cantidad de ciclos que (a)
     
-    c) WITH_BRANCH_PRED: Con predicción de saltos
+    c) WITH_BRANCH_PRED: Con predicción de saltos       Latencia: 30ns
        - NO forwarding
        - Stalls para dependencias RAW
        - SÍ predicción de saltos
        - Reduce stalls por control hazards
     
-    d) FULL_HAZARD: Con unidad de riesgos Y predicción
+    d) FULL_HAZARD: Con unidad de riesgos Y predicción      Latencia: 30ns
        - SÍ forwarding
        - Solo stalls en load-use hazard
        - SÍ predicción de saltos
@@ -158,6 +158,14 @@ class Simulator:
         
         # Predicción de saltos (simple: siempre tomado o no tomado)
         self.branch_prediction = True  # True = siempre predicho como tomado
+
+        self.latency = 20
+        if self.hazard_policy == HazardPolicy.WITH_HAZARD_UNIT:
+            self.latency = 25
+        if self.hazard_policy == HazardPolicy.WITH_BRANCH_PRED:
+            self.latency = 30
+        if self.hazard_policy == HazardPolicy.FULL_HAZARD:
+            self.latency = 30
 
     # --------------------------------------------------------
     # Carga de programa / reset
@@ -552,6 +560,118 @@ class Simulator:
                 "branch_accuracy": self.metrics.branch_accuracy,
                 "data_hazards": self.metrics.data_hazards,
                 "control_hazards": self.metrics.control_hazards,
+                "latencia": self.metrics.cycles * self.latency,
             },
             "hazard_policy": self.hazard_policy.name,
         }
+
+
+
+
+    ########## ProcessorDiagramWidget
+    # instructions:
+    # add, sub, addi, and, or, lw, sw, beq, bne, jal
+    # Hazard Policies:
+        # HazardPolicy.NO_HAZARD_UNIT
+        # HazardPolicy.WITH_HAZARD_UNIT
+        # HazardPolicy.WITH_BRANCH_PRED
+        # HazardPolicy.FULL_HAZARD
+    def get_mux_and_enablers_states(self):
+        fetch_muxes = [0, 0]
+        # [PC_select, 2_4_select]   // 2_4_select will always be zero.
+        execute_muxes = [1,1,1,0]   # execute_muxes[1] and execute_muxes[3] are always present and connect directly to the ALU.
+        writeback_mux = [1]         # defaults to choosing ALU.
+        write_enable_registers = [0]    # defaults to not enabled.
+        write_enable_memory = [0]       # defaults to not enabled.
+
+        # self.IF_ID.instr    # instruction in IF → ID buffer
+        # self.ID_EX.instr    # instruction in ID → EX buffer
+        # self.EX_MEM.instr   # instruction in EX → MEM buffer
+        # self.MEM_WB.instr   # instruction in MEM → WB buffer
+    
+        # unnecessary to check hazard policy.
+        # The difference in the muxes is taken into account by not drawing those not present.
+        # If There is forwarding, execute muxes are different and there are 4.
+        # if self.hazard_policy in (HazardPolicy.FULL_HAZARD, HazardPolicy.WITH_HAZARD_UNIT):
+    
+        # Execute muxes
+        if self.ID_EX.instr is not None and self.ID_EX.instr.opcode in ("add", "sub", "and", "or", "addi", "lw", "sw", "beq", "bne", "jal"):
+            execute_muxes = [1,1,1,0]
+            # Forward from memory.
+            forward_op1_or_op2_from_memory = detect_forwarding(self.ID_EX.instr, self.EX_MEM.instr) 
+            if forward_op1_or_op2_from_memory[0]:
+                execute_muxes[0] = 2    # op1 forward from mem.
+            if forward_op1_or_op2_from_memory[1]:
+                execute_muxes[2] = 2    # op2 forward from mem.
+            # Forward from writeback.
+            forward_op1_or_op2_from_writeback = detect_forwarding(self.ID_EX.instr, self.MEM_WB.instr) 
+            if forward_op1_or_op2_from_writeback[0]:
+                execute_muxes[0] = 0    # op1 forward from WB.
+            if forward_op1_or_op2_from_writeback[1]:
+                execute_muxes[2] = 0    # op2 forward from WB.
+        if self.ID_EX.instr is not None and self.ID_EX.instr.opcode in ("addi", "sw"):   # if using immediate.
+            execute_muxes[3] = 1
+
+        if self.ID_EX.instr is not None and self.ID_EX.instr.opcode in ("beq", "bne", "jal"):    # If jumping
+            # Decode mux 1
+            execute_muxes[1] = 0    # op1 becomes PC+4.
+            # Fetch mux
+            fetch_muxes[1] = 1      # Chose ALU result for next PC.
+
+        # Writeback mux
+        if self.MEM_WB.instr is not None and self.MEM_WB.instr.opcode == "jal":
+            writeback_mux[0] = 0  # Selects PC+4.
+        if self.MEM_WB.instr is not None and self.MEM_WB.instr.opcode == "lw":
+            writeback_mux[0] = 2  # Selects Memory.
+
+        # Write Enable of Register File
+        if self.MEM_WB.instr is not None and self.MEM_WB.instr.opcode in ("add", "sub", "and", "or", "addi", "lw"):   # If writing to a register.
+            write_enable_registers[0] = 1
+        # Write Enable of Data Memory
+        if self.MEM_WB.instr is not None and self.MEM_WB.instr.opcode == "sw":   # If writing to a register.
+            write_enable_memory[0] = 1
+
+        resulting_mux_selection_list = fetch_muxes + execute_muxes + writeback_mux + write_enable_registers + write_enable_memory
+
+        # Add current instrucctions to the resulting list.
+        resulting_mux_selection_list += generate_pipes_instructions_list_for_print(self)
+        print("At get_mux_and_enablers_states resulting_mux_selection_list = ", resulting_mux_selection_list)
+        return resulting_mux_selection_list
+
+    ########## ProcessorDiagramWidget
+
+# returns a (boolean, boolean) value telling if op1 and op2 must be forwarded.
+def detect_forwarding(execute_instruction: Instruction, memory_or_writeback_instruction: Instruction):
+    if execute_instruction is not None:
+        if memory_or_writeback_instruction is not None:
+            return (execute_instruction.rs1 == memory_or_writeback_instruction.rd, execute_instruction.rs2 == memory_or_writeback_instruction.rd)
+    return (False, False)
+            
+
+# # Registros de pipeline
+# self.IF_ID = IF_ID_Reg()
+# self.ID_EX = ID_EX_Reg()
+# self.EX_MEM = EX_MEM_Reg()
+# self.MEM_WB = MEM_WB_Reg()
+def generate_pipes_instructions_list_for_print(processor):
+    result = []
+    if processor.IF_ID.instr is not None:
+        result += [processor.IF_ID.instr.text]
+    else:
+        result += ["nop"]
+        
+    if processor.ID_EX.instr is not None:
+        result += [processor.ID_EX.instr.text]
+    else:
+        result += ["nop"]
+        
+    if processor.EX_MEM.instr is not None:
+        result += [processor.EX_MEM.instr.text]
+    else:
+        result += ["nop"]
+        
+    if processor.MEM_WB.instr is not None:
+        result += [processor.MEM_WB.instr.text]
+    else:
+        result += ["nop"]
+    return result
